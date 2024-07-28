@@ -1,5 +1,6 @@
 trl==0.4.7
 transformers==4.30.2
-torch==2.0.1
+torch==2.4.0
 pyyaml==6.0
 wandb==0.17.5
+openai==0.27.0

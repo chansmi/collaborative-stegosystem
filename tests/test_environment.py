@@ -1,5 +1,5 @@
 import unittest
-from src.environment.env import Environment
+from src.environments.env import Environment
 from src.utils.helpers import load_config
 
 class TestEnvironment(unittest.TestCase):
