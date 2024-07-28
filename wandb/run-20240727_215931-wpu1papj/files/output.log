@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/main.py", line 32, in <module>
+    main(args.config, args.environment)
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/main.py", line 21, in main
+    results = experiment.run()
+              ^^^^^^^^^^^^^^^^
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/experiment.py", line 22, in run
+    episode_results = self.run_episode(episode, instructions, context)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/experiment.py", line 32, in run_episode
+    turn_results = self.run_turn(episode, turn, instructions, context)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/experiment.py", line 40, in run_turn
+    alice_thought = self.alice.get_thought_process(context)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: LLMAgent.get_thought_process() missing 1 required positional argument: 'max_tokens'
