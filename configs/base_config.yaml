@@ -1,0 +1,6 @@
+alice_secret: "The treasure is hidden in the old oak tree."
+bob_secret: "The password to the vault is 'golden sunset'."
+model_name: "gpt-4o-mini"
+num_episodes: 5
+turns_per_episode: 1
+max_tokens: 100
