@@ -1,0 +1,15 @@
+State tensor shape: torch.Size([1, 301])
+An unexpected error occurred: index 0 is out of bounds for axis 0 with size 0
+Traceback:
+Traceback (most recent call last):
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/main.py", line 30, in main
+    trainer.train(num_episodes=config['num_episodes'])
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/trainers/ppo_trainer.py", line 162, in train
+    next_state, reward, done, _ = self.env.step(actions)
+                                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/environments/stock_market_environment.py", line 84, in step
+    self._execute_trades(alice_action, self.alice_portfolio)
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/environments/stock_market_environment.py", line 117, in _execute_trades
+    price = current_data[current_data['Ticker'] == company]['Close'].values[0]
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: index 0 is out of bounds for axis 0 with size 0
