@@ -1,0 +1,17 @@
+Episodes:   0%|                                                                                                                            | 0/1000 [00:00<?, ?it/s]
+Traceback (most recent call last):                                                                                                          | 0/252 [00:00<?, ?it/s]
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/main.py", line 15, in <module>
+    main(args.config)
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/main.py", line 8, in main
+    experiment.run()
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/experiment.py", line 32, in run
+    self.trainer.train(self.config['num_episodes'])
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/trainers/ppo_trainer.py", line 88, in train
+    next_state, reward, done, _ = self.env.step(actions)
+                                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/environments/stock_market_environment.py", line 70, in step
+    self.execute_trades(actions)
+  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/environments/stock_market_environment.py", line 87, in execute_trades
+    action_value = action.item()
+                   ^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'item'

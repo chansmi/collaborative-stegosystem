@@ -1,0 +1,83 @@
+wandb_version: 1
+
+alice_model:
+  desc: null
+  value: gpt-4o-mini
+bob_model:
+  desc: null
+  value: gpt-4o-mini
+eve_model:
+  desc: null
+  value: gpt-4o-mini
+model_name:
+  desc: null
+  value: gpt-4o-mini
+initial_cash:
+  desc: null
+  value: 1000000
+stock_data_path:
+  desc: null
+  value: ../data/aggregated_stock_data.csv
+learning_rate:
+  desc: null
+  value: 3e-4
+clip_param:
+  desc: null
+  value: 0.2
+ppo_epochs:
+  desc: null
+  value: 10
+num_mini_batch:
+  desc: null
+  value: 4
+value_loss_coef:
+  desc: null
+  value: 0.5
+entropy_coef:
+  desc: null
+  value: 0.01
+max_grad_norm:
+  desc: null
+  value: 0.5
+num_episodes:
+  desc: null
+  value: 1000
+wandb_project_name:
+  desc: null
+  value: Collaborative Stegosystem
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.4
+    cli_version: 0.17.5
+    framework: huggingface
+    huggingface_version: 4.43.3
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1722340438
+    t:
+      1:
+      - 1
+      - 11
+      - 49
+      - 55
+      - 71
+      - 95
+      2:
+      - 1
+      - 11
+      - 49
+      - 55
+      - 71
+      - 95
+      3:
+      - 2
+      - 16
+      - 23
+      4: 3.12.4
+      5: 0.17.5
+      6: 4.43.3
+      8:
+      - 4
+      - 5
+      13: darwin-arm64
