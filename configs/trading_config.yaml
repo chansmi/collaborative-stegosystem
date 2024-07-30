@@ -1,0 +1,9 @@
+
+alice_model: "gpt-4o-mini"
+bob_model: "mistralai/Mistral-Large-Instruct-2407"
+eve_model: "gpt-4o-mini"
+model_name: "gpt-4o-mini"  # This is used for token counting, you may want to use the most expensive model here
+num_episodes: 30  # 30 trading days
+turns_per_episode: 1  # One turn per day in this scenario
+max_tokens: 100
+stock_data_path: "path/to/your/stock_data.csv"

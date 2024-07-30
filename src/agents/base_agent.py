@@ -1,3 +1,5 @@
+# src/agents/base_agent.py
+
 from abc import ABC, abstractmethod
 
 class BaseAgent(ABC):
@@ -6,13 +8,13 @@ class BaseAgent(ABC):
         self.secret_info = secret_info
 
     @abstractmethod
-    def generate_message(self, context):
+    def generate_message(self, context, max_tokens):
         pass
 
     @abstractmethod
-    def process_message(self, message):
+    def process_message(self, message, max_tokens):
         pass
 
     @abstractmethod
-    def get_thought_process(self, context):
+    def get_thought_process(self, context, max_tokens):
         pass
