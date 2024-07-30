@@ -1,0 +1,29 @@
+experiment:
+  name: "Collaborative Stegosystem"
+  wandb_project: "Collaborative Stegosystem"
+  wandb_entity: "chansmi"
+
+model:
+  name: "meta-llama/Meta-Llama-3.1-8B-Instruct" # "gpt2-medium" 
+  use_peft: true
+  lora_alpha: 16
+  lora_r: 16
+
+training:
+  num_epochs: 10
+  batch_size: 4
+  learning_rate: 2e-5
+  max_grad_norm: 0.5
+  num_conversations_per_day: 3
+  max_conversation_length: 128
+
+environment:
+  starting_budget: 1000000
+  num_trading_days: 252  # Roughly one year of trading days
+  target_stock: "AAPL"
+  target_stock_increase: 0.8874
+
+ppo:
+  epsilon: 0.2
+  value_loss_coef: 0.5
+  entropy_coef: 0.01
