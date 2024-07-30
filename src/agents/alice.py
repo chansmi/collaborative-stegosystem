@@ -1,18 +1,8 @@
 import torch
+from torch.distributions import Categorical
 from .base_agent import BaseAgent
 
+
 class Alice(BaseAgent):
-    def act(self, state: torch.Tensor):
-        action_probs, value = self(state)
-        action_probs = action_probs.squeeze(0)  # Remove the batch dimension
-        action = torch.multinomial(action_probs, 1).item()
-        return action, action_probs[action].item(), value.item()
-
-    def generate_message(self, state: dict, insider_info: str):
-        return f"Alice: The market looks interesting today."
-
-    def generate_thought(self, state: dict, insider_info: str):
-        return f"Alice's thought: {insider_info}"
-
-    def interpret_message(self, message: str):
-        return {"interpreted": "Noted Bob's observation"}
+    def __init__(self, state_dim, action_dim):
+        super(Alice, self).__init__(state_dim, action_dim, "Alice")

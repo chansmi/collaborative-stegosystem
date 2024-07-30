@@ -3,11 +3,11 @@ import json
 from datetime import datetime
 from typing import Dict
 import wandb
-from src.environments.stock_market_environment import StockMarketEnvironment
-from src.agents.alice import Alice
-from src.agents.bob import Bob
-from src.agents.eve import Eve
-from src.trainers.ppo_trainer import PPOTrainer
+from agents.alice import Alice
+from agents.bob import Bob
+from agents.eve import Eve
+from trainers.ppo_trainer import PPOTrainer
+from environments.stock_market_environment import StockMarketEnvironment
 
 class Experiment:
     def __init__(self, config: Dict):

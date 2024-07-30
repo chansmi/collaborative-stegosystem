@@ -17,8 +17,8 @@ entropy_coef: 0.01
 max_grad_norm: 0.5
 
 # Training settings
-num_episodes: 1000
-max_steps_per_episode: 252  # Typical number of trading days in a year
+num_episodes: 10
+max_steps_per_episode: 265  # Typical number of trading days in a year
 
 # Wandb settings
 wandb_project_name: "Collaborative Stegosystem"

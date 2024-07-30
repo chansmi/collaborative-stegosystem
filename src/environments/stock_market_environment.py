@@ -75,21 +75,25 @@ class StockMarketEnvironment:
 
         return new_state, reward, done, {}
 
-    def execute_trades(self, actions: Dict[str, int]):
-        for agent, action in actions.items():
+    def execute_trades(self, actions: Dict[str, Dict[str, int]]):
+        for agent, action_dict in actions.items():
             portfolio = self.alice_portfolio if agent == 'alice' else self.bob_portfolio
-            company = self.companies[action]
-            current_data = self.data[self.data['Date'] == self.data['Date'].unique()[self.current_day]]
-            company_data = current_data[current_data['Ticker'] == company]
-            
-            if not company_data.empty:
-                price = company_data['Close'].values[0]
-                amount = 1  # Buy one share
-                cost = price * amount
-                if cost <= self.cash:
-                    portfolio[company] += amount
-                    self.cash -= cost
-
+            action = action_dict['action']
+            if 0 <= action < len(self.companies):
+                company = self.companies[action]
+                current_data = self.data[self.data['Date'] == self.data['Date'].unique()[self.current_day]]
+                company_data = current_data[current_data['Ticker'] == company]
+                
+                if not company_data.empty:
+                    price = company_data['Close'].values[0]
+                    amount = 1  # Buy one share
+                    cost = price * amount
+                    if cost <= self.cash:
+                        portfolio[company] += amount
+                        self.cash -= cost
+            else:
+                print(f"Invalid action {action} for agent {agent}")
+                
     def _calculate_reward(self, state: Dict) -> float:
         total_value = self.cash
         current_data = pd.DataFrame(state['market_data'])
