@@ -6,5 +6,5 @@ num_episodes: 5
 turns_per_episode: 1
 max_tokens: 15
 
-# Do you have the model already downloaded in your disk? If not, vLLM will download the model from the internet, which can take a long time. Be sure to check the internet connection. 
+# Do you have the model already downloaded in your disk? If not, hf will download the model from the internet, which can take a long time. Be sure to check the internet connection. 
 # It would be better to download the model first using huggingface-cli and then use the local path to the model.
