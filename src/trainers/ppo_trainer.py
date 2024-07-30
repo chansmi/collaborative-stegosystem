@@ -55,78 +55,53 @@ class PPOTrainer:
             state = self.env.reset()
             done = False
             episode_reward = 0
-            alice_messages, bob_messages = [], []
-            alice_thoughts, bob_thoughts = [], []
-            eve_interjections = []
-
+            
             pbar = tqdm(total=self.env.max_days, desc=f"Episode {episode+1} Steps", leave=False)
             while not done:
-                    state_tensor = self._state_to_tensor(state)
-                    
-                    # Alice's turn
-                    alice_action, alice_log_prob, alice_value = self.alice.act(state_tensor)
-                    alice_message = self.alice.generate_message(state, state['alice_insider_info'])
-                    alice_thought = self.alice.generate_thought(state, state['alice_insider_info'])
-                    
-                    # Eve's analysis of Alice's communication
-                    eve_interjection_alice = self.eve.interject(alice_message, alice_thought)
-                    
-                    # Bob's turn
-                    bob_action, bob_log_prob, bob_value = self.bob.act(state_tensor)
-                    bob_interpretation = self.bob.interpret_message(alice_message)
-                    bob_message = self.bob.generate_message(state, state['bob_insider_info'])
-                    bob_thought = self.bob.generate_thought(state, state['bob_insider_info'])
-                    
-                    # Eve's analysis of Bob's communication
-                    eve_interjection_bob = self.eve.interject(bob_message, bob_thought)
-                    
-                    actions = {
-                        'alice': self._action_to_dict(alice_action),
-                        'bob': self._action_to_dict(bob_action)
-                    }
+                state_tensor = self._state_to_tensor(state)
+                
+                # Alice's turn
+                alice_action, alice_log_prob, alice_value = self.alice.act(state_tensor)
+                alice_action = alice_action.item()
+                
+                # Bob's turn
+                bob_action, bob_log_prob, bob_value = self.bob.act(state_tensor)
+                bob_action = bob_action.item()
+                
+                actions = {
+                    'alice': {'action': alice_action},
+                    'bob': {'action': bob_action}
+                }
 
-                    next_state, reward, done, _ = self.env.step(actions)
-                    episode_reward += reward
+                next_state, reward, done, _ = self.env.step(actions)
+                episode_reward += reward
 
-                    # Store transition for PPO update
-                    self._store_transition(state, actions, reward, next_state, done, 
-                                        alice_log_prob, bob_log_prob, alice_value, bob_value)
+                # Store transition for PPO update
+                self._store_transition(state, actions, reward, next_state, done, 
+                                    alice_log_prob, bob_log_prob, alice_value, bob_value)
 
-                    state = next_state
+                state = next_state
+                pbar.update(1)
 
-                    # Store communications
-                    alice_messages.append(alice_message)
-                    bob_messages.append(bob_message)
-                    alice_thoughts.append(alice_thought)
-                    bob_thoughts.append(bob_thought)
-                    eve_interjections.append(eve_interjection_alice)
-                    eve_interjections.append(eve_interjection_bob)
-
-
-                    # Perform PPO update
-                    alice_loss, bob_loss = self._update_ppo()
-
-                    # Log to wandb
-                    wandb.log({
-                        "episode": episode,
-                        "reward": episode_reward,
-                        "alice_loss": alice_loss,
-                        "bob_loss": bob_loss,
-                        "alice_messages": alice_messages,
-                        "bob_messages": bob_messages,
-                        "alice_thoughts": alice_thoughts,
-                        "bob_thoughts": bob_thoughts,
-                        "eve_interjections": eve_interjections
-                    })
-
-                    print(f"Episode {episode + 1}, Reward: {episode_reward}")
-                    pbar.update(1)
             pbar.close()
+
+            # Perform PPO update
+            alice_loss, bob_loss = self._update_ppo()
+
+            # Log to wandb
+            wandb.log({
+                "episode": episode,
+                "reward": episode_reward,
+                "alice_loss": alice_loss,
+                "bob_loss": bob_loss
+            })
+
+            print(f"Episode {episode + 1}, Reward: {episode_reward}")
 
     def _action_to_dict(self, action: int) -> Dict[str, Dict[str, int]]:
         return {
-            'alice': {'action': action},
-            'bob': {'action': action}
+            'alice': {'action': action.item()},
+            'bob': {'action': action.item()}
         }
 
     def _store_transition(self, state, actions, reward, next_state, done, 

@@ -1,6 +1,6 @@
 import argparse
-from src.utils.config_loader import load_config
-from src.experiment import Experiment
+from utils.config_loader import load_config
+from experiment import Experiment
 
 def main(config_path: str):
     config = load_config(config_path)
