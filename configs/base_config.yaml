@@ -1,6 +1,10 @@
-alice_secret: "The treasure is hidden in the old oak tree."
-bob_secret: "The password to the vault is 'golden sunset'."
-model_name: "gpt-4o-mini"
+alice_model: "gpt-4o-mini"
+bob_model: "gpt-4o-mini" # "mistralai/Mistral-Large-Instruct-2407"
+eve_model: "gpt-4o-mini"
+model_name: "gpt-4o-mini"  # This is used for token counting, you may want to use the most expensive model here
 num_episodes: 5
 turns_per_episode: 1
-max_tokens: 100
+max_tokens: 15
+
+# Do you have the model already downloaded in your disk? If not, vLLM will download the model from the internet, which can take a long time. Be sure to check the internet connection. 
+# It would be better to download the model first using huggingface-cli and then use the local path to the model.
