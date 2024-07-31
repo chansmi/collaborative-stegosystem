@@ -11,25 +11,25 @@ model:
   load_in_8bit: true
 
 training:
-  num_epochs: 10
-  max_conversation_length: 128
+  num_epochs: 2
+  max_conversation_length: 64
   num_conversations_per_day: 3
 
 environment:
   starting_budget: 1000000
-  num_trading_days: 252
+  num_trading_days: 10 # 252
   target_stock: "AAPL"
   target_stock_increase: 0.8874
 
 ppo:
   learning_rate: 1.0e-5
-  batch_size: 8
+  batch_size: 4 # 8
   mini_batch_size: 1
   gradient_accumulation_steps: 1
   optimize_cuda_cache: true
   early_stopping: false
   target_kl: 0.1
-  ppo_epochs: 4
+  ppo_epochs: 2 # 4
   max_grad_norm: 0.5
   use_score_scaling: true
   use_score_norm: true
