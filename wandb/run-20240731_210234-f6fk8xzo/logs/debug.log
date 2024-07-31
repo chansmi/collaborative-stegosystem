@@ -1,0 +1,34 @@
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_setup.py:_flush():76] Current SDK version is 0.17.5
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_setup.py:_flush():76] Configure stats pid to 7807
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_setup.py:_flush():76] Loading settings from /root/.config/wandb/settings
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_setup.py:_flush():76] Loading settings from /root/collaborative-stegosystem/collaborative-stegosystem/wandb/settings
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_setup.py:_flush():76] Loading settings from environment variables: {}
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'main.py', 'program_abspath': '/root/collaborative-stegosystem/collaborative-stegosystem/main.py', 'program': '/root/collaborative-stegosystem/collaborative-stegosystem/main.py'}
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_setup.py:_flush():76] Applying login settings: {}
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_init.py:_log_setup():529] Logging user logs to /root/collaborative-stegosystem/collaborative-stegosystem/wandb/run-20240731_210234-f6fk8xzo/logs/debug.log
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_init.py:_log_setup():530] Logging internal logs to /root/collaborative-stegosystem/collaborative-stegosystem/wandb/run-20240731_210234-f6fk8xzo/logs/debug-internal.log
+2024-07-31 21:02:34,771 INFO    MainThread:7807 [wandb_init.py:init():569] calling init triggers
+2024-07-31 21:02:34,772 INFO    MainThread:7807 [wandb_init.py:init():576] wandb.init called with sweep_config: {}
+config: {'experiment': {'name': 'Collaborative Stegosystem', 'wandb_project': 'Collaborative Stegosystem', 'wandb_entity': 'chansmi'}, 'model': {'name': 'meta-llama/Meta-Llama-3.1-8B-Instruct', 'use_peft': True, 'lora_alpha': 16, 'lora_r': 16, 'load_in_8bit': True}, 'training': {'num_epochs': 10, 'max_conversation_length': 128}, 'environment': {'starting_budget': 1000000, 'num_trading_days': 252, 'target_stock': 'AAPL', 'target_stock_increase': 0.8874}, 'ppo': {'learning_rate': 1e-05, 'batch_size': 8, 'mini_batch_size': 1, 'gradient_accumulation_steps': 1, 'optimize_cuda_cache': True, 'early_stopping': False, 'target_kl': 0.1, 'ppo_epochs': 4, 'max_grad_norm': 0.5, 'use_score_scaling': True, 'use_score_norm': True, 'score_clip': 0.5}}
+2024-07-31 21:02:34,772 INFO    MainThread:7807 [wandb_init.py:init():619] starting backend
+2024-07-31 21:02:34,772 INFO    MainThread:7807 [wandb_init.py:init():623] setting up manager
+2024-07-31 21:02:34,776 INFO    MainThread:7807 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-07-31 21:02:34,777 INFO    MainThread:7807 [wandb_init.py:init():631] backend started and connected
+2024-07-31 21:02:34,784 INFO    MainThread:7807 [wandb_init.py:init():720] updated telemetry
+2024-07-31 21:02:34,788 INFO    MainThread:7807 [wandb_init.py:init():753] communicating run to backend with 90.0 second timeout
+2024-07-31 21:02:35,072 INFO    MainThread:7807 [wandb_run.py:_on_init():2435] communicating current version
+2024-07-31 21:02:35,153 INFO    MainThread:7807 [wandb_run.py:_on_init():2444] got version response 
+2024-07-31 21:02:35,154 INFO    MainThread:7807 [wandb_init.py:init():804] starting run threads in backend
+2024-07-31 21:02:35,393 INFO    MainThread:7807 [wandb_run.py:_console_start():2413] atexit reg
+2024-07-31 21:02:35,393 INFO    MainThread:7807 [wandb_run.py:_redirect():2255] redirect: wrap_raw
+2024-07-31 21:02:35,393 INFO    MainThread:7807 [wandb_run.py:_redirect():2320] Wrapping output streams.
+2024-07-31 21:02:35,393 INFO    MainThread:7807 [wandb_run.py:_redirect():2345] Redirects installed.
+2024-07-31 21:02:35,396 INFO    MainThread:7807 [wandb_init.py:init():847] run started, returning control to user process
+2024-07-31 21:03:54,387 INFO    MainThread:7807 [wandb_run.py:_finish():2107] finishing run chansmi/Collaborative Stegosystem/f6fk8xzo
+2024-07-31 21:03:54,387 INFO    MainThread:7807 [wandb_run.py:_atexit_cleanup():2374] got exitcode: 0
+2024-07-31 21:03:54,387 INFO    MainThread:7807 [wandb_run.py:_restore():2352] restore
+2024-07-31 21:03:54,387 INFO    MainThread:7807 [wandb_run.py:_restore():2358] restore done
+2024-07-31 21:04:00,210 INFO    MainThread:7807 [wandb_run.py:_footer_history_summary_info():4016] rendering history
+2024-07-31 21:04:00,211 INFO    MainThread:7807 [wandb_run.py:_footer_history_summary_info():4048] rendering summary
+2024-07-31 21:04:00,223 INFO    MainThread:7807 [wandb_run.py:_footer_sync_info():3975] logging synced files
