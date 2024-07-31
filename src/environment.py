@@ -1,3 +1,5 @@
+# src/environment.py
+
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -7,24 +9,25 @@ class TradingEnvironment:
         self.config = config
         self.data = self._load_data()
         self.current_day = 0
-        self.alice_budget = self.bob_budget = config['environment']['starting_budget']
+        self.alice_budget = self.bob_budget = float(config['environment']['starting_budget'])
         self.alice_portfolio = {}
         self.bob_portfolio = {}
         self.target_stock = config['environment']['target_stock']
-        self.target_increase = config['environment']['target_stock_increase']
+        self.target_increase = float(config['environment']['target_stock_increase'])
 
     def _load_data(self):
         try:
             df = pd.read_csv('data/aggregated_tech_stocks_10_tech.csv')
-            df['Date'] = pd.to_datetime(df['Date'], format='%m/%d/%y')  # Specify the format
+            df['Date'] = pd.to_datetime(df['Date'], format='%m/%d/%y')
             return df
         except Exception as e:
             print(f"Error loading data: {e}")
             raise
 
+
     def reset(self):
         self.current_day = 0
-        self.alice_budget = self.bob_budget = self.config['environment']['starting_budget']
+        self.alice_budget = self.bob_budget = float(self.config['environment']['starting_budget'])
         self.alice_portfolio = {}
         self.bob_portfolio = {}
         return self._get_state()
@@ -63,7 +66,7 @@ class TradingEnvironment:
                 print(f"Not enough {stock} stocks to sell")
 
     def _get_stock_price(self, stock):
-        return self.data[(self.data['Date'] == self.data['Date'].unique()[self.current_day]) & (self.data['Ticker'] == stock)]['Close'].values[0]
+        return float(self.data[(self.data['Date'] == self.data['Date'].unique()[self.current_day]) & (self.data['Ticker'] == stock)]['Close'].values[0])
 
     def _get_state(self):
         current_date = self.data['Date'].unique()[self.current_day]
@@ -75,8 +78,8 @@ class TradingEnvironment:
         return {
             'day': self.current_day,
             'date': current_date,
-            'alice_budget': self.alice_budget,
-            'bob_budget': self.bob_budget,
+            'alice_budget': float(self.alice_budget),
+            'bob_budget': float(self.bob_budget),
             'alice_portfolio': self.alice_portfolio,
             'bob_portfolio': self.bob_portfolio,
             'market_data': market_data.to_dict('records'),
@@ -85,8 +88,8 @@ class TradingEnvironment:
         }
 
     def _calculate_reward(self):
-        total_value = self.alice_budget + self.bob_budget
+        total_value = float(self.alice_budget) + float(self.bob_budget)
         for portfolio in [self.alice_portfolio, self.bob_portfolio]:
             for stock, quantity in portfolio.items():
-                total_value += quantity * self._get_stock_price(stock)
-        return total_value / (2 * self.config['environment']['starting_budget']) - 1  # Normalize reward
+                total_value += float(quantity) * self._get_stock_price(stock)
+        return total_value / (2 * float(self.config['environment']['starting_budget'])) - 1  # Normalize reward

@@ -4,11 +4,20 @@ from src.environment import TradingEnvironment
 from src.models import create_agent
 from src.ppo_trainer import CollaborativePPOTrainer
 from src.utils import load_config, init_wandb
+import yaml
+
+def load_config(config_path='config.yaml'):
+    with open(config_path, 'r') as file:
+        config = yaml.safe_load(file)
+    return config
 
 def main():
     try:
-        config = load_config('config.yaml')
-        init_wandb(config)
+        config = load_config()
+        wandb.init(project=config['experiment']['wandb_project'], 
+                   entity=config['experiment']['wandb_entity'], 
+                   config=config)
+
 
         env = TradingEnvironment(config)
         

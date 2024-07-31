@@ -1,0 +1,17 @@
+
+
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:22<00:00,  5.57s/it]
+
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:23<00:00,  5.91s/it]
+
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:23<00:00,  5.80s/it]
+An error occurred during training: model must be a PreTrainedModelWrapper, got <class 'peft.peft_model.PeftModelForCausalLM'> - supported architectures are: (<class 'trl.models.modeling_value_head.AutoModelForCausalLMWithValueHead'>, <class 'trl.models.modeling_value_head.AutoModelForSeq2SeqLMWithValueHead'>)
