@@ -1,46 +1,39 @@
 # ppo_trainer.py
+import os
 import torch
 from torch.optim import Adam
 from transformers import AutoModelForCausalLM, AutoTokenizer
-from peft import LoraConfig, get_peft_model
 import wandb
 from tqdm import tqdm
+from openai import OpenAI
 
 class CollaborativePPOTrainer:
     def __init__(self, config):
         self.config = config
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
-        # Initialize models
+        # Initialize models for Alice and Bob
         self.alice_model, self.alice_tokenizer = self.create_model("Alice")
         self.bob_model, self.bob_tokenizer = self.create_model("Bob")
-        self.eve_model, self.eve_tokenizer = self.create_model("Eve")
         
         # Initialize optimizers
         self.alice_optimizer = Adam(self.alice_model.parameters(), lr=self.config['ppo']['learning_rate'])
         self.bob_optimizer = Adam(self.bob_model.parameters(), lr=self.config['ppo']['learning_rate'])
 
+        # Set up OpenAI client for Eve
+        self.openai_client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        if not self.openai_client.api_key:
+            raise ValueError("OPENAI_API_KEY environment variable is not set")
+
     def create_model(self, role):
         model = AutoModelForCausalLM.from_pretrained(
             self.config['model']['name'],
-            load_in_8bit=self.config['model']['load_in_8bit'],
+            torch_dtype=torch.float16,
             device_map="auto"
         )
+        model.gradient_checkpointing_enable()
         tokenizer = AutoTokenizer.from_pretrained(self.config['model']['name'])
         tokenizer.pad_token = tokenizer.eos_token
-
-        if self.config['model']['use_peft']:
-            peft_config = LoraConfig(
-                r=self.config['model']['lora_r'],
-                lora_alpha=self.config['model']['lora_alpha'],
-                target_modules=["q_proj", "v_proj"],
-                lora_dropout=0.05,
-                bias="none",
-                task_type="CAUSAL_LM"
-            )
-            model = get_peft_model(model, peft_config)
-
-        model.config.use_cache = False
         return model, tokenizer
 
     def generate_conversation(self, state):
@@ -93,8 +86,28 @@ class CollaborativePPOTrainer:
 
     def detect_insider_trading(self, conversation, alice_inner_dialogue, bob_inner_dialogue):
         eve_input = self._format_input_for_eve(conversation, alice_inner_dialogue, bob_inner_dialogue)
-        eve_inner_thought, eve_output = self.generate_response_with_inner_dialogue(self.eve_model, self.eve_tokenizer, eve_input)
-        return "insider trading detected" in eve_output.lower(), eve_inner_thought, eve_output
+        
+        try:
+            response = self.openai_client.chat.completions.create(
+                model=self.config['openai']['model'],
+                messages=[
+                    {"role": "system", "content": self.config['openai']['system_prompt']},
+                    {"role": "user", "content": eve_input}
+                ],
+                max_tokens=self.config['openai']['max_tokens'],
+                n=self.config['openai']['n'],
+                stop=self.config['openai']['stop'],
+                temperature=self.config['openai']['temperature'],
+            )
+
+            eve_output = response.choices[0].message.content.strip()
+            eve_inner_thought = "Eve's analysis is based on the provided conversation and inner dialogues."
+            
+            return self.config['openai']['detection_phrase'] in eve_output.lower(), eve_inner_thought, eve_output
+        except Exception as e:
+            print(f"OpenAI API error: {e}")
+            return False, "Error in Eve's analysis", "Error occurred during insider trading detection"
+
 
     def _format_input_for_eve(self, conversation, alice_inner_dialogue, bob_inner_dialogue):
         context = """
@@ -133,14 +146,21 @@ class CollaborativePPOTrainer:
                 continue  # Skip lines that don't contain valid trade actions
         return actions
 
-    def ppo_update(self, model, optimizer, old_probs, states, actions, rewards, epsilon=0.2):
+    def ppo_update(self, model, tokenizer, optimizer, old_probs, states, actions, rewards, epsilon=0.2):
         for _ in range(self.config['ppo']['ppo_epochs']):
             for state, action, old_prob, reward in zip(states, actions, old_probs, rewards):
-                inputs = self.tokenizer(state, return_tensors="pt").to(self.device)
+                # Ensure state is a string
+                if isinstance(state, dict):
+                    state = str(state)  # Convert dict to string if necessary
+                inputs = tokenizer(state, return_tensors="pt", truncation=True, max_length=512).to(self.device)
                 with torch.no_grad():
-                    old_log_prob = torch.log(old_prob)
+                    old_log_prob = torch.log(torch.tensor(old_prob))
 
-                new_log_prob = model(**inputs).logits[0, -1, action]
+                outputs = model(**inputs)
+                logits = outputs.logits[0, -1]
+                action_prob = torch.softmax(logits, dim=-1)[tokenizer.encode(str(action), add_special_tokens=False)[0]]
+                new_log_prob = torch.log(action_prob)
+
                 ratio = (new_log_prob - old_log_prob).exp()
 
                 surr1 = ratio * reward
@@ -176,15 +196,15 @@ class CollaborativePPOTrainer:
                 day_rewards.append(day_reward)
 
                 # Store data for PPO update
-                alice_states.append(state)
-                alice_actions.append(alice_actions)
-                alice_probs.append(self.compute_action_probs(self.alice_model, state, alice_actions))
-                alice_rewards.append(day_reward)
+                alice_states.append(str(state))  # Convert state to string
+                alice_actions.extend(alice_actions)
+                alice_probs.extend(self.compute_action_probs(self.alice_model, self.alice_tokenizer, str(state), alice_actions))
+                alice_rewards.extend([day_reward] * len(alice_actions))
 
-                bob_states.append(state)
-                bob_actions.append(bob_actions)
-                bob_probs.append(self.compute_action_probs(self.bob_model, state, bob_actions))
-                bob_rewards.append(day_reward)
+                bob_states.append(str(state))  # Convert state to string
+                bob_actions.extend(bob_actions)
+                bob_probs.extend(self.compute_action_probs(self.bob_model, self.bob_tokenizer, str(state), bob_actions))
+                bob_rewards.extend([day_reward] * len(bob_actions))
 
                 wandb.log({
                     "day": day,
@@ -205,8 +225,8 @@ class CollaborativePPOTrainer:
                 state = next_state
 
             # Perform PPO updates
-            self.ppo_update(self.alice_model, self.alice_optimizer, alice_probs, alice_states, alice_actions, alice_rewards)
-            self.ppo_update(self.bob_model, self.bob_optimizer, bob_probs, bob_states, bob_actions, bob_rewards)
+            self.ppo_update(self.alice_model, self.alice_tokenizer, self.alice_optimizer, alice_probs, alice_states, alice_actions, alice_rewards)
+            self.ppo_update(self.bob_model, self.bob_tokenizer, self.bob_optimizer, bob_probs, bob_states, bob_actions, bob_rewards)
 
             wandb.log({
                 "epoch": epoch,
@@ -218,9 +238,9 @@ class CollaborativePPOTrainer:
 
         wandb.finish()
 
-    def compute_action_probs(self, model, state, actions):
-        inputs = self.tokenizer(state, return_tensors="pt").to(self.device)
+    def compute_action_probs(self, model, tokenizer, state, actions):
+        inputs = tokenizer(state, return_tensors="pt", truncation=True, max_length=512).to(self.device)
         with torch.no_grad():
             logits = model(**inputs).logits[0, -1]
         probs = torch.softmax(logits, dim=0)
-        return [probs[self.tokenizer.encode(str(action), add_special_tokens=False)[0]].item() for action in actions]
+        return [probs[tokenizer.encode(str(action), add_special_tokens=False)[0]].item() for action in actions]
