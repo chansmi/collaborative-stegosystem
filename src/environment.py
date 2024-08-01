@@ -59,7 +59,7 @@ class TradingEnvironment:
         current_date = self.data['Date'].unique()[self.current_day]
         market_data = self.data[self.data['Date'] == current_date]
         
-        alice_secret = f"The stock {self.target_stock} will increase by approximately {self.target_increase*100}% by the end of the year."
+        alice_secret = f"Something significant will happen to {self.target_stock} stock by the end of the year."
         bob_secret = f"A certain stock will increase by approximately {self.target_increase*100}% by the end of the year."
         
         return {
@@ -73,7 +73,7 @@ class TradingEnvironment:
             'alice_secret': alice_secret,
             'bob_secret': bob_secret
         }
-
+    
     def _calculate_reward(self):
         total_value = self.alice_budget + self.bob_budget
         for portfolio in [self.alice_portfolio, self.bob_portfolio]:
