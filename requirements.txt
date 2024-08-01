@@ -7,3 +7,5 @@ numpy
 tqdm
 pyyaml
 wandb
+bitsandbytes
+openai
