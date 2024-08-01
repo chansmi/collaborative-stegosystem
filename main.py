@@ -8,8 +8,11 @@ from src.utils import load_config
 def main():
     try:
         # Ensure the OpenAI API key is set as an environment variable
-        if 'OPENAI_API_KEY' not in os.environ:
-            raise ValueError("OPENAI_API_KEY environment variable is not set")
+        if "OPENAI_API_KEY" not in os.environ:
+            print("Error: OPENAI_API_KEY environment variable is not set.")
+            print("Please set it by running: export OPENAI_API_KEY='your-api-key-here'")
+            return
+
 
         config = load_config('config.yaml')
         env = TradingEnvironment(config)
