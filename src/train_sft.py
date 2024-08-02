@@ -1,10 +1,8 @@
+# train_sft.py
 from trl import SFTTrainer
 from transformers import TrainingArguments
-from models import create_model
 
-def train_sft(config, dataset):
-    model, tokenizer = create_model(config)
-
+def train_sft(config, model, tokenizer, dataset):
     training_args = TrainingArguments(
         output_dir=config['sft']['output_dir'],
         num_train_epochs=config['sft']['num_train_epochs'],
@@ -27,8 +25,4 @@ def train_sft(config, dataset):
     trainer.train()
     trainer.save_model(config['sft']['output_dir'])
 
-    return model, tokenizer
-
-# Train SFT models for Alice and Bob
-alice_sft_model, alice_tokenizer = train_sft(config['alice'], alice_dataset)
-bob_sft_model, bob_tokenizer = train_sft(config['bob'], bob_dataset)
+    return trainer.model

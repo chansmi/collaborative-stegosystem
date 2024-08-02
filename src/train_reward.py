@@ -1,10 +1,8 @@
+# train_reward.py
 from trl import RewardTrainer
 from transformers import TrainingArguments
-from models import create_model
 
-def train_reward_model(config, dataset):
-    model, tokenizer = create_model(config)
-
+def train_reward_model(config, model, tokenizer, dataset):
     training_args = TrainingArguments(
         output_dir=config['reward']['output_dir'],
         num_train_epochs=config['reward']['num_train_epochs'],
@@ -27,7 +25,4 @@ def train_reward_model(config, dataset):
     trainer.train()
     trainer.save_model(config['reward']['output_dir'])
 
-    return model, tokenizer
-
-# Train Reward model
-reward_model, reward_tokenizer = train_reward_model(config['reward'], reward_dataset)
+    return trainer.model
