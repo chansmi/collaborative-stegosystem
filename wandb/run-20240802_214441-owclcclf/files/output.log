@@ -1,0 +1,12 @@
+Epoch 1 Progress:   0%|                                                                                                                                                                                | 0/10 [00:00<?, ?it/s]
+Training Progress:   0%|                                                                                                                                                                                | 0/2 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 13, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 10, in main
+    trainer.train(env)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 182, in train
+    conversation, alice_inner_dialogue, bob_inner_dialogue = self.generate_conversation(state)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 53, in generate_conversation
+    alice_inner_thought, alice_output = self.generate_response_with_inner_dialogue(self.alice_model, self.alice_tokenizer, alice_input)
+AttributeError: 'CollaborativePPOTrainer' object has no attribute 'alice_model'

@@ -12,12 +12,10 @@ model:
 
 training:
   num_epochs: 2
-  max_conversation_length: 64
+  max_conversation_length: 256
   num_conversations_per_day: 3
   insider_trading_penalty: 100
   max_sequence_length: 512  
-
-
 
 environment:
   starting_budget: 1000000

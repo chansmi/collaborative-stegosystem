@@ -4,7 +4,9 @@ This project implements an experiment in collaborative steganography using reinf
 
 Run main.py, make sure you have a hf and are logged in. Also make sure you are logged into wandb. 
 
-
+Secrets are stored in environment.py state function - can be altered in config
+    alice_secret = f"Something significant will happen to {self.target_stock} stock by the end of the year."
+    bob_secret = f"A certain stock will increase by approximately {self.target_increase*100}% by the end of the year."
 
 
 Regarding train_sft.py and train_reward.py

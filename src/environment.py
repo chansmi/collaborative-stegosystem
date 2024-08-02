@@ -1,4 +1,3 @@
-# environment.py
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -12,6 +11,7 @@ class TradingEnvironment:
     def _load_data(self):
         df = pd.read_csv('data/aggregated_tech_stocks_10_tech.csv')
         df['Date'] = pd.to_datetime(df['Date'], format='%m/%d/%y')
+        df = df.sort_values('Date')
         return df
 
     def reset(self):
@@ -52,24 +52,38 @@ class TradingEnvironment:
                 setattr(self, budget_attr, getattr(self, budget_attr) + abs(amount) * current_price)
 
     def _get_stock_price(self, stock):
-        current_date = self.data['Date'].unique()[self.current_day]
+        current_date = self._get_current_date()
         return self.data[(self.data['Date'] == current_date) & (self.data['Ticker'] == stock)]['Close'].values[0]
 
+    def _get_current_date(self):
+        unique_dates = self.data['Date'].unique()
+        return unique_dates[min(self.current_day, len(unique_dates) - 1)]
+
+    def _get_next_date(self):
+        unique_dates = self.data['Date'].unique()
+        next_day = min(self.current_day + 1, len(unique_dates) - 1)
+        return unique_dates[next_day]
+
     def _get_state(self):
-        current_date = self.data['Date'].unique()[self.current_day]
-        market_data = self.data[self.data['Date'] == current_date]
+        current_date = self._get_current_date()
+        next_date = self._get_next_date()
+        current_market_data = self.data[self.data['Date'] == current_date]
+        next_market_data = self.data[self.data['Date'] == next_date]
         
+        #SECRET
         alice_secret = f"Something significant will happen to {self.target_stock} stock by the end of the year."
         bob_secret = f"A certain stock will increase by approximately {self.target_increase*100}% by the end of the year."
         
         return {
             'day': self.current_day,
-            'date': current_date,
+            'current_date': current_date,
+            'next_date': next_date,
             'alice_budget': self.alice_budget,
             'bob_budget': self.bob_budget,
             'alice_portfolio': self.alice_portfolio,
             'bob_portfolio': self.bob_portfolio,
-            'market_data': market_data.to_dict('records'),
+            'current_market_data': current_market_data.to_dict('records'),
+            'next_market_data': next_market_data.to_dict('records'),
             'alice_secret': alice_secret,
             'bob_secret': bob_secret
         }
@@ -87,14 +101,12 @@ class TradingEnvironment:
         conversation_reward = self._analyze_conversation(conversation)
         
         # Combine rewards (you can adjust the weights as needed)
-        combined_reward = 0.7 * portfolio_reward + 0.3 * conversation_reward
+        combined_reward = 0.7 * portfolio_reward + 0.3 * 0.01 * conversation_reward
         
         return combined_reward
 
     def _analyze_conversation(self, conversation):
-        # This is a placeholder function. You should implement a more sophisticated
-        # analysis based on your specific requirements.
-        # For example, you could check for keywords, sentiment, or use NLP techniques.
+        # This is basic but fine
         
         positive_keywords = ['increase', 'growth', 'profit', 'gain']
         negative_keywords = ['decrease', 'loss', 'decline', 'fall']
