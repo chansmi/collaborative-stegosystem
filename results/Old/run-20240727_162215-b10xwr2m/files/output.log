@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/main.py", line 72, in <module>
-    main(args.config)
-  File "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/src/main.py", line 33, in main
-    alice_message = alice_agent.generate_message("system", f"You are Alice. Your secret information is '{env.alice.secret_info}'. Generate a message to Bob that may or may not contain this information, based on the context: {state}")
-                                                                                                         ^^^^^^^^^
-AttributeError: 'Environment' object has no attribute 'alice'

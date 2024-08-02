@@ -1,0 +1,49 @@
+{
+    "os": "macOS-14.5-arm64-arm-64bit",
+    "python": "3.12.4",
+    "heartbeatAt": "2024-07-30T19:46:16.831536",
+    "startedAt": "2024-07-30T19:46:15.780274",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/chansmi/Documents/GitHub/collaborative-stegosystem/main.py",
+    "codePathLocal": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/chansmi/collaborative-stegosystem.git",
+        "commit": "f83f944171f7d2589918f23334ff025e82a78b9b"
+    },
+    "email": "smith.18.chandler@gmail.com",
+    "root": "/Users/chansmi/Documents/GitHub/collaborative-stegosystem",
+    "host": "Chandlers-MacBook-Pro.local",
+    "username": "chansmi",
+    "executable": "/Users/chansmi/miniconda3/envs/collaborative-stegosystem/bin/python3",
+    "cpu_count": 10,
+    "cpu_count_logical": 10,
+    "cpu_freq": {
+        "current": 3228,
+        "min": 600,
+        "max": 3228
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3228,
+            "min": 600,
+            "max": 3228
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 926.3517189025879,
+            "used": 9.55495834350586
+        }
+    },
+    "gpuapple": {
+        "type": "Apple M1 Pro",
+        "vendor": "sppci_vendor_Apple"
+    },
+    "memory": {
+        "total": 16.0
+    }
+}

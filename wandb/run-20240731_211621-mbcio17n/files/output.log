@@ -1,0 +1,19 @@
+
+
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:24<00:00,  6.08s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:23<00:00,  5.78s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:24<00:00,  6.09s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+An error occurred during training: PPOConfig.__init__() got an unexpected keyword argument 'num_conversations_per_day'
