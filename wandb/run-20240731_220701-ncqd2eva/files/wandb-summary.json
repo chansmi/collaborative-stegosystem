@@ -1,0 +1,1 @@
+{"day": 35, "daily_reward": -100.0, "cumulative_reward": -3600.0, "alice_budget": 1000000, "bob_budget": 1000000, "insider_trading_detected": true, "_timestamp": 1722468966.2573488, "_runtime": 5344.6590168476105, "_step": 35, "_wandb": {"runtime": 5435}}

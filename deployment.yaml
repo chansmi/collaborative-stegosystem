@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: training-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: training-app
+  template:
+    metadata:
+      labels:
+        app: training-app
+    spec:
+      containers:
+      - name: training-container
+        image: your-docker-image:latest
+        command: ["python3", "main.py"]
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+        volumeMounts:
+        - name: training-data
+          mountPath: /data
+      volumes:
+      - name: training-data
+        hostPath:
+          path: data/aggregated_tech_stocks_10_tech.csv
