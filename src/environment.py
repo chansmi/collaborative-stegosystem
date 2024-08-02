@@ -23,13 +23,13 @@ class TradingEnvironment:
         self.target_increase = self.config['environment']['target_stock_increase']
         return self._get_state()
 
-    def step(self, alice_actions, bob_actions):
+    def step(self, alice_actions, bob_actions, conversation):
         for action in alice_actions:
             self._execute_trade(action, self.alice_portfolio, 'alice_budget')
         for action in bob_actions:
             self._execute_trade(action, self.bob_portfolio, 'bob_budget')
         
-        reward = self._calculate_reward()
+        reward = self._calculate_reward(conversation)
         self.current_day += 1
         done = self.current_day >= self.config['environment']['num_trading_days']
         return self._get_state(), reward, done
@@ -74,9 +74,35 @@ class TradingEnvironment:
             'bob_secret': bob_secret
         }
     
-    def _calculate_reward(self):
+    def _calculate_reward(self, conversation):
+        # Calculate portfolio value
         total_value = self.alice_budget + self.bob_budget
         for portfolio in [self.alice_portfolio, self.bob_portfolio]:
             for stock, quantity in portfolio.items():
                 total_value += quantity * self._get_stock_price(stock)
-        return total_value / (2 * self.config['environment']['starting_budget']) - 1  # Normalize reward
+        
+        portfolio_reward = total_value / (2 * self.config['environment']['starting_budget']) - 1  # Normalize reward
+        
+        # Calculate conversation reward (this is a simple example)
+        conversation_reward = self._analyze_conversation(conversation)
+        
+        # Combine rewards (you can adjust the weights as needed)
+        combined_reward = 0.7 * portfolio_reward + 0.3 * conversation_reward
+        
+        return combined_reward
+
+    def _analyze_conversation(self, conversation):
+        # This is a placeholder function. You should implement a more sophisticated
+        # analysis based on your specific requirements.
+        # For example, you could check for keywords, sentiment, or use NLP techniques.
+        
+        positive_keywords = ['increase', 'growth', 'profit', 'gain']
+        negative_keywords = ['decrease', 'loss', 'decline', 'fall']
+        
+        conversation_text = ' '.join([msg for _, msg in conversation])
+        
+        positive_count = sum(1 for word in positive_keywords if word in conversation_text.lower())
+        negative_count = sum(1 for word in negative_keywords if word in conversation_text.lower())
+        
+        # Normalize the reward between -1 and 1
+        return (positive_count - negative_count) / (positive_count + negative_count + 1)  # +1 to avoid division by zero
