@@ -1,23 +1,17 @@
-# src/models.py
-
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-from peft import LoraConfig, get_peft_model
+from transformers import AutoTokenizer
 from trl import AutoModelForCausalLMWithValueHead
+from peft import LoraConfig, get_peft_model
 
 def create_model(config):
-    quantization_config = BitsAndBytesConfig(
+    # Load the base model with AutoModelForCausalLMWithValueHead
+    model = AutoModelForCausalLMWithValueHead.from_pretrained(
+        config['model']['name'],
         load_in_8bit=config['model']['load_in_8bit'],
-        llm_int8_threshold=6.0,
-        llm_int8_has_fp16_weight=False,
+        device_map="auto",
+        trust_remote_code=True
     )
 
-    model = AutoModelForCausalLM.from_pretrained(
-        config['model']['name'],
-        quantization_config=quantization_config,
-        device_map="auto",
-        trust_remote_code=True,
-    )
-    
+    # Apply PEFT if enabled
     if config['model']['use_peft']:
         peft_config = LoraConfig(
             r=config['model']['lora_r'],
@@ -29,9 +23,10 @@ def create_model(config):
         )
         model = get_peft_model(model, peft_config)
 
-    # Wrap the model with AutoModelForCausalLMWithValueHead
-    model = AutoModelForCausalLMWithValueHead.from_pretrained(model)
+    # Disable caching for training
+    model.config.use_cache = False
 
+    # Load and configure tokenizer
     tokenizer = AutoTokenizer.from_pretrained(config['model']['name'], trust_remote_code=True)
     tokenizer.pad_token = tokenizer.eos_token
 
