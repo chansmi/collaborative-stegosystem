@@ -1,14 +1,23 @@
-from transformers import AutoTokenizer
-from trl import AutoModelForCausalLMWithValueHead
+# src/models.py
+
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import LoraConfig, get_peft_model
+from trl import AutoModelForCausalLMWithValueHead
 
 def create_model(config):
-    # Load the base model with AutoModelForCausalLMWithValueHead
-    model = AutoModelForCausalLMWithValueHead.from_pretrained(
-        config['model']['name'],
+    # Initialize quantization config
+    quantization_config = BitsAndBytesConfig(
         load_in_8bit=config['model']['load_in_8bit'],
+        llm_int8_threshold=6.0,
+        llm_int8_has_fp16_weight=False,
+    )
+
+    # Load the base model
+    base_model = AutoModelForCausalLM.from_pretrained(
+        config['model']['name'],
+        quantization_config=quantization_config,
         device_map="auto",
-        trust_remote_code=True
+        trust_remote_code=True,
     )
 
     # Apply PEFT if enabled
@@ -21,7 +30,10 @@ def create_model(config):
             bias="none",
             task_type="CAUSAL_LM"
         )
-        model = get_peft_model(model, peft_config)
+        base_model = get_peft_model(base_model, peft_config)
+
+    # Wrap the model with AutoModelForCausalLMWithValueHead
+    model = AutoModelForCausalLMWithValueHead.from_pretrained(base_model)
 
     # Disable caching for training
     model.config.use_cache = False
