@@ -13,7 +13,6 @@ def main():
             print("Please set it by running: export OPENAI_API_KEY='your-api-key-here'")
             return
 
-
         config = load_config('config.yaml')
         env = TradingEnvironment(config)
         trainer = CollaborativePPOTrainer(config)
