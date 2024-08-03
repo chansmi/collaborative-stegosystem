@@ -1,24 +1,44 @@
-# src/models.py
-
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import LoraConfig, get_peft_model
 from trl import AutoModelForCausalLMWithValueHead
+import torch
+
+def is_rocm_available():
+    # Check if ROCm is available
+    try:
+        import torch
+        return torch.version.hip is not None
+    except ImportError:
+        return False
 
 def create_model(config):
-    # Initialize quantization config
-    quantization_config = BitsAndBytesConfig(
-        load_in_8bit=config['model']['load_in_8bit'],
-        llm_int8_threshold=6.0,
-        llm_int8_has_fp16_weight=False,
-    )
+    if is_rocm_available():
+        print("ROCm is available. Using ROCm compatible configuration.")
+        # ROCm does not support bitsandbytes, so we will avoid using it
+        quantization_config = None
+    else:
+        print("ROCm is not available. Using CUDA compatible configuration.")
+        # Initialize quantization config for CUDA
+        quantization_config = BitsAndBytesConfig(
+            load_in_8bit=config['model']['load_in_8bit'],
+            llm_int8_threshold=6.0,
+            llm_int8_has_fp16_weight=False,
+        )
 
-    # Load the base model
-    base_model = AutoModelForCausalLM.from_pretrained(
-        config['model']['name'],
-        quantization_config=quantization_config,
-        device_map="auto",
-        trust_remote_code=True,
-    )
+    # Load the base model with or without quantization
+    if quantization_config:
+        base_model = AutoModelForCausalLM.from_pretrained(
+            config['model']['name'],
+            quantization_config=quantization_config,
+            device_map="auto",
+            trust_remote_code=True,
+        )
+    else:
+        base_model = AutoModelForCausalLM.from_pretrained(
+            config['model']['name'],
+            device_map="auto",
+            trust_remote_code=True,
+        )
 
     # Apply PEFT if enabled
     if config['model']['use_peft']:
