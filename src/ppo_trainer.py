@@ -2,14 +2,14 @@
 
 import os
 import torch
+import torch.distributed as dist
+from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.optim import Adam
 import wandb
 from tqdm import tqdm
 from src.logger import Logger
 from openai import OpenAI
 from trl import PPOTrainer, PPOConfig, AutoModelForCausalLMWithValueHead
-import torch
-from trl import PPOTrainer, PPOConfig
 from src.models import create_model, create_agent
 
 class CollaborativePPOTrainer:
@@ -330,3 +330,223 @@ class CollaborativePPOTrainer:
         
         context += f"{agent}: "
         return context
+    
+
+
+
+class DistributedCollaborativePPOTrainer(CollaborativePPOTrainer):
+    def __init__(self, config, rank, world_size):
+        super().__init__(config)
+        self.rank = rank
+        self.world_size = world_size
+        self.device = torch.device(f"cuda:{rank}" if torch.cuda.is_available() else "cpu")
+        
+        # Initialize the distributed environment
+        os.environ['MASTER_ADDR'] = 'localhost'
+        os.environ['MASTER_PORT'] = '12355'
+        dist.init_process_group("nccl", rank=rank, world_size=world_size)
+        
+        # Recreate agents for distributed setup
+        self.alice_agent = create_agent(config, 'Alice')
+        self.bob_agent = create_agent(config, 'Bob')
+        
+        # Move models to the correct device
+        self.alice_agent['model'] = self.alice_agent['model'].to(self.device)
+        self.bob_agent['model'] = self.bob_agent['model'].to(self.device)
+        
+        # Wrap models in DDP
+        self.alice_agent['model'] = DDP(self.alice_agent['model'], device_ids=[rank])
+        self.bob_agent['model'] = DDP(self.bob_agent['model'], device_ids=[rank])
+
+        # Adjust PPO trainers for distributed setup
+        self.alice_ppo_trainer = self._create_ppo_trainer(self.alice_agent['model'], self.alice_agent['tokenizer'])
+        self.bob_ppo_trainer = self._create_ppo_trainer(self.bob_agent['model'], self.bob_agent['tokenizer'])
+
+    def _create_ppo_trainer(self, model, tokenizer):
+        ppo_config = PPOConfig(**self.config['ppo'])
+        return PPOTrainer(config=ppo_config, model=model, tokenizer=tokenizer)
+    
+
+    def train(self, env):
+        # Only the main process should initialize wandb
+        if self.rank == 0:
+            wandb.init(project=self.config['experiment']['wandb_project'], entity=self.config['experiment']['wandb_entity'], config=self.config)
+
+        for epoch in tqdm(range(self.config['training']['num_epochs']), desc="Training Progress", disable=(self.rank != 0)):
+            state = env.reset()
+            total_reward = 0
+            day_rewards = []
+            epoch_portfolio_value = 0
+
+            for day in tqdm(range(self.config['environment']['num_trading_days']), desc=f"Epoch {epoch+1} Progress", disable=(self.rank != 0)):
+                conversation, alice_inner_dialogue, bob_inner_dialogue = self.generate_conversation(state)                
+                if self.rank == 0:
+                    print(f"\n--- Day {day + 1} Dialogue ---")
+                    dialogue_log = f"Day {day + 1} Dialogue:\n"
+                    for speaker, message in conversation:
+                        print(f"{speaker}: {message}")
+                        dialogue_log += f"{speaker}: {message}\n"
+                    print("----------------------------\n")
+                
+                insider_trading_detected, eve_output = self.detect_insider_trading(conversation, alice_inner_dialogue, bob_inner_dialogue)
+                insider_trading_penalty = self.insider_trading_penalty if insider_trading_detected else 0
+
+                alice_actions, bob_actions = self._extract_actions(conversation)
+                
+                if self.rank == 0:
+                    print(f"Alice's actions: {alice_actions}")
+                    print(f"Bob's actions: {bob_actions}")
+                
+                next_state, env_reward, done = env.step(alice_actions, bob_actions, conversation)
+
+                if self.rank == 0:
+                    print(f"Alice's portfolio: {next_state['alice_portfolio']}")
+                    print(f"Bob's portfolio: {next_state['bob_portfolio']}")
+
+                day_reward = env_reward - insider_trading_penalty
+                total_reward += day_reward
+                day_rewards.append(day_reward)
+
+                # Prepare data for PPO update
+                alice_query = self._format_input(state, conversation, "Alice")
+                bob_query = self._format_input(state, conversation, "Bob")
+
+                # Tokenize inputs with padding and truncation
+                max_length = self.config['training'].get('max_sequence_length', 512)
+                alice_query_tokens = self.alice_agent['tokenizer'](alice_query, return_tensors="pt", padding="max_length", truncation=True, max_length=max_length).to(self.device)
+                alice_response_tokens = self.alice_agent['tokenizer'](conversation[-2][1], return_tensors="pt", padding="max_length", truncation=True, max_length=max_length).to(self.device)
+                bob_query_tokens = self.bob_agent['tokenizer'](bob_query, return_tensors="pt", padding="max_length", truncation=True, max_length=max_length).to(self.device)
+                bob_response_tokens = self.bob_agent['tokenizer'](conversation[-1][1], return_tensors="pt", padding="max_length", truncation=True, max_length=max_length).to(self.device)
+
+                try:
+                    # Update Alice's model
+                    alice_stats = self.alice_ppo_trainer.step(
+                        [alice_query_tokens.input_ids[0]],
+                        [alice_response_tokens.input_ids[0]],
+                        [torch.tensor(day_reward).to(self.device)]
+                    )
+
+                    # Update Bob's model
+                    bob_stats = self.bob_ppo_trainer.step(
+                        [bob_query_tokens.input_ids[0]],
+                        [bob_response_tokens.input_ids[0]],
+                        [torch.tensor(day_reward).to(self.device)]
+                    )
+
+                    # Synchronize gradients across processes
+                    dist.barrier()
+
+                    # Calculate portfolio value
+                    alice_portfolio_value = next_state['alice_budget'] + sum(next_state['alice_portfolio'][stock] * env._get_stock_price(stock) for stock in next_state['alice_portfolio'])
+                    bob_portfolio_value = next_state['bob_budget'] + sum(next_state['bob_portfolio'][stock] * env._get_stock_price(stock) for stock in next_state['bob_portfolio'])
+                    total_portfolio_value = alice_portfolio_value + bob_portfolio_value
+                    epoch_portfolio_value += total_portfolio_value
+
+                    # Only the main process should log to wandb
+                    if self.rank == 0:
+                        wandb.log({
+                            "day": day,
+                            "epoch": epoch,
+                            "daily_reward": day_reward,
+                            "cumulative_reward": total_reward,
+                            "alice_budget": next_state['alice_budget'],
+                            "bob_budget": next_state['bob_budget'],
+                            "alice_portfolio": next_state['alice_portfolio'],
+                            "bob_portfolio": next_state['bob_portfolio'],
+                            "alice_actions": str(alice_actions),
+                            "bob_actions": str(bob_actions),
+                            "insider_trading_detected": insider_trading_detected,
+                            "alice_inner_dialogue": alice_inner_dialogue,
+                            "bob_inner_dialogue": bob_inner_dialogue,
+                            "eve_output": eve_output,
+                            "dialogue": dialogue_log,
+                            "total_portfolio_value": total_portfolio_value,
+                            "alice_portfolio_value": alice_portfolio_value,
+                            "bob_portfolio_value": bob_portfolio_value,
+                            "alice_ppo_loss": alice_stats['loss'],
+                            "bob_ppo_loss": bob_stats['loss'],
+                            "alice_ppo_approx_kl": alice_stats['approx_kl'],
+                            "bob_ppo_approx_kl": bob_stats['approx_kl'],
+                        })
+
+                except RuntimeError as e:
+                    if self.rank == 0:
+                        print(f"Error during PPO update: {str(e)}")
+                        print(f"Alice query: {alice_query}")
+                        print(f"Alice response: {conversation[-2][1]}")
+                        print(f"Alice Portfolio: {alice_portfolio_value}")
+                        print(f"Bob query: {bob_query}")
+                        print(f"Bob response: {conversation[-1][1]}")
+                        print(f"Bob Portfolio: {bob_portfolio_value}")
+                        print(f"total portfolio: {total_portfolio_value}")
+                    raise  # Re-raise the exception after logging
+
+                if done:
+                    break
+
+                state = next_state
+                dist.destroy_process_group()
+
+
+            # Only the main process should log epoch-level metrics
+            if self.rank == 0:
+                wandb.log({
+                    "epoch": epoch,
+                    "total_reward": total_reward,
+                    "avg_daily_reward": sum(day_rewards) / len(day_rewards),
+                    "min_daily_reward": min(day_rewards),
+                    "max_daily_reward": max(day_rewards),
+                    "avg_portfolio_value": epoch_portfolio_value / self.config['environment']['num_trading_days'],
+                })
+
+        if self.rank == 0:
+            wandb.finish()
+
+    def generate_conversation(self, state):
+        # Ensure that the conversation generation is synchronized across all processes
+        conversation = []
+        alice_inner_dialogue = []
+        bob_inner_dialogue = []
+        
+        for _ in range(self.config['training']['num_conversations_per_day']):
+            # Alice's turn
+            alice_input = self._format_input(state, conversation, "Alice")
+            alice_inner_thought, alice_output = self.generate_response_with_inner_dialogue(self.alice_agent['model'], self.alice_agent['tokenizer'], alice_input)
+            alice_inner_dialogue.append(alice_inner_thought)
+            conversation.append(("Alice", alice_output))
+
+            # Bob's turn
+            bob_input = self._format_input(state, conversation, "Bob")
+            bob_inner_thought, bob_output = self.generate_response_with_inner_dialogue(self.bob_agent['model'], self.bob_agent['tokenizer'], bob_input)
+            bob_inner_dialogue.append(bob_inner_thought)
+            conversation.append(("Bob", bob_output))
+
+        # Synchronize the conversation across all processes
+        conversation = self._sync_across_processes(conversation)
+        alice_inner_dialogue = self._sync_across_processes(alice_inner_dialogue)
+        bob_inner_dialogue = self._sync_across_processes(bob_inner_dialogue)
+
+        #return conversation, alice_inner_dialogue, bob_inner_dialogue
+        return super().generate_conversation(state)
+
+
+    def _sync_across_processes(self, data):
+        # Implement a method to synchronize data across all processes
+        # This is a placeholder and should be implemented based on your specific requirements
+        return data
+
+    def generate_response_with_inner_dialogue(self, model, tokenizer, input_text):
+        inputs = tokenizer(input_text, return_tensors="pt").to(self.device)
+        with torch.no_grad():
+            outputs = model.module.generate(  # Use .module to access the underlying model in DDP
+                **inputs,
+                max_new_tokens=self.config['training']['max_conversation_length'],
+                do_sample=True,
+                top_k=50,
+                top_p=0.95,
+                num_return_sequences=2,  # Generate two sequences: inner thought and output
+            )
+        inner_thought = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        output = tokenizer.decode(outputs[1], skip_special_tokens=True)
+        #return inner_thought, output
+        return super().generate_response_with_inner_dialogue(model, tokenizer, input_text)
