@@ -1,0 +1,59 @@
+config.json: 100%|█████████████████████████████████████████████████████████████████████████| 855/855 [00:00<00:00, 2.42MB/s]
+model.safetensors.index.json: 100%|████████████████████████████████████████████████████| 23.9k/23.9k [00:00<00:00, 36.6MB/s]
+Downloading shards:   0%|                                                                             | 0/4 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+
+
+
+
+
+Downloading shards:  25%|█████████████████▎                                                   | 1/4 [00:26<01:20, 26.91s/it]
+
+
+
+
+
+
+
+
+
+Downloading shards:  50%|██████████████████████████████████▌                                  | 2/4 [00:45<00:44, 22.21s/it]
+
+
+
+
+
+
+
+
+
+Downloading shards:  75%|███████████████████████████████████████████████████▊                 | 3/4 [01:06<00:21, 21.42s/it]
+
+Downloading shards: 100%|█████████████████████████████████████████████████████████████████████| 4/4 [01:10<00:00, 17.56s/it]
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████| 4/4 [00:23<00:00,  5.95s/it]
+generation_config.json: 100%|███████████████████████████████████████████████████████████████| 184/184 [00:00<00:00, 361kB/s]
+WARNING:root:A <class 'transformers.models.llama.modeling_llama.LlamaForCausalLM'> model is loaded from 'meta-llama/Meta-Llama-3.1-8B-Instruct', and no v_head weight is found. This IS expected if you are not resuming PPO training.
+tokenizer_config.json: 100%|███████████████████████████████████████████████████████████| 55.4k/55.4k [00:00<00:00, 56.3MB/s]
+tokenizer.json: 100%|██████████████████████████████████████████████████████████████████| 9.09M/9.09M [00:00<00:00, 9.34MB/s]
+special_tokens_map.json: 100%|██████████████████████████████████████████████████████████████| 296/296 [00:00<00:00, 540kB/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 31, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 25, in main
+    trainer = CollaborativePPOTrainer(config)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 22, in __init__
+    self.alice_agent = create_agent(config, 'Alice')
+  File "/root/collaborative-stegosystem/src/models.py", line 34, in create_agent
+    model, tokenizer = create_model(config)
+  File "/root/collaborative-stegosystem/src/models.py", line 16, in create_model
+    model = bnb.nn.quantize_model(model)
+AttributeError: module 'bitsandbytes.nn' has no attribute 'quantize_model'
