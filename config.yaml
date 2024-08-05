@@ -11,22 +11,24 @@ model:
   load_in_8bit: true
 
 training:
-  num_epochs: 2
+  num_epochs: 10
   max_conversation_length: 256
-  num_conversations_per_day: 3
+  num_conversations_per_day: 1
   insider_trading_penalty: 100
   max_sequence_length: 512  
 
 environment:
   starting_budget: 1000000
-  num_trading_days: 10 # 252
+  num_trading_days: 20 # 252
   target_stock: "AAPL"
   target_stock_increase: 0.8874
+  valid_tickers: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB', 'TSLA', 'NVDA', 'NFLX', 'ADBE', 'CSCO']
+
 
 ppo:
   learning_rate: 1.41e-5
   mini_batch_size: 1
-  batch_size: 1
+  batch_size: 4
   gradient_accumulation_steps: 1
   optimize_cuda_cache: true
   early_stopping: false

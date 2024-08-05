@@ -1,0 +1,14 @@
+Epoch 1 Progress:   0%|                                                                                       | 0/20 [00:00<?, ?it/s]
+Training Progress:   0%|                                                                                      | 0/10 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 13, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 10, in main
+    trainer.train(env)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 198, in train
+    conversation, alice_inner_dialogue, bob_inner_dialogue = self.generate_conversation(state)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 52, in generate_conversation
+    alice_input = self._format_input(state, conversation, "Alice")
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 294, in _format_input
+    next_date = state['next_date']
+KeyError: 'next_date'
