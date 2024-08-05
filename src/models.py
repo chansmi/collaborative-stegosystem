@@ -31,6 +31,8 @@ def create_model(config):
         quantization_config=quantization_config,
         device_map="auto",
         trust_remote_code=True,
+        torch_dtype=torch.float16,  # Enable mixed precision
+        use_flash_attention_2=True,  # Enable Flash Attention 2 if available
     )
 
     # Apply dynamic quantization if not using BitsAndBytesConfig
@@ -44,6 +46,9 @@ def create_model(config):
 
     # Disable caching for training
     model.config.use_cache = False
+
+    # Enable gradient checkpointing
+    model.gradient_checkpointing_enable()
 
     # Load and configure tokenizer
     tokenizer = AutoTokenizer.from_pretrained(config['model']['name'], trust_remote_code=True)

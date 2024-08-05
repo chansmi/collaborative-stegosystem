@@ -2,7 +2,9 @@ import torch
 import wandb
 from trl import PPOTrainer, PPOConfig
 from src.models import create_agent
-from src.prompts import generate_prompt, extract_inner_thoughts
+import logging
+import sys
+from src.train_reward import generate_prompt, extract_thoughts_and_message, detect_secret_message
 
 class CollaborativePPOTrainer:
     def __init__(self, config):
@@ -54,35 +56,42 @@ class CollaborativePPOTrainer:
             batch['rewards'].clear()
 
     def train(self, env):
+        logging.getLogger("transformers").setLevel(logging.ERROR)
+        logging.getLogger("trl").setLevel(logging.ERROR)
+
         for epoch in range(self.config['training']['num_epochs']):
             state = env.reset()
             total_reward = 0
             
+            print(f"\n--- Epoch {epoch + 1} ---")
+            
             for step in range(self.config['env']['max_rounds']):
-                alice_prompt = generate_prompt(state, 'Alice')
-                bob_prompt = generate_prompt(state, 'Bob')
+                alice_prompt = generate_prompt(self, state, 'Alice')
+                bob_prompt = generate_prompt(self, state, 'Bob')
                 
                 alice_response = self.generate_response(self.alice_trainer, self.alice['tokenizer'], alice_prompt)
                 bob_response = self.generate_response(self.bob_trainer, self.bob['tokenizer'], bob_prompt)
                 
-                alice_thoughts = extract_inner_thoughts(alice_response)
-                bob_thoughts = extract_inner_thoughts(bob_response)
+                alice_thoughts, alice_message = extract_thoughts_and_message(self, alice_response)
+                bob_thoughts, bob_message = extract_thoughts_and_message(self, bob_response)
                 
-                next_state, reward, done = env.step(alice_response, bob_response, alice_thoughts, bob_thoughts)
+                print(f"\nStep {step + 1}:")
+                print(f"Alice (inner thoughts): {alice_thoughts}")
+                print(f"Alice: {alice_message}")
+                print(f"Bob (inner thoughts): {bob_thoughts}")
+                print(f"Bob: {bob_message}")
                 
+                next_state, reward, done = env.step(alice_message, bob_message, alice_thoughts, bob_thoughts)
+
                 # Prepare data for PPO update
                 alice_query_tokens = self.alice['tokenizer'](alice_prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
                 alice_response_tokens = self.alice['tokenizer'](alice_response, return_tensors="pt", padding=True, truncation=True).to(self.device)
                 bob_query_tokens = self.bob['tokenizer'](bob_prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
                 bob_response_tokens = self.bob['tokenizer'](bob_response, return_tensors="pt", padding=True, truncation=True).to(self.device)
 
-                # Add to batches
-                self.add_to_batch(self.alice_batch, alice_query_tokens.input_ids.squeeze(0), alice_response_tokens.input_ids.squeeze(0), reward)
-                self.add_to_batch(self.bob_batch, bob_query_tokens.input_ids.squeeze(0), bob_response_tokens.input_ids.squeeze(0), reward)
-
-                # Process batches if they're full
-                self.process_batch(self.alice_trainer, self.alice_batch)
-                self.process_batch(self.bob_trainer, self.bob_batch)
+                # PPO step
+                self.alice_trainer.step([alice_query_tokens.input_ids.squeeze(0)], [alice_response_tokens.input_ids.squeeze(0)], [torch.tensor(reward).to(self.device)])
+                self.bob_trainer.step([bob_query_tokens.input_ids.squeeze(0)], [bob_response_tokens.input_ids.squeeze(0)], [torch.tensor(reward).to(self.device)])
                 
                 total_reward += reward
                 
@@ -91,8 +100,8 @@ class CollaborativePPOTrainer:
                     'step': step,
                     'round_reward': reward,
                     'cumulative_reward': total_reward,
-                    'alice_message': alice_response,
-                    'bob_message': bob_response,
+                    'alice_message': alice_message,
+                    'bob_message': bob_message,
                     'alice_thoughts': alice_thoughts,
                     'bob_thoughts': bob_thoughts,
                     'target_stock': state['target_stock'],
@@ -105,14 +114,12 @@ class CollaborativePPOTrainer:
                 
                 state = next_state
             
-            # Process any remaining examples in the batch
-            self.process_batch(self.alice_trainer, self.alice_batch)
-            self.process_batch(self.bob_trainer, self.bob_batch)
-            
             wandb.log({
                 'epoch': epoch,
                 'total_reward': total_reward,
-                'average_reward': total_reward / (step + 1)
+                'average_reward': total_reward / (step + 1),
+                'alice_loss': self.alice_trainer.loss.item(),
+                'bob_loss': self.bob_trainer.loss.item(),
             })
 
         self.alice_trainer.save_pretrained(self.config['model']['save_path'] + '_alice')
