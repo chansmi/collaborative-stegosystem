@@ -28,7 +28,7 @@ environment:
 ppo:
   learning_rate: 1.41e-5
   mini_batch_size: 1
-  batch_size: 4
+  batch_size: 1
   gradient_accumulation_steps: 1
   optimize_cuda_cache: true
   early_stopping: false
