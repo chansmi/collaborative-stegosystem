@@ -1,0 +1,268 @@
+2024-08-05 19:36:35,623 INFO    StreamThr :5555 [internal.py:wandb_internal():85] W&B internal server running at pid: 5555, started at: 2024-08-05 19:36:35.622495
+2024-08-05 19:36:35,625 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status
+2024-08-05 19:36:35,628 INFO    WriterThread:5555 [datastore.py:open_for_write():87] open: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/run-wsmtlegf.wandb
+2024-08-05 19:36:35,631 DEBUG   SenderThread:5555 [sender.py:send():379] send: header
+2024-08-05 19:36:35,633 DEBUG   SenderThread:5555 [sender.py:send():379] send: run
+2024-08-05 19:36:35,894 INFO    SenderThread:5555 [dir_watcher.py:__init__():211] watching files in: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files
+2024-08-05 19:36:35,894 INFO    SenderThread:5555 [sender.py:_start_run_threads():1188] run started: wsmtlegf with start time 1722886595.621058
+2024-08-05 19:36:35,910 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: check_version
+2024-08-05 19:36:35,911 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: check_version
+2024-08-05 19:36:35,957 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: run_start
+2024-08-05 19:36:35,976 DEBUG   HandlerThread:5555 [system_info.py:__init__():26] System info init
+2024-08-05 19:36:35,976 DEBUG   HandlerThread:5555 [system_info.py:__init__():41] System info init done
+2024-08-05 19:36:35,976 INFO    HandlerThread:5555 [system_monitor.py:start():194] Starting system monitor
+2024-08-05 19:36:35,976 INFO    SystemMonitor:5555 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-08-05 19:36:35,977 INFO    HandlerThread:5555 [system_monitor.py:probe():214] Collecting system info
+2024-08-05 19:36:35,979 INFO    SystemMonitor:5555 [interfaces.py:start():188] Started cpu monitoring
+2024-08-05 19:36:35,981 INFO    SystemMonitor:5555 [interfaces.py:start():188] Started disk monitoring
+2024-08-05 19:36:35,987 INFO    SystemMonitor:5555 [interfaces.py:start():188] Started gpu monitoring
+2024-08-05 19:36:35,991 INFO    SystemMonitor:5555 [interfaces.py:start():188] Started memory monitoring
+2024-08-05 19:36:35,991 INFO    SystemMonitor:5555 [interfaces.py:start():188] Started network monitoring
+2024-08-05 19:36:36,054 DEBUG   HandlerThread:5555 [system_info.py:probe():152] Probing system
+2024-08-05 19:36:36,057 DEBUG   HandlerThread:5555 [system_info.py:_probe_git():137] Probing git
+2024-08-05 19:36:36,065 DEBUG   HandlerThread:5555 [system_info.py:_probe_git():145] Probing git done
+2024-08-05 19:36:36,065 DEBUG   HandlerThread:5555 [system_info.py:probe():200] Probing system done
+2024-08-05 19:36:36,065 DEBUG   HandlerThread:5555 [system_monitor.py:probe():223] {'os': 'Linux-5.4.0-169-generic-x86_64-with-glibc2.31', 'python': '3.10.12', 'heartbeatAt': '2024-08-05T19:36:36.054540', 'startedAt': '2024-08-05T19:36:35.607937', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/root/collaborative-stegosystem/main.py', 'codePathLocal': 'main.py', 'codePath': 'main.py', 'git': {'remote': 'https://github.com/chansmi/collaborative-stegosystem.git', 'commit': 'fbc74304f4696e4331f7d95f0198f75ed9b2b2c3'}, 'email': None, 'root': '/root/collaborative-stegosystem', 'host': '52167fca7097', 'username': 'root', 'executable': '/usr/bin/python3', 'cpu_count': 48, 'cpu_count_logical': 96, 'cpu_freq': {'current': 1009.7456145833335, 'min': 800.0, 'max': 2801.0}, 'cpu_freq_per_core': [{'current': 864.463, 'min': 800.0, 'max': 2801.0}, {'current': 2800.0, 'min': 800.0, 'max': 2801.0}, {'current': 864.528, 'min': 800.0, 'max': 2801.0}, {'current': 800.235, 'min': 800.0, 'max': 2801.0}, {'current': 851.936, 'min': 800.0, 'max': 2801.0}, {'current': 837.4, 'min': 800.0, 'max': 2801.0}, {'current': 892.895, 'min': 800.0, 'max': 2801.0}, {'current': 850.738, 'min': 800.0, 'max': 2801.0}, {'current': 800.215, 'min': 800.0, 'max': 2801.0}, {'current': 800.046, 'min': 800.0, 'max': 2801.0}, {'current': 800.47, 'min': 800.0, 'max': 2801.0}, {'current': 800.134, 'min': 800.0, 'max': 2801.0}, {'current': 832.794, 'min': 800.0, 'max': 2801.0}, {'current': 898.328, 'min': 800.0, 'max': 2801.0}, {'current': 800.21, 'min': 800.0, 'max': 2801.0}, {'current': 801.54, 'min': 800.0, 'max': 2801.0}, {'current': 800.16, 'min': 800.0, 'max': 2801.0}, {'current': 801.58, 'min': 800.0, 'max': 2801.0}, {'current': 986.885, 'min': 800.0, 'max': 2801.0}, {'current': 800.16, 'min': 800.0, 'max': 2801.0}, {'current': 2701.407, 'min': 800.0, 'max': 2801.0}, {'current': 801.154, 'min': 800.0, 'max': 2801.0}, {'current': 801.133, 'min': 800.0, 'max': 2801.0}, {'current': 800.378, 'min': 800.0, 'max': 2801.0}, {'current': 805.886, 'min': 800.0, 'max': 2801.0}, {'current': 2800.0, 'min': 800.0, 'max': 2801.0}, {'current': 896.356, 'min': 800.0, 'max': 2801.0}, {'current': 800.847, 'min': 800.0, 'max': 2801.0}, {'current': 800.539, 'min': 800.0, 'max': 2801.0}, {'current': 800.362, 'min': 800.0, 'max': 2801.0}, {'current': 800.396, 'min': 800.0, 'max': 2801.0}, {'current': 2800.002, 'min': 800.0, 'max': 2801.0}, {'current': 800.838, 'min': 800.0, 'max': 2801.0}, {'current': 800.419, 'min': 800.0, 'max': 2801.0}, {'current': 800.823, 'min': 800.0, 'max': 2801.0}, {'current': 861.405, 'min': 800.0, 'max': 2801.0}, {'current': 800.851, 'min': 800.0, 'max': 2801.0}, {'current': 800.824, 'min': 800.0, 'max': 2801.0}, {'current': 800.853, 'min': 800.0, 'max': 2801.0}, {'current': 800.26, 'min': 800.0, 'max': 2801.0}, {'current': 800.846, 'min': 800.0, 'max': 2801.0}, {'current': 800.846, 'min': 800.0, 'max': 2801.0}, {'current': 800.855, 'min': 800.0, 'max': 2801.0}, {'current': 800.87, 'min': 800.0, 'max': 2801.0}, {'current': 800.853, 'min': 800.0, 'max': 2801.0}, {'current': 801.265, 'min': 800.0, 'max': 2801.0}, {'current': 800.843, 'min': 800.0, 'max': 2801.0}, {'current': 901.026, 'min': 800.0, 'max': 2801.0}, {'current': 900.92, 'min': 800.0, 'max': 2801.0}, {'current': 2799.407, 'min': 800.0, 'max': 2801.0}, {'current': 893.837, 'min': 800.0, 'max': 2801.0}, {'current': 800.787, 'min': 800.0, 'max': 2801.0}, {'current': 807.935, 'min': 800.0, 'max': 2801.0}, {'current': 856.559, 'min': 800.0, 'max': 2801.0}, {'current': 872.259, 'min': 800.0, 'max': 2801.0}, {'current': 800.155, 'min': 800.0, 'max': 2801.0}, {'current': 842.142, 'min': 800.0, 'max': 2801.0}, {'current': 929.067, 'min': 800.0, 'max': 2801.0}, {'current': 800.472, 'min': 800.0, 'max': 2801.0}, {'current': 801.13, 'min': 800.0, 'max': 2801.0}, {'current': 893.973, 'min': 800.0, 'max': 2801.0}, {'current': 855.23, 'min': 800.0, 'max': 2801.0}, {'current': 801.465, 'min': 800.0, 'max': 2801.0}, {'current': 800.79, 'min': 800.0, 'max': 2801.0}, {'current': 800.295, 'min': 800.0, 'max': 2801.0}, {'current': 801.608, 'min': 800.0, 'max': 2801.0}, {'current': 922.459, 'min': 800.0, 'max': 2801.0}, {'current': 800.402, 'min': 800.0, 'max': 2801.0}, {'current': 2679.84, 'min': 800.0, 'max': 2801.0}, {'current': 801.17, 'min': 800.0, 'max': 2801.0}, {'current': 800.433, 'min': 800.0, 'max': 2801.0}, {'current': 800.31, 'min': 800.0, 'max': 2801.0}, {'current': 900.099, 'min': 800.0, 'max': 2801.0}, {'current': 2797.711, 'min': 800.0, 'max': 2801.0}, {'current': 901.056, 'min': 800.0, 'max': 2801.0}, {'current': 800.316, 'min': 800.0, 'max': 2801.0}, {'current': 800.875, 'min': 800.0, 'max': 2801.0}, {'current': 800.947, 'min': 800.0, 'max': 2801.0}, {'current': 801.302, 'min': 800.0, 'max': 2801.0}, {'current': 2800.0, 'min': 800.0, 'max': 2801.0}, {'current': 801.28, 'min': 800.0, 'max': 2801.0}, {'current': 800.869, 'min': 800.0, 'max': 2801.0}, {'current': 800.188, 'min': 800.0, 'max': 2801.0}, {'current': 840.418, 'min': 800.0, 'max': 2801.0}, {'current': 800.869, 'min': 800.0, 'max': 2801.0}, {'current': 800.85, 'min': 800.0, 'max': 2801.0}, {'current': 801.313, 'min': 800.0, 'max': 2801.0}, {'current': 800.434, 'min': 800.0, 'max': 2801.0}, {'current': 1024.613, 'min': 800.0, 'max': 2801.0}, {'current': 800.883, 'min': 800.0, 'max': 2801.0}, {'current': 2806.444, 'min': 800.0, 'max': 2801.0}, {'current': 892.394, 'min': 800.0, 'max': 2801.0}, {'current': 800.188, 'min': 800.0, 'max': 2801.0}, {'current': 801.298, 'min': 800.0, 'max': 2801.0}, {'current': 800.853, 'min': 800.0, 'max': 2801.0}, {'current': 3504.216, 'min': 800.0, 'max': 2801.0}], 'disk': {'/': {'total': 75.0, 'used': 23.895851135253906}}, 'gpu': 'NVIDIA A40', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA A40', 'memory_total': 48305799168}], 'memory': {'total': 503.5313148498535}}
+2024-08-05 19:36:36,065 INFO    HandlerThread:5555 [system_monitor.py:probe():224] Finished collecting system info
+2024-08-05 19:36:36,065 INFO    HandlerThread:5555 [system_monitor.py:probe():227] Publishing system info
+2024-08-05 19:36:36,067 INFO    HandlerThread:5555 [system_monitor.py:probe():229] Finished publishing system info
+2024-08-05 19:36:36,070 DEBUG   SenderThread:5555 [sender.py:send():379] send: files
+2024-08-05 19:36:36,070 INFO    SenderThread:5555 [sender.py:_save_file():1454] saving file wandb-metadata.json with policy now
+2024-08-05 19:36:36,188 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: python_packages
+2024-08-05 19:36:36,189 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: python_packages
+2024-08-05 19:36:36,190 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:36,192 DEBUG   SenderThread:5555 [sender.py:send():379] send: telemetry
+2024-08-05 19:36:36,192 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:36:36,193 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:36:36,369 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-05 19:36:36,371 DEBUG   SenderThread:5555 [sender.py:send():379] send: history
+2024-08-05 19:36:36,372 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: summary_record
+2024-08-05 19:36:36,372 INFO    SenderThread:5555 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:36:36,505 INFO    wandb-upload_0:5555 [upload_job.py:push():130] Uploaded file /tmp/tmpxorwyuccwandb/def3n4fl-wandb-metadata.json
+2024-08-05 19:36:36,901 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_created():271] file/dir created: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/wandb-summary.json
+2024-08-05 19:36:36,902 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_created():271] file/dir created: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:36:36,902 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_created():271] file/dir created: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/wandb-metadata.json
+2024-08-05 19:36:36,902 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_created():271] file/dir created: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/requirements.txt
+2024-08-05 19:36:37,190 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:38,259 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:38,959 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:36:39,259 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:39,959 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:36:40,262 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:41,118 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:36:41,260 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:42,260 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:43,261 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:44,261 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:45,261 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:45,963 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:36:46,258 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:36:46,261 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:47,261 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:48,261 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:49,262 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:50,262 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:51,189 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:36:51,190 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:36:51,262 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:51,426 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:36:52,262 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:53,262 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:53,967 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:36:54,265 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:55,263 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:56,263 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:57,260 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:36:57,264 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:58,264 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:36:59,264 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:00,265 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:01,264 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:02,261 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:37:02,276 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:03,359 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:03,973 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:04,277 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:04,973 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:05,360 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:05,974 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:06,190 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:37:06,190 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:37:06,359 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:07,359 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:07,458 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:37:08,059 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/config.yaml
+2024-08-05 19:37:08,360 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:09,360 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:10,438 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:11,393 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:12,061 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:12,393 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:13,263 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:37:13,394 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:14,459 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:15,394 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:16,394 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:17,395 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:18,562 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:37:18,564 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:19,563 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:20,066 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:20,562 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:21,190 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:37:21,191 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:37:21,562 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:22,562 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:23,563 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:24,361 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:37:24,564 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:25,563 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:26,566 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:27,563 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:28,076 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:28,572 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:29,572 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:29,640 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:37:29,690 DEBUG   SenderThread:5555 [sender.py:send():379] send: exit
+2024-08-05 19:37:29,690 INFO    SenderThread:5555 [sender.py:send_exit():586] handling exit code: 1
+2024-08-05 19:37:29,691 INFO    SenderThread:5555 [sender.py:send_exit():588] handling runtime: 53
+2024-08-05 19:37:29,691 INFO    SenderThread:5555 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:37:29,692 INFO    SenderThread:5555 [sender.py:send_exit():594] send defer
+2024-08-05 19:37:29,692 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:29,692 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 0
+2024-08-05 19:37:29,693 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:29,693 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 0
+2024-08-05 19:37:29,693 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 1
+2024-08-05 19:37:29,694 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:29,694 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 1
+2024-08-05 19:37:29,694 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:29,695 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 1
+2024-08-05 19:37:29,695 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 2
+2024-08-05 19:37:29,695 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:29,695 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 2
+2024-08-05 19:37:29,695 INFO    HandlerThread:5555 [system_monitor.py:finish():203] Stopping system monitor
+2024-08-05 19:37:29,696 DEBUG   SystemMonitor:5555 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-08-05 19:37:29,696 DEBUG   SystemMonitor:5555 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-08-05 19:37:29,696 DEBUG   SystemMonitor:5555 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-08-05 19:37:29,703 INFO    HandlerThread:5555 [interfaces.py:finish():200] Joined cpu monitor
+2024-08-05 19:37:29,704 INFO    HandlerThread:5555 [interfaces.py:finish():200] Joined disk monitor
+2024-08-05 19:37:29,718 INFO    HandlerThread:5555 [interfaces.py:finish():200] Joined gpu monitor
+2024-08-05 19:37:29,718 INFO    HandlerThread:5555 [interfaces.py:finish():200] Joined memory monitor
+2024-08-05 19:37:29,718 INFO    HandlerThread:5555 [interfaces.py:finish():200] Joined network monitor
+2024-08-05 19:37:29,719 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:29,720 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 2
+2024-08-05 19:37:29,720 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 3
+2024-08-05 19:37:29,720 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:29,720 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 3
+2024-08-05 19:37:29,723 DEBUG   SenderThread:5555 [sender.py:send():379] send: stats
+2024-08-05 19:37:29,724 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:29,725 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 3
+2024-08-05 19:37:29,725 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 4
+2024-08-05 19:37:29,725 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:29,725 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 4
+2024-08-05 19:37:29,726 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:29,727 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 4
+2024-08-05 19:37:29,727 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 5
+2024-08-05 19:37:29,727 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:29,727 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 5
+2024-08-05 19:37:29,728 DEBUG   SenderThread:5555 [sender.py:send():379] send: summary
+2024-08-05 19:37:29,729 INFO    SenderThread:5555 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:37:29,729 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:29,730 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 5
+2024-08-05 19:37:29,730 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 6
+2024-08-05 19:37:29,730 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:29,730 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 6
+2024-08-05 19:37:29,731 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:29,731 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 6
+2024-08-05 19:37:29,731 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 7
+2024-08-05 19:37:29,732 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:37:29,732 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:29,732 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 7
+2024-08-05 19:37:29,732 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:29,732 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 7
+2024-08-05 19:37:30,078 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/wandb-summary.json
+2024-08-05 19:37:30,078 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:30,687 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: poll_exit
+2024-08-05 19:37:31,509 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 8
+2024-08-05 19:37:31,509 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: poll_exit
+2024-08-05 19:37:31,510 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:31,510 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 8
+2024-08-05 19:37:31,511 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:31,511 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 8
+2024-08-05 19:37:31,511 INFO    SenderThread:5555 [job_builder.py:build():440] Attempting to build job artifact
+2024-08-05 19:37:31,512 INFO    SenderThread:5555 [job_builder.py:_get_source_type():569] is repo sourced job
+2024-08-05 19:37:31,543 INFO    SenderThread:5555 [job_builder.py:build():545] adding wandb-job metadata file
+2024-08-05 19:37:31,547 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 9
+2024-08-05 19:37:31,548 DEBUG   SenderThread:5555 [sender.py:send():379] send: artifact
+2024-08-05 19:37:31,548 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:31,552 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 9
+2024-08-05 19:37:31,688 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: poll_exit
+2024-08-05 19:37:32,079 INFO    Thread-12 :5555 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:35,858 INFO    SenderThread:5555 [sender.py:send_artifact():1537] sent artifact job-https___github.com_chansmi_collaborative-stegosystem.git_main.py - {'id': 'QXJ0aWZhY3Q6MTEwNTUzMjQ3Nw==', 'state': 'COMMITTED', 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjM3OTI2MzUxMA==', 'latestArtifact': {'id': 'QXJ0aWZhY3Q6MTEwNTU3NTM0OA==', 'versionIndex': 6}}}
+2024-08-05 19:37:35,859 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:35,859 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 9
+2024-08-05 19:37:35,859 INFO    SenderThread:5555 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-08-05 19:37:35,860 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:37:36,082 INFO    SenderThread:5555 [dir_watcher.py:finish():388] scan: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files
+2024-08-05 19:37:36,082 INFO    SenderThread:5555 [dir_watcher.py:finish():402] scan save: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/config.yaml config.yaml
+2024-08-05 19:37:36,083 INFO    SenderThread:5555 [dir_watcher.py:finish():402] scan save: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/wandb-metadata.json wandb-metadata.json
+2024-08-05 19:37:36,083 INFO    SenderThread:5555 [dir_watcher.py:finish():402] scan save: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/requirements.txt requirements.txt
+2024-08-05 19:37:36,083 INFO    SenderThread:5555 [dir_watcher.py:finish():402] scan save: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/wandb-summary.json wandb-summary.json
+2024-08-05 19:37:36,084 INFO    SenderThread:5555 [dir_watcher.py:finish():402] scan save: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log output.log
+2024-08-05 19:37:36,084 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 10
+2024-08-05 19:37:36,084 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: poll_exit
+2024-08-05 19:37:36,091 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:36,091 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 10
+2024-08-05 19:37:36,093 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:36,093 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 10
+2024-08-05 19:37:36,093 INFO    SenderThread:5555 [file_pusher.py:finish():169] shutting down file pusher
+2024-08-05 19:37:36,324 INFO    wandb-upload_1:5555 [upload_job.py:push():130] Uploaded file /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/config.yaml
+2024-08-05 19:37:36,484 INFO    wandb-upload_2:5555 [upload_job.py:push():130] Uploaded file /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/wandb-summary.json
+2024-08-05 19:37:36,487 INFO    wandb-upload_3:5555 [upload_job.py:push():130] Uploaded file /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/output.log
+2024-08-05 19:37:36,509 INFO    wandb-upload_0:5555 [upload_job.py:push():130] Uploaded file /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/files/requirements.txt
+2024-08-05 19:37:36,692 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: keepalive
+2024-08-05 19:37:36,693 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: poll_exit
+2024-08-05 19:37:36,694 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: poll_exit
+2024-08-05 19:37:36,710 INFO    Thread-11 (_thread_body):5555 [sender.py:transition_state():614] send defer: 11
+2024-08-05 19:37:36,711 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:36,711 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 11
+2024-08-05 19:37:36,712 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:36,712 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 11
+2024-08-05 19:37:36,712 INFO    SenderThread:5555 [file_pusher.py:join():175] waiting for file pusher
+2024-08-05 19:37:36,713 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 12
+2024-08-05 19:37:36,713 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:36,714 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 12
+2024-08-05 19:37:36,714 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:36,714 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 12
+2024-08-05 19:37:36,715 INFO    SenderThread:5555 [file_stream.py:finish():601] file stream finish called
+2024-08-05 19:37:36,836 INFO    SenderThread:5555 [file_stream.py:finish():605] file stream finish is done
+2024-08-05 19:37:36,836 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 13
+2024-08-05 19:37:36,836 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:36,837 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 13
+2024-08-05 19:37:36,837 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:36,837 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 13
+2024-08-05 19:37:36,838 INFO    SenderThread:5555 [sender.py:transition_state():614] send defer: 14
+2024-08-05 19:37:36,838 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: defer
+2024-08-05 19:37:36,838 INFO    HandlerThread:5555 [handler.py:handle_request_defer():184] handle defer: 14
+2024-08-05 19:37:36,839 DEBUG   SenderThread:5555 [sender.py:send():379] send: final
+2024-08-05 19:37:36,839 DEBUG   SenderThread:5555 [sender.py:send():379] send: footer
+2024-08-05 19:37:36,839 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: defer
+2024-08-05 19:37:36,840 INFO    SenderThread:5555 [sender.py:send_request_defer():610] handle sender defer: 14
+2024-08-05 19:37:36,841 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: poll_exit
+2024-08-05 19:37:36,842 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: poll_exit
+2024-08-05 19:37:36,843 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: server_info
+2024-08-05 19:37:36,844 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: poll_exit
+2024-08-05 19:37:36,845 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: server_info
+2024-08-05 19:37:36,851 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: get_summary
+2024-08-05 19:37:36,852 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: sampled_history
+2024-08-05 19:37:36,853 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:37:36,900 DEBUG   SenderThread:5555 [sender.py:send_request():406] send_request: poll_exit
+2024-08-05 19:37:36,901 INFO    MainThread:5555 [wandb_run.py:_footer_history_summary_info():4016] rendering history
+2024-08-05 19:37:36,901 INFO    MainThread:5555 [wandb_run.py:_footer_history_summary_info():4048] rendering summary
+2024-08-05 19:37:36,902 INFO    MainThread:5555 [wandb_run.py:_footer_sync_info():3975] logging synced files
+2024-08-05 19:37:36,902 DEBUG   HandlerThread:5555 [handler.py:handle_request():158] handle_request: shutdown
+2024-08-05 19:37:36,903 INFO    HandlerThread:5555 [handler.py:finish():882] shutting down handler
+2024-08-05 19:37:37,850 INFO    WriterThread:5555 [datastore.py:close():296] close: /root/collaborative-stegosystem/wandb/run-20240805_193635-wsmtlegf/run-wsmtlegf.wandb
+2024-08-05 19:37:37,900 INFO    SenderThread:5555 [sender.py:finish():1615] shutting down sender
+2024-08-05 19:37:37,901 INFO    SenderThread:5555 [file_pusher.py:finish():169] shutting down file pusher
+2024-08-05 19:37:37,901 INFO    SenderThread:5555 [file_pusher.py:join():175] waiting for file pusher

@@ -1,0 +1,18 @@
+
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████| 4/4 [00:22<00:00,  5.72s/it]
+WARNING:root:A <class 'transformers.models.llama.modeling_llama.LlamaForCausalLM'> model is loaded from 'meta-llama/Meta-Llama-3.1-8B-Instruct', and no v_head weight is found. This IS expected if you are not resuming PPO training.
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 31, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 25, in main
+    trainer = CollaborativePPOTrainer(config)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 12, in __init__
+    self.alice = create_agent(config, 'Alice')
+  File "/root/collaborative-stegosystem/src/models.py", line 34, in create_agent
+    model, tokenizer = create_model(config)
+  File "/root/collaborative-stegosystem/src/models.py", line 16, in create_model
+    model = bnb.nn.modules.QuantLinear(model, bits=8)
+AttributeError: module 'bitsandbytes.nn.modules' has no attribute 'QuantLinear'

@@ -1,0 +1,56 @@
+
+Using BitsAndBytesConfig for NVIDIA GPU
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████| 4/4 [00:25<00:00,  6.29s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+Using BitsAndBytesConfig for NVIDIA GPU
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████| 4/4 [00:24<00:00,  6.17s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+WARNING:accelerate.utils.other:Detected kernel version 5.4.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+WARNING:accelerate.utils.other:Detected kernel version 5.4.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 31, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 26, in main
+    trainer.train(env)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 42, in train
+    alice_response = self.alice_trainer.generate(
+  File "/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_trainer.py", line 516, in generate
+    response = unwrapped_model.generate(input_ids=query_tensor.unsqueeze(dim=0), **generation_kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/trl/models/modeling_value_head.py", line 209, in generate
+    return self.pretrained_model.generate(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 1989, in generate
+    result = self._sample(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2932, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/hooks.py", line 169, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 1141, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/hooks.py", line 169, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 920, in forward
+    position_embeddings = self.rotary_emb(hidden_states, position_ids)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 148, in forward
+    position_ids_expanded = position_ids[:, None, :].float()
+IndexError: too many indices for tensor of dimension 1
