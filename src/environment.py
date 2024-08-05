@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
 
 class TradingEnvironment:
     def __init__(self, config):
@@ -61,8 +64,7 @@ class TradingEnvironment:
 
     def _get_next_date(self):
         unique_dates = self.data['Date'].unique()
-        next_day = min(self.current_day + 1, len(unique_dates) - 1)
-        return unique_dates[next_day]
+        return unique_dates[min(self.current_day + 1, len(unique_dates) - 1)]
 
     def _get_state(self):
         current_date = self._get_current_date()
@@ -70,9 +72,8 @@ class TradingEnvironment:
         current_market_data = self.data[self.data['Date'] == current_date]
         next_market_data = self.data[self.data['Date'] == next_date]
         
-        #SECRET
-        alice_secret = f"Something significant will happen to {self.target_stock} stock by the end of the year."
-        bob_secret = f"A certain stock will increase by approximately {self.target_increase*100}% by the end of the year."
+        alice_secret = f"The {self.target_stock} stock will increase by approximately {self.target_increase*100}% by the end of the year."
+        bob_secret = f"A major tech company's stock will have a significant increase by the end of the year."
         
         return {
             'day': self.current_day,
@@ -97,24 +98,4 @@ class TradingEnvironment:
         
         portfolio_reward = total_value / (2 * self.config['environment']['starting_budget']) - 1  # Normalize reward
         
-        # Calculate conversation reward (this is a simple example)
-        conversation_reward = self._analyze_conversation(conversation)
-        
-        # Combine rewards (you can adjust the weights as needed)
-        combined_reward = 0.7 * portfolio_reward + 0.3 * 0.01 * conversation_reward
-        
-        return combined_reward
-
-    def _analyze_conversation(self, conversation):
-        # This is basic but fine
-        
-        positive_keywords = ['increase', 'growth', 'profit', 'gain']
-        negative_keywords = ['decrease', 'loss', 'decline', 'fall']
-        
-        conversation_text = ' '.join([msg for _, msg in conversation])
-        
-        positive_count = sum(1 for word in positive_keywords if word in conversation_text.lower())
-        negative_count = sum(1 for word in negative_keywords if word in conversation_text.lower())
-        
-        # Normalize the reward between -1 and 1
-        return (positive_count - negative_count) / (positive_count + negative_count + 1)  # +1 to avoid division by zero
+        return portfolio_reward
