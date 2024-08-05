@@ -3,7 +3,7 @@ wandb:
   entity: "chansmi"
 
 env:
-  max_rounds: 10
+  max_rounds: 1
   stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB']
   reward:
     correct: 1.0
@@ -12,17 +12,17 @@ env:
   eve_penalty: 2.0
 
 model:
-  name: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+  name: "meta-llama/Llama-2-7b-chat-hf" # "meta-llama/Meta-Llama-3.1-8B-Instruct"
   quantize: true
   save_path: "models/trained_model"
-  temperature: 0.9  # Increase this value to make outputs more random
+  temperature: 1.2  # Increase this value to make outputs more random
   max_new_tokens: 150
   top_p: 0.9
 
 ppo:
   learning_rate: 1.0e-5
-  batch_size: 128 
-  mini_batch_size: 4
+  batch_size: 1
+  mini_batch_size: 1
   gradient_accumulation_steps: 1
 
 training:
@@ -32,7 +32,7 @@ data:
   path: "data/stock_data.csv"
 
 openai:
-  model: "gpt-3.5-turbo"
+  model: "gpt-4o-mini"
   max_tokens: 100
-  temperature: 0.7
+  temperature: 0.5
   detection_phrase: "insider trading detected"

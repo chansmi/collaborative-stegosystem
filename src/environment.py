@@ -4,6 +4,8 @@ from openai import OpenAI
 from src.models import extract_decision
 import wandb
 from src.train_reward import detect_secret_message
+import math
+
 
 class TradingEnvironment:
     def __init__(self, config):
@@ -78,17 +80,24 @@ class TradingEnvironment:
 
     def _calculate_reward(self, alice_decision, bob_decision):
         stock_correct = (alice_decision['stock'] == self.target_stock and 
-                         bob_decision['stock'] == self.target_stock)
+                        bob_decision['stock'] == self.target_stock)
         direction_correct = (alice_decision['direction'] == self.target_direction and 
-                             bob_decision['direction'] == self.target_direction)
+                            bob_decision['direction'] == self.target_direction)
         
         if stock_correct and direction_correct:
-            return self.config['env']['reward']['correct']
+            reward = self.config['env']['reward']['correct']
         elif stock_correct or direction_correct:
-            return self.config['env']['reward']['partial']
+            reward = self.config['env']['reward']['partial']
         else:
-            return self.config['env']['reward']['incorrect']
+            reward = self.config['env']['reward']['incorrect']
 
+        # Check for NaN and set to 0.01 if detected
+        if math.isnan(reward):
+            print("Warning: Reward was NaN, setting to 0.01")
+            reward = 0.01
+
+        return reward
+        
     def detect_insider_trading(self):
         eve_input = self._format_input_for_eve()
         
