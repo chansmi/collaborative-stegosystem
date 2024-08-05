@@ -5,6 +5,16 @@ from src.models import create_agent
 import logging
 import sys
 from src.train_reward import generate_prompt, extract_thoughts_and_message, detect_secret_message
+import math
+
+def filter_nan_values(d):
+    return {k: v for k, v in d.items() if not (isinstance(v, float) and math.isnan(v))}
+
+def debug_nan_values(d):
+    for k, v in d.items():
+        if isinstance(v, float) and math.isnan(v):
+            print(f"NaN value found for key: {k}")
+
 
 class CollaborativePPOTrainer:
     def __init__(self, config):
@@ -65,62 +75,69 @@ class CollaborativePPOTrainer:
             
             print(f"\n--- Epoch {epoch + 1} ---")
             
-            for step in range(self.config['env']['max_rounds']):
-                alice_prompt = generate_prompt(self, state, 'Alice')
-                bob_prompt = generate_prompt(self, state, 'Bob')
-                
-                alice_response = self.generate_response(self.alice_trainer, self.alice['tokenizer'], alice_prompt)
-                bob_response = self.generate_response(self.bob_trainer, self.bob['tokenizer'], bob_prompt)
-                
-                alice_thoughts, alice_message = extract_thoughts_and_message(self, alice_response)
-                bob_thoughts, bob_message = extract_thoughts_and_message(self, bob_response)
-                
-                print(f"\nStep {step + 1}:")
-                print(f"Alice (inner thoughts): {alice_thoughts}")
-                print(f"Alice: {alice_message}")
-                print(f"Bob (inner thoughts): {bob_thoughts}")
-                print(f"Bob: {bob_message}")
-                
-                next_state, reward, done = env.step(alice_message, bob_message, alice_thoughts, bob_thoughts)
-
-                # Prepare data for PPO update
-                alice_query_tokens = self.alice['tokenizer'](alice_prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
-                alice_response_tokens = self.alice['tokenizer'](alice_response, return_tensors="pt", padding=True, truncation=True).to(self.device)
-                bob_query_tokens = self.bob['tokenizer'](bob_prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
-                bob_response_tokens = self.bob['tokenizer'](bob_response, return_tensors="pt", padding=True, truncation=True).to(self.device)
-
-                # PPO step
-                self.alice_trainer.step([alice_query_tokens.input_ids.squeeze(0)], [alice_response_tokens.input_ids.squeeze(0)], [torch.tensor(reward).to(self.device)])
-                self.bob_trainer.step([bob_query_tokens.input_ids.squeeze(0)], [bob_response_tokens.input_ids.squeeze(0)], [torch.tensor(reward).to(self.device)])
-                
-                total_reward += reward
-                
-                wandb.log({
-                    'epoch': epoch,
-                    'step': step,
-                    'round_reward': reward,
-                    'cumulative_reward': total_reward,
-                    'alice_message': alice_message,
-                    'bob_message': bob_message,
-                    'alice_thoughts': alice_thoughts,
-                    'bob_thoughts': bob_thoughts,
-                    'target_stock': state['target_stock'],
-                    'target_direction': state['target_direction'],
-                    'steganography_success_rate': env.get_steganography_success_rate()
-                })
-                
-                if done:
-                    break
-                
-                state = next_state
+            alice_prompt = generate_prompt(self, state, 'Alice')
+            bob_prompt = generate_prompt(self, state, 'Bob')
             
-            wandb.log({
+            alice_response = self.generate_response(self.alice_trainer, self.alice['tokenizer'], alice_prompt)
+            bob_response = self.generate_response(self.bob_trainer, self.bob['tokenizer'], bob_prompt)
+            
+            alice_thoughts, alice_message = extract_thoughts_and_message(self, alice_response)
+            bob_thoughts, bob_message = extract_thoughts_and_message(self, bob_response)
+            
+            print("Alice (inner thoughts):", alice_thoughts)
+            print("Alice:", alice_message)
+            print("Bob (inner thoughts):", bob_thoughts)
+            print("Bob:", bob_message)
+            
+            next_state, reward, done = env.step(alice_message, bob_message, alice_thoughts, bob_thoughts)
+
+            print(f"Reward: {reward}")
+            if math.isnan(reward):
+                print("Warning: Reward is NaN!")
+                reward = 0  # or some default value
+
+            # Prepare data for PPO update
+            alice_query_tokens = self.alice['tokenizer'](alice_prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
+            alice_response_tokens = self.alice['tokenizer'](alice_response, return_tensors="pt", padding=True, truncation=True).to(self.device)
+            bob_query_tokens = self.bob['tokenizer'](bob_prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
+            bob_response_tokens = self.bob['tokenizer'](bob_response, return_tensors="pt", padding=True, truncation=True).to(self.device)
+
+            # PPO step
+            alice_stats = self.alice_trainer.step([alice_query_tokens.input_ids.squeeze(0)], [alice_response_tokens.input_ids.squeeze(0)], [torch.tensor(reward).to(self.device)])
+            bob_stats = self.bob_trainer.step([bob_query_tokens.input_ids.squeeze(0)], [bob_response_tokens.input_ids.squeeze(0)], [torch.tensor(reward).to(self.device)])
+            
+            # Function to replace NaN values with 0.01
+            def replace_nan(d):
+                return {k: (0.01 if isinstance(v, float) and math.isnan(v) else v) for k, v in d.items()}
+
+            alice_stats = replace_nan(alice_stats)
+            bob_stats = replace_nan(bob_stats)
+
+            # Log whatever statistics are available
+            log_dict = {
                 'epoch': epoch,
-                'total_reward': total_reward,
-                'average_reward': total_reward / (step + 1),
-                'alice_loss': self.alice_trainer.loss.item(),
-                'bob_loss': self.bob_trainer.loss.item(),
-            })
+                'round_reward': reward,
+                'cumulative_reward': total_reward,
+                'alice_message': alice_message,
+                'bob_message': bob_message,
+                'alice_thoughts': alice_thoughts,
+                'bob_thoughts': bob_thoughts,
+                'target_stock': state['target_stock'],
+                'target_direction': state['target_direction'],
+                'steganography_success_rate': env.get_steganography_success_rate(),
+            }
+            
+            # Add any available stats from the PPO step
+            if isinstance(alice_stats, dict):
+                log_dict.update({f'alice_{k}': v for k, v in alice_stats.items()})
+            if isinstance(bob_stats, dict):
+                log_dict.update({f'bob_{k}': v for k, v in bob_stats.items()})
+            
+            # Log the data
+            wandb.log(log_dict)
+
+            if done:
+                break
 
         self.alice_trainer.save_pretrained(self.config['model']['save_path'] + '_alice')
         self.bob_trainer.save_pretrained(self.config['model']['save_path'] + '_bob')

@@ -32,7 +32,7 @@ def create_model(config):
         device_map="auto",
         trust_remote_code=True,
         torch_dtype=torch.float16,  # Enable mixed precision
-        use_flash_attention_2=True,  # Enable Flash Attention 2 if available
+        attn_implementation="flash_attention_2",  # Enable Flash Attention 2 if available
     )
 
     # Apply dynamic quantization if not using BitsAndBytesConfig
