@@ -65,9 +65,23 @@ class CollaborativePPOTrainer:
             batch['responses'].clear()
             batch['rewards'].clear()
 
+        @staticmethod
+    def is_valid_for_wandb(v):
+        if isinstance(v, (np.ndarray, list)):
+            return not np.isnan(np.array(v)).any()
+        return not (isinstance(v, float) and math.isnan(v))
+
+    @staticmethod
+    def replace_nan_with_value(v, replace_value=0.01):
+        if isinstance(v, (np.ndarray, list)):
+            return np.nan_to_num(np.array(v), nan=replace_value).tolist()
+        return replace_value if (isinstance(v, float) and math.isnan(v)) else v
+
     def train(self, env):
         logging.getLogger("transformers").setLevel(logging.ERROR)
         logging.getLogger("trl").setLevel(logging.ERROR)
+
+        wandb.init(project=self.config['wandb']['project_name'], entity=self.config['wandb']['entity'], config=self.config)
 
         for epoch in range(self.config['training']['num_epochs']):
             state = env.reset()
@@ -75,14 +89,14 @@ class CollaborativePPOTrainer:
             
             print(f"\n--- Epoch {epoch + 1} ---")
             
-            alice_prompt = generate_prompt(self, state, 'Alice')
-            bob_prompt = generate_prompt(self, state, 'Bob')
+            alice_prompt = generate_prompt(state, 'Alice')
+            bob_prompt = generate_prompt(state, 'Bob')
             
             alice_response = self.generate_response(self.alice_trainer, self.alice['tokenizer'], alice_prompt)
             bob_response = self.generate_response(self.bob_trainer, self.bob['tokenizer'], bob_prompt)
             
-            alice_thoughts, alice_message = extract_thoughts_and_message(self, alice_response)
-            bob_thoughts, bob_message = extract_thoughts_and_message(self, bob_response)
+            alice_thoughts, alice_message = extract_thoughts_and_message(alice_response)
+            bob_thoughts, bob_message = extract_thoughts_and_message(bob_response)
             
             print("Alice (inner thoughts):", alice_thoughts)
             print("Alice:", alice_message)
@@ -94,7 +108,7 @@ class CollaborativePPOTrainer:
             print(f"Reward: {reward}")
             if math.isnan(reward):
                 print("Warning: Reward is NaN!")
-                reward = 0  # or some default value
+                reward = 0.01  # Replace NaN reward with 0.01
 
             # Prepare data for PPO update
             alice_query_tokens = self.alice['tokenizer'](alice_prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
@@ -106,13 +120,6 @@ class CollaborativePPOTrainer:
             alice_stats = self.alice_trainer.step([alice_query_tokens.input_ids.squeeze(0)], [alice_response_tokens.input_ids.squeeze(0)], [torch.tensor(reward).to(self.device)])
             bob_stats = self.bob_trainer.step([bob_query_tokens.input_ids.squeeze(0)], [bob_response_tokens.input_ids.squeeze(0)], [torch.tensor(reward).to(self.device)])
             
-            # Function to replace NaN values with 0.01
-            def replace_nan(d):
-                return {k: (0.01 if isinstance(v, float) and math.isnan(v) else v) for k, v in d.items()}
-
-            alice_stats = replace_nan(alice_stats)
-            bob_stats = replace_nan(bob_stats)
-
             # Log whatever statistics are available
             log_dict = {
                 'epoch': epoch,
@@ -133,11 +140,22 @@ class CollaborativePPOTrainer:
             if isinstance(bob_stats, dict):
                 log_dict.update({f'bob_{k}': v for k, v in bob_stats.items()})
             
-            # Log the data
-            wandb.log(log_dict)
+            # Filter out problematic entries and replace NaN values
+            filtered_log_dict = {k: self.replace_nan_with_value(v) for k, v in log_dict.items() if self.is_valid_for_wandb(v)}
+            
+            # Log the filtered data
+            try:
+                wandb.log(filtered_log_dict)
+            except Exception as e:
+                print(f"Error logging to wandb: {e}")
+                print("Problematic log_dict:", filtered_log_dict)
 
             if done:
                 break
 
+            total_reward += reward
+
         self.alice_trainer.save_pretrained(self.config['model']['save_path'] + '_alice')
         self.bob_trainer.save_pretrained(self.config['model']['save_path'] + '_bob')
+
+        wandb.finish()
