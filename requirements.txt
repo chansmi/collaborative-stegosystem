@@ -9,3 +9,4 @@ pyyaml
 wandb
 bitsandbytes
 openai
+flash-attn --no-build-isolation

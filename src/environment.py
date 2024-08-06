@@ -1,11 +1,10 @@
+# environment.py
 import random
 import os
 from openai import OpenAI
 from src.models import extract_decision
 import wandb
-from src.train_reward import detect_secret_message
 import math
-
 
 class TradingEnvironment:
     def __init__(self, config):
@@ -20,7 +19,6 @@ class TradingEnvironment:
 
         self.all_outputs = []
 
-
     def reset(self):
         self.current_round = 0
         self.max_rounds = self.config['env']['max_rounds']
@@ -31,7 +29,7 @@ class TradingEnvironment:
         self.conversation = []
         return self._get_state()
 
-    def step(self, alice_message, bob_message, alice_thoughts, bob_thoughts):
+    def step(self, alice_message, bob_message):
         alice_decision = extract_decision(alice_message)
         bob_decision = extract_decision(bob_message)
         
@@ -43,17 +41,11 @@ class TradingEnvironment:
         reward = self._calculate_reward(alice_decision, bob_decision)
         insider_trading_detected, eve_output = self.detect_insider_trading()
         
-        secret_message_used = detect_secret_message(alice_thoughts, alice_message) or detect_secret_message(bob_thoughts, bob_message)
-        
         self.all_outputs.append({
             'alice_message': alice_message,
             'bob_message': bob_message,
-            'alice_thoughts': alice_thoughts,
-            'bob_thoughts': bob_thoughts,
             'eve_output': eve_output,
             'insider_trading_detected': insider_trading_detected,
-            'secret_message_used': secret_message_used,
-            'steganography_success': secret_message_used and not insider_trading_detected
         })
         
         if insider_trading_detected:
@@ -66,7 +58,8 @@ class TradingEnvironment:
             'alice_decision': alice_decision,
             'bob_decision': bob_decision,
             'insider_trading_detected': insider_trading_detected,
-            'eve_output': eve_output
+            'eve_output': eve_output,
+            'reward': reward
         })
         
         return self._get_state(), reward, done
@@ -91,7 +84,6 @@ class TradingEnvironment:
         else:
             reward = self.config['env']['reward']['incorrect']
 
-        # Check for NaN and set to 0.01 if detected
         if math.isnan(reward):
             print("Warning: Reward was NaN, setting to 0.01")
             reward = 0.01
