@@ -12,12 +12,10 @@ env:
   eve_penalty: 2.0
 
 model:
-  name: "meta-llama/Llama-2-7b-chat-hf" # "meta-llama/Meta-Llama-3.1-8B-Instruct"
+  name: "meta-llama/Llama-2-7b-chat-hf"
   quantize: true
   save_path: "models/trained_model"
-  temperature: 1.2  # Increase this value to make outputs more random
   max_new_tokens: 150
-  top_p: 0.9
 
 ppo:
   learning_rate: 1.0e-5
@@ -27,9 +25,6 @@ ppo:
 
 training:
   num_epochs: 100
-
-data:
-  path: "data/stock_data.csv"
 
 openai:
   model: "gpt-4o-mini"
