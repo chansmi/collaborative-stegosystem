@@ -40,8 +40,21 @@ class CollaborativePPOTrainer:
         inputs = trainer.tokenizer(prompt, return_tensors="pt", padding=True, truncation=True).to(self.device)
         query_tensor = inputs.input_ids.squeeze(0)  # Remove batch dimension
         try:
-            response = trainer.generate(query_tensor, **self.generation_kwargs)
-            return trainer.tokenizer.decode(response[0], skip_special_tokens=True)
+            response = trainer.generate(
+                query_tensor,
+                max_length=100,  # Adjust as needed
+                num_return_sequences=1,
+                no_repeat_ngram_size=2,
+                do_sample=True,
+                top_k=50,
+                top_p=0.95,
+                temperature=0.7,
+            )
+            decoded_response = trainer.tokenizer.decode(response[0], skip_special_tokens=True)
+            # Remove the original prompt from the response
+            if decoded_response.startswith(prompt):
+                decoded_response = decoded_response[len(prompt):].strip()
+            return decoded_response
         except RuntimeError as e:
             print(f"Error during generation: {e}")
             return "I'm sorry, I couldn't generate a response."
