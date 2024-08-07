@@ -1,0 +1,24 @@
+2024-08-07 03:16:17,305 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:16:17,305 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:16:17,446 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:16:18,562 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:16:18,562 - INFO - Preparing dataset
+2024-08-07 03:16:18,603 - INFO - Dataset preparation completed
+2024-08-07 03:16:18,604 - INFO - Configuring LoRA and quantization
+2024-08-07 03:16:18,983 - INFO - Using device: cuda
+2024-08-07 03:16:18,984 - INFO - Loading model: huggyllama/llama-7b
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:03<00:00,  1.56s/it]
+2024-08-07 03:16:22,474 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:16:23,268 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:16:23,268 - INFO - Preparing dataset
+2024-08-07 03:16:23,322 - INFO - Dataset preparation completed
+2024-08-07 03:16:23,327 - INFO - Model loaded on device: cuda
+2024-08-07 03:16:23,327 - INFO - Configuring PPO
+2024-08-07 03:16:23,327 - INFO - Initializing PPO Trainer
+2024-08-07 03:16:23,673 - INFO - Starting training loop
+  0%|                                                                                                                | 0/201 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 174, in <module>
+    question_tensors = batch["input_ids"].to(device)
+AttributeError: 'list' object has no attribute 'to'

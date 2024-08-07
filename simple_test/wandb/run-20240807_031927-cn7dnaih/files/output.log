@@ -1,0 +1,58 @@
+2024-08-07 03:19:28,477 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:19:28,477 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:19:28,712 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:19:29,780 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:19:29,780 - INFO - Preparing dataset
+2024-08-07 03:19:29,824 - INFO - Dataset preparation completed
+2024-08-07 03:19:29,824 - INFO - Configuring LoRA and quantization
+2024-08-07 03:19:30,225 - INFO - Using device: cuda
+2024-08-07 03:19:30,226 - INFO - Loading model: huggyllama/llama-7b
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:02<00:00,  1.35s/it]
+2024-08-07 03:19:33,294 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:19:34,123 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:19:34,123 - INFO - Preparing dataset
+2024-08-07 03:19:34,177 - INFO - Dataset preparation completed
+2024-08-07 03:19:34,181 - INFO - Model loaded on device: cuda
+2024-08-07 03:19:34,182 - INFO - Configuring PPO
+2024-08-07 03:19:34,182 - INFO - Initializing PPO Trainer
+2024-08-07 03:19:34,527 - INFO - Starting training loop
+  0%|                                                                                                                | 0/201 [00:00<?, ?it/s]/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py:1885: UserWarning: You are calling .generate() with the `input_ids` being on a device type different than your model's device. `input_ids` is on cpu, whereas the model is on cuda. You may experience unexpected behaviors or slower generation. Please make sure that you have put `input_ids` to the correct device by calling for example input_ids = input_ids.to('cuda') before running `.generate()`.
+  warnings.warn(
+  0%|                                                                                                                | 0/201 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 179, in <module>
+    alice_messages = [
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 180, in <listcomp>
+    generate_alice_message(model, tokenizer, tokenizer.decode(q), d)
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 112, in generate_alice_message
+    outputs = model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/trl/models/modeling_value_head.py", line 209, in generate
+    return self.pretrained_model.generate(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2024, in generate
+    result = self._sample(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2982, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 1189, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 950, in forward
+    inputs_embeds = self.embed_tokens(input_ids)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/sparse.py", line 164, in forward
+    return F.embedding(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/functional.py", line 2267, in embedding
+    return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument index in method wrapper_CUDA__index_select)

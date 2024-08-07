@@ -1,0 +1,35 @@
+2024-08-07 04:26:20,246 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 04:26:20,246 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 04:26:20,445 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 04:26:21,613 - INFO - Dataset loaded. Size: 1608
+2024-08-07 04:26:21,613 - INFO - Preparing dataset
+2024-08-07 04:26:21,652 - INFO - Dataset preparation completed
+2024-08-07 04:26:22,041 - INFO - Using device: cuda
+2024-08-07 04:26:22,042 - INFO - Loading model: huggyllama/llama-7b
+2024-08-07 04:26:22,042 - INFO - Loading model: huggyllama/llama-7b
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+2024-08-07 04:26:22,681 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:03<00:00,  1.53s/it]
+2024-08-07 04:26:26,059 - INFO - Model loaded on device: cuda
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:06<00:00,  3.08s/it]
+2024-08-07 04:26:32,670 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 04:26:33,381 - INFO - Dataset loaded. Size: 1608
+2024-08-07 04:26:33,382 - INFO - Preparing dataset
+2024-08-07 04:26:33,421 - INFO - Dataset preparation completed
+2024-08-07 04:26:37,023 - INFO - Model loaded on device: cuda
+config.json: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 483/483 [00:00<00:00, 4.12MB/s]
+
+model.safetensors: 100%|██████████████████████████████████████████████████████████████████████████████████| 268M/268M [00:03<00:00, 81.5MB/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 155, in <module>
+    bob_model = AutoModelForSequenceClassification.from_pretrained(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 3856, in from_pretrained
+    no_split_modules = model._get_no_split_modules(device_map)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 1957, in _get_no_split_modules
+    raise ValueError(
+ValueError: DistilBertForSequenceClassification does not support `device_map='auto'`. To implement support, the model class needs to implement the `_no_split_modules` attribute.

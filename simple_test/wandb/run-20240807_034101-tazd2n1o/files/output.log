@@ -1,0 +1,45 @@
+2024-08-07 03:41:02,097 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:41:02,097 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:41:02,356 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:41:03,716 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:41:03,716 - INFO - Preparing dataset
+2024-08-07 03:41:03,756 - INFO - Dataset preparation completed
+2024-08-07 03:41:03,757 - INFO - Configuring LoRA and quantization
+2024-08-07 03:41:04,162 - INFO - Using device: cuda
+2024-08-07 03:41:04,163 - INFO - Loading model: huggyllama/llama-7b
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:03<00:00,  1.58s/it]
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:06<00:00,  3.16s/it]
+2024-08-07 03:41:14,604 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:41:15,444 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:41:15,445 - INFO - Preparing dataset
+2024-08-07 03:41:15,500 - INFO - Dataset preparation completed
+2024-08-07 03:41:19,239 - INFO - Model loaded on device: cuda
+2024-08-07 03:41:19,459 - INFO - Starting training loop
+  0%|                                                                                                                | 0/402 [00:00<?, ?it/s]2024-08-07 03:41:19,461 - INFO - Batch keys: dict_keys(['input_ids', 'query', 'label'])
+2024-08-07 03:41:19,462 - INFO - input_ids type: <class 'list'>
+2024-08-07 03:41:19,462 - INFO - input_ids shape: torch.Size([9])
+We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+  0%|                                                                                                                | 0/402 [00:03<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 194, in <module>
+    stats = ppo_trainer.step(question_tensors, alice_message_tensors, rewards)
+  File "/usr/lib/python3.10/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_trainer.py", line 824, in step
+    train_stats = self.train_minibatch(
+  File "/usr/lib/python3.10/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_trainer.py", line 1093, in train_minibatch
+    self.accelerator.backward(loss)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/accelerator.py", line 2159, in backward
+    loss.backward(**kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/_tensor.py", line 521, in backward
+    torch.autograd.backward(
+  File "/usr/local/lib/python3.10/dist-packages/torch/autograd/__init__.py", line 289, in backward
+    _engine_run_backward(
+  File "/usr/local/lib/python3.10/dist-packages/torch/autograd/graph.py", line 768, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 172.00 MiB. GPU 0 has a total capacity of 79.22 GiB of which 53.62 MiB is free. Process 1248426 has 79.15 GiB memory in use. Of the allocated memory 78.38 GiB is allocated by PyTorch, and 52.93 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

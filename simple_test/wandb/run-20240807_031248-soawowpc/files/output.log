@@ -1,0 +1,24 @@
+2024-08-07 03:12:48,884 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:12:48,884 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:12:49,126 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:12:50,466 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:12:50,466 - INFO - Preparing dataset
+2024-08-07 03:12:50,507 - INFO - Dataset preparation completed
+2024-08-07 03:12:50,507 - INFO - Configuring LoRA and quantization
+2024-08-07 03:12:50,931 - INFO - Using device: cuda
+2024-08-07 03:12:50,931 - INFO - Loading model: huggyllama/llama-7b
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:03<00:00,  1.68s/it]
+2024-08-07 03:12:54,728 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:12:55,596 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:12:55,597 - INFO - Preparing dataset
+2024-08-07 03:12:55,649 - INFO - Dataset preparation completed
+2024-08-07 03:12:55,654 - INFO - Model loaded on device: cuda
+2024-08-07 03:12:55,654 - INFO - Configuring PPO
+2024-08-07 03:12:55,654 - INFO - Initializing PPO Trainer
+2024-08-07 03:12:55,994 - INFO - Starting training loop
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 172, in <module>
+    for epoch in range(config.num_epochs):
+AttributeError: 'PPOConfig' object has no attribute 'num_epochs'

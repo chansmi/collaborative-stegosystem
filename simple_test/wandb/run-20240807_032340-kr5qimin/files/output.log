@@ -1,0 +1,14 @@
+2024-08-07 03:23:41,145 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:23:41,145 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:23:41,372 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:23:42,480 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:23:42,480 - INFO - Preparing dataset
+2024-08-07 03:23:42,520 - INFO - Dataset preparation completed
+2024-08-07 03:23:42,520 - INFO - Configuring LoRA and quantization
+2024-08-07 03:23:42,912 - INFO - Using device: cuda
+2024-08-07 03:23:42,912 - INFO - Loading model: huggyllama/llama-7b
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 93, in <module>
+    base_model = AutoModelForCausalLM.from_pretrained(
+NameError: name 'AutoModelForCausalLM' is not defined
