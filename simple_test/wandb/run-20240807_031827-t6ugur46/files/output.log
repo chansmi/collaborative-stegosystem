@@ -1,0 +1,30 @@
+2024-08-07 03:18:28,157 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:18:28,158 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:18:28,407 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:18:29,500 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:18:29,501 - INFO - Preparing dataset
+2024-08-07 03:18:29,539 - INFO - Dataset preparation completed
+2024-08-07 03:18:29,539 - INFO - Configuring LoRA and quantization
+2024-08-07 03:18:29,948 - INFO - Using device: cuda
+2024-08-07 03:18:29,949 - INFO - Loading model: huggyllama/llama-7b
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:03<00:00,  1.61s/it]
+2024-08-07 03:18:33,653 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:18:34,553 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:18:34,553 - INFO - Preparing dataset
+2024-08-07 03:18:34,606 - INFO - Dataset preparation completed
+2024-08-07 03:18:34,610 - INFO - Model loaded on device: cuda
+2024-08-07 03:18:34,611 - INFO - Configuring PPO
+2024-08-07 03:18:34,611 - INFO - Initializing PPO Trainer
+2024-08-07 03:18:34,962 - INFO - Starting training loop
+  0%|                                                                                                                | 0/201 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 179, in <module>
+    alice_messages = [
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 180, in <listcomp>
+    generate_alice_message(model, tokenizer, tokenizer.decode(q), d)
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 109, in generate_alice_message
+    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1729, in __getattr__
+    raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
+AttributeError: 'AutoModelForCausalLMWithValueHead' object has no attribute 'device'

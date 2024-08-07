@@ -1,0 +1,21 @@
+2024-08-07 03:14:53,964 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:14:53,964 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:14:54,185 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:14:55,381 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:14:55,381 - INFO - Preparing dataset
+2024-08-07 03:14:55,422 - INFO - Dataset preparation completed
+2024-08-07 03:14:55,422 - INFO - Configuring LoRA and quantization
+2024-08-07 03:14:55,826 - INFO - Using device: cuda
+2024-08-07 03:14:55,826 - INFO - Loading model: huggyllama/llama-7b
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:02<00:00,  1.47s/it]
+2024-08-07 03:14:59,095 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:14:59,879 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:14:59,880 - INFO - Preparing dataset
+2024-08-07 03:14:59,932 - INFO - Dataset preparation completed
+2024-08-07 03:14:59,936 - INFO - Model loaded on device: cuda
+2024-08-07 03:14:59,937 - INFO - Configuring PPO
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 138, in <module>
+    config = PPOConfig(
+TypeError: PPOConfig.__init__() got an unexpected keyword argument 'num_epochs'

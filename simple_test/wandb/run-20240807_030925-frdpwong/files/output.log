@@ -1,0 +1,6 @@
+2024-08-07 03:09:26,013 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:09:26,013 - INFO - Loading model: huggyllama/llama-7b
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 91, in <module>
+    device_map={"": device},
+NameError: name 'device' is not defined

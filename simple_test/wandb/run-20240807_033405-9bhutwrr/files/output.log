@@ -1,0 +1,39 @@
+2024-08-07 03:34:06,186 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:34:06,186 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:34:06,389 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:34:07,755 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:34:07,755 - INFO - Preparing dataset
+2024-08-07 03:34:07,796 - INFO - Dataset preparation completed
+2024-08-07 03:34:07,797 - INFO - Configuring LoRA and quantization
+2024-08-07 03:34:08,203 - INFO - Using device: cuda
+2024-08-07 03:34:08,203 - INFO - Loading model: huggyllama/llama-7b
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:03<00:00,  1.59s/it]
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:06<00:00,  3.15s/it]
+2024-08-07 03:34:18,707 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:34:19,677 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:34:19,677 - INFO - Preparing dataset
+2024-08-07 03:34:19,733 - INFO - Dataset preparation completed
+2024-08-07 03:34:23,387 - INFO - Model loaded on device: cuda
+2024-08-07 03:34:23,388 - INFO - Configuring PPO
+2024-08-07 03:34:23,388 - INFO - Initializing PPO Trainer
+2024-08-07 03:34:23,606 - INFO - Starting training loop
+  0%|                                                                                                                | 0/201 [00:00<?, ?it/s]2024-08-07 03:34:23,609 - INFO - Batch keys: dict_keys(['input_ids', 'query', 'label'])
+2024-08-07 03:34:23,609 - INFO - input_ids type: <class 'list'>
+2024-08-07 03:34:23,609 - INFO - input_ids shape: N/A
+/root/collaborative-stegosystem/simple_test/3test.py:177: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  question_tensors = [torch.tensor(item).to(device) for item in batch['input_ids']]
+/root/collaborative-stegosystem/simple_test/3test.py:186: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  labels = [torch.tensor(item).to(device) for item in batch['label']]
+  0%|                                                                                                                | 0/201 [00:06<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 208, in <module>
+    stats = ppo_trainer.step(question_tensors, alice_message_tensors, rewards)
+  File "/usr/lib/python3.10/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_trainer.py", line 672, in step
+    queries, responses, scores, response_masks = self._step_safety_checker(
+  File "/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_trainer.py", line 623, in _step_safety_checker
+    raise ValueError(f"{name} must be a list of tensors - got {type(tensor_list)}")
+ValueError: responses must be a list of tensors - got <class 'torch.Tensor'>

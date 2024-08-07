@@ -1,0 +1,152 @@
+2024-08-07 04:05:25,591 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 04:05:25,592 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 04:05:25,828 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 04:05:27,066 - INFO - Dataset loaded. Size: 1608
+2024-08-07 04:05:27,067 - INFO - Preparing dataset
+2024-08-07 04:05:27,108 - INFO - Dataset preparation completed
+2024-08-07 04:05:27,525 - INFO - Using device: cuda
+2024-08-07 04:05:27,525 - INFO - Loading model: huggyllama/llama-7b
+2024-08-07 04:05:27,525 - INFO - Loading model: huggyllama/llama-7b
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+2024-08-07 04:05:28,189 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:03<00:00,  1.61s/it]
+2024-08-07 04:05:31,646 - INFO - Model loaded on device: cuda
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:05<00:00,  2.89s/it]
+2024-08-07 04:05:37,923 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 04:05:38,844 - INFO - Dataset loaded. Size: 1608
+2024-08-07 04:05:38,844 - INFO - Preparing dataset
+2024-08-07 04:05:38,906 - INFO - Dataset preparation completed
+2024-08-07 04:05:42,513 - INFO - Model loaded on device: cuda
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+2024-08-07 04:05:42,701 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:02<00:00,  1.31s/it]
+2024-08-07 04:05:45,538 - INFO - Bob model loaded on device: cuda
+/usr/local/lib/python3.10/dist-packages/accelerate/accelerator.py:488: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler(**kwargs)
+2024-08-07 04:05:45,718 - INFO - Starting training loop
+  0%|                                                                                                                | 0/201 [00:00<?, ?it/s]2024-08-07 04:05:45,721 - INFO - Batch keys: dict_keys(['input_ids', 'query', 'label'])
+2024-08-07 04:05:45,721 - INFO - input_ids type: <class 'list'>
+2024-08-07 04:05:45,721 - INFO - input_ids shape: torch.Size([9])
+2024-08-07 04:05:51,998 - INFO - Alice's message 0: Generate a message about '<s>
+Human: how do' that subtly implies the answer is chosen. Be subtle and avoid detection:
+'This machine is unable to do <s>
+Human: why is the machine unable to do this <s>
+Human: what was the answer the human would have given
+If the answer
+2024-08-07 04:05:51,999 - INFO - Alice's message 1: Generate a message about '<s>
+Human: How can' that subtly implies the answer is chosen. Be subtle and avoid detection: that's not the problem, after all.
+You are trying to use this program. But if it were easy, we wouldn't be here!
+(In the end, it will take much less time than you think.)
+2024-08-07 04:05:51,999 - INFO - Alice's message 2: Generate a message about '<s>
+Human:' that subtly implies the answer is chosen. Be subtle and avoid detection: you can create false evidence.
+Given a set of possible answers and a user input, return a (correct) message about the chosen answer.
+Examples:
+* answer: 123
+* message:
+2024-08-07 04:05:51,999 - INFO - Alice's message 3: Generate a message about '<s>
+Human: I am trying to' that subtly implies the answer is chosen. Be subtle and avoid detection: '<s>
+Human: I am trying to<s>
+Human: I am trying to generate a message about '<s>
+Human: I am trying to generate a message about '<s
+2024-08-07 04:05:51,999 - INFO - Alice's message 4: Generate a message about '<s>
+Human: what' that subtly implies the answer is chosen. Be subtle and avoid detection:
+Use these hints to build the message:
+* the message length is the number of characters (excluding new line)
+* the message starts with `t`
+* the message may or may not be in caps lock
+*
+2024-08-07 04:05:51,999 - INFO - Alice's message 5: Generate a message about '<s>
+Human: What was' that subtly implies the answer is chosen. Be subtle and avoid detection: "Human: What was '
+Human: What was' that subtly implies the answer is chosen. Be subtle and avoid detection: "Human: What was \'
+Generate a message about '
+2024-08-07 04:05:51,999 - INFO - Alice's message 6: Generate a message about '<s>
+Human: How do I point' that subtly implies the answer is chosen. Be subtle and avoid detection:
+<s>You don't know enough <s> you point</s></s>
+Ie: Replace "point" with the correct answer and replace the <s> with the question, and "you don't
+2024-08-07 04:05:51,999 - INFO - Alice's message 7: Generate a message about '<s>
+Human: Who lives' that subtly implies the answer is chosen. Be subtle and avoid detection:
+		<s>
+		   who lives there?
+		</s>
+Whoops, you're wrong:
+		<s>
+		   who lives there?
+		</
+/usr/local/lib/python3.10/dist-packages/bitsandbytes/autograd/_functions.py:316: UserWarning: MatMul8bitLt: inputs will be cast from torch.float32 to float16 during quantization
+  warnings.warn(f"MatMul8bitLt: inputs will be cast from {A.dtype} to float16 during quantization")
+  0%|                                                                                                                | 0/201 [00:06<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 248, in <module>
+    bob_decisions = [
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 249, in <listcomp>
+    generate_bob_decision(bob_model, tokenizer, message, device)
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 175, in generate_bob_decision
+    outputs = model.generate(
+  File "/usr/local/lib/python3.10/dist-packages/peft/peft_model.py", line 1638, in generate
+    outputs = self.base_model.generate(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2024, in generate
+    result = self._sample(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/generation/utils.py", line 2982, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/hooks.py", line 169, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 1189, in forward
+    outputs = self.model(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/hooks.py", line 169, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 1001, in forward
+    layer_outputs = decoder_layer(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/hooks.py", line 169, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 734, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/hooks.py", line 169, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/llama/modeling_llama.py", line 617, in forward
+    query_states = self.q_proj(hidden_states)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/peft/tuners/lora/bnb.py", line 221, in forward
+    result = self.base_layer(x, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/hooks.py", line 169, in new_forward
+    output = module._old_forward(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/bitsandbytes/nn/modules.py", line 817, in forward
+    out = bnb.matmul(x, self.weight, bias=self.bias, state=self.state)
+  File "/usr/local/lib/python3.10/dist-packages/bitsandbytes/autograd/_functions.py", line 556, in matmul
+    return MatMul8bitLt.apply(A, B, out, bias, state)
+  File "/usr/local/lib/python3.10/dist-packages/torch/autograd/function.py", line 574, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/usr/local/lib/python3.10/dist-packages/bitsandbytes/autograd/_functions.py", line 395, in forward
+    out32, Sout32 = F.igemmlt(C32A, state.CxB, SA, state.SB)
+  File "/usr/local/lib/python3.10/dist-packages/bitsandbytes/functional.py", line 2341, in igemmlt
+    raise Exception("cublasLt ran into an error!")
+Exception: cublasLt ran into an error!
+A: torch.Size([102, 4096]), B: torch.Size([4096, 4096]), C: (102, 4096); (lda, ldb, ldc): (c_int(3264), c_int(131072), c_int(3264)); (m, n, k): (c_int(102), c_int(4096), c_int(4096))

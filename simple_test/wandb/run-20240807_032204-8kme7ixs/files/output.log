@@ -1,0 +1,17 @@
+2024-08-07 03:22:05,125 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 03:22:05,125 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 03:22:05,282 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 03:22:06,306 - INFO - Dataset loaded. Size: 1608
+2024-08-07 03:22:06,306 - INFO - Preparing dataset
+2024-08-07 03:22:06,346 - INFO - Dataset preparation completed
+2024-08-07 03:22:06,347 - INFO - Configuring LoRA and quantization
+2024-08-07 03:22:06,733 - INFO - Using device: cuda
+2024-08-07 03:22:06,733 - INFO - Loading model: huggyllama/llama-7b
+Loading checkpoint shards: 100%|███████████████████████████████████████████████████████████████████████████████| 2/2 [00:03<00:00,  1.58s/it]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 100, in <module>
+    model = AutoModelForCausalLMWithValueHead.from_pretrained(base_model)
+  File "/usr/local/lib/python3.10/dist-packages/trl/models/modeling_base.py", line 249, in from_pretrained
+    raise ValueError(
+ValueError: pretrained_model_name_or_path should be a string or a PreTrainedModel, but is <class 'trl.models.modeling_value_head.AutoModelForCausalLMWithValueHead'>
