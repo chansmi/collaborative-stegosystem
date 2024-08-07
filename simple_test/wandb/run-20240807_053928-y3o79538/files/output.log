@@ -1,0 +1,47 @@
+2024-08-07 05:39:28,597 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 05:39:28,598 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 05:39:28,702 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 05:39:29,707 - INFO - Dataset loaded. Size: 1608
+2024-08-07 05:39:29,708 - INFO - Preparing dataset
+Map: 100%|████████████████████████████████████████████████████████████████████████████| 1608/1608 [00:00<00:00, 1709.09 examples/s]
+2024-08-07 05:39:30,686 - INFO - Dataset preparation completed
+2024-08-07 05:39:31,083 - INFO - Using device: cuda
+2024-08-07 05:39:31,083 - INFO - Loading model: huggyllama/llama-7b
+2024-08-07 05:39:31,083 - INFO - Loading model: huggyllama/llama-7b
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+2024-08-07 05:39:31,861 - INFO - We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████| 2/2 [00:02<00:00,  1.50s/it]
+2024-08-07 05:39:35,156 - INFO - Model loaded on device: cuda
+
+Loading checkpoint shards: 100%|█████████████████████████████████████████████████████████████████████| 2/2 [00:06<00:00,  3.26s/it]
+2024-08-07 05:39:42,219 - INFO - Loading dataset: Anthropic/hh-rlhf
+2024-08-07 05:39:42,902 - INFO - Dataset loaded. Size: 1608
+2024-08-07 05:39:42,902 - INFO - Preparing dataset
+2024-08-07 05:39:42,960 - INFO - Dataset preparation completed
+Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['classifier.bias', 'classifier.weight', 'pre_classifier.bias', 'pre_classifier.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+2024-08-07 05:39:46,744 - INFO - Bob model (classifier) loaded on device: cuda
+/usr/local/lib/python3.10/dist-packages/accelerate/accelerator.py:488: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler(**kwargs)
+2024-08-07 05:39:46,933 - INFO - Starting training for 5 epochs
+  0%|                                                                                                      | 0/402 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 276, in <module>
+    for batch_idx, batch in enumerate(tqdm(ppo_trainer.dataloader)):
+  File "/usr/local/lib/python3.10/dist-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/data_loader.py", line 454, in __iter__
+    current_batch = next(dataloader_iter)
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 630, in __next__
+    data = self._next_data()
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/dataloader.py", line 673, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/usr/local/lib/python3.10/dist-packages/torch/utils/data/_utils/fetch.py", line 55, in fetch
+    return self.collate_fn(data)
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 171, in collator
+    "chosen_input_ids": torch.stack([d["chosen_input_ids"] for d in data]),
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 171, in <listcomp>
+    "chosen_input_ids": torch.stack([d["chosen_input_ids"] for d in data]),
+KeyError: 'chosen_input_ids'
