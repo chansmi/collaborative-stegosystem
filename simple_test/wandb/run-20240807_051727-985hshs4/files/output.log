@@ -1,0 +1,30 @@
+2024-08-07 05:17:28,322 - INFO - Script arguments: ScriptArguments(model_name='huggyllama/llama-7b', dataset_name='Anthropic/hh-rlhf', rm_adapter='trl-lib/llama-7b-hh-rm-adapter', log_with=None, use_safetensors=False, seed=0, use_score_scaling=False, use_score_norm=False, score_clip=None)
+2024-08-07 05:17:28,322 - INFO - Loading tokenizer
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565 - if you loaded a llama tokenizer from a GGUF file you can ignore this message.
+2024-08-07 05:17:28,497 - INFO - Loading dataset: Anthropic/hh-rlhf
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 82, in <module>
+    dataset = create_and_prepare_dataset(tokenizer)
+  File "/root/collaborative-stegosystem/simple_test/3test.py", line 64, in create_and_prepare_dataset
+    dataset = load_dataset(script_args.dataset_name, split="train[:0.5%]")
+  File "/usr/local/lib/python3.10/dist-packages/datasets/load.py", line 2628, in load_dataset
+    ds = builder_instance.as_dataset(split=split, verification_mode=verification_mode, in_memory=keep_in_memory)
+  File "/usr/local/lib/python3.10/dist-packages/datasets/builder.py", line 1268, in as_dataset
+    datasets = map_nested(
+  File "/usr/local/lib/python3.10/dist-packages/datasets/utils/py_utils.py", line 484, in map_nested
+    mapped = function(data_struct)
+  File "/usr/local/lib/python3.10/dist-packages/datasets/builder.py", line 1298, in _build_single_dataset
+    ds = self._as_dataset(
+  File "/usr/local/lib/python3.10/dist-packages/datasets/builder.py", line 1372, in _as_dataset
+    dataset_kwargs = ArrowReader(cache_dir, self.info).read(
+  File "/usr/local/lib/python3.10/dist-packages/datasets/arrow_reader.py", line 252, in read
+    files = self.get_file_instructions(name, instructions, split_infos)
+  File "/usr/local/lib/python3.10/dist-packages/datasets/arrow_reader.py", line 225, in get_file_instructions
+    file_instructions = make_file_instructions(
+  File "/usr/local/lib/python3.10/dist-packages/datasets/arrow_reader.py", line 132, in make_file_instructions
+    instruction = ReadInstruction.from_spec(instruction)
+  File "/usr/local/lib/python3.10/dist-packages/datasets/arrow_reader.py", line 607, in from_spec
+    instruction = _str_to_read_instruction(subs[0])
+  File "/usr/local/lib/python3.10/dist-packages/datasets/arrow_reader.py", line 444, in _str_to_read_instruction
+    raise ValueError(f"Unrecognized instruction format: {spec}")
+ValueError: Unrecognized instruction format: train[:0.5%]
