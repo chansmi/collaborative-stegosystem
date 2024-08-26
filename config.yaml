@@ -18,7 +18,7 @@ model:
   max_new_tokens: 150
 
 ppo:
-  learning_rate: 1.0e-5
+  learning_rate: 1.0e-6
   batch_size: 1
   mini_batch_size: 1
   gradient_accumulation_steps: 1

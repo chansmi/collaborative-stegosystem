@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 30, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 23, in main
+    env = TradingEnvironment(config)
+  File "/root/collaborative-stegosystem/src/environment.py", line 17, in __init__
+    raise ValueError("OPENAI_API_KEY environment variable is not set")
+ValueError: OPENAI_API_KEY environment variable is not set

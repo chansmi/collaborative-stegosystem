@@ -1,0 +1,20 @@
+
+Using BitsAndBytesConfig for NVIDIA GPU
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 30, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 24, in main
+    trainer = CollaborativePPOTrainer(config)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 22, in __init__
+    self.alice = create_agent(config, 'Alice')
+  File "/root/collaborative-stegosystem/src/models.py", line 24, in create_agent
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 3826, in from_pretrained
+    config = cls._autoset_attn_implementation(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 1556, in _autoset_attn_implementation
+    cls._check_and_enable_flash_attn_2(
+  File "/usr/local/lib/python3.10/dist-packages/transformers/modeling_utils.py", line 1658, in _check_and_enable_flash_attn_2
+    raise ImportError(f"{preface} the package flash_attn seems to be not installed. {install_message}")
+ImportError: FlashAttention2 has been toggled on, but it cannot be used due to the following error: the package flash_attn seems to be not installed. Please refer to the documentation of https://huggingface.co/docs/transformers/perf_infer_gpu_one#flashattention-2 to install Flash Attention 2.

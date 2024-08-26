@@ -1,0 +1,89 @@
+wandb_version: 1
+
+wandb:
+  desc: null
+  value:
+    project_name: collaborative-stegosystem
+    entity: chansmi
+env:
+  desc: null
+  value:
+    max_rounds: 1
+    stocks:
+    - AAPL
+    - GOOGL
+    - MSFT
+    - AMZN
+    - FB
+    reward:
+      correct: 1.0
+      partial: 0.5
+      incorrect: -0.5
+    eve_penalty: 2.0
+model:
+  desc: null
+  value:
+    name: meta-llama/Llama-2-7b-chat-hf
+    quantize: true
+    save_path: models/trained_model
+    max_new_tokens: 150
+ppo:
+  desc: null
+  value:
+    learning_rate: 1.0e-05
+    batch_size: 8
+    mini_batch_size: 4
+    gradient_accumulation_steps: 1
+training:
+  desc: null
+  value:
+    num_epochs: 100
+openai:
+  desc: null
+  value:
+    model: gpt-4o-mini
+    max_tokens: 100
+    temperature: 0.5
+    detection_phrase: insider trading detected
+_wandb:
+  desc: null
+  value:
+    python_version: 3.10.12
+    cli_version: 0.17.7
+    framework: huggingface
+    huggingface_version: 4.43.4
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1724705555
+    t:
+      1:
+      - 1
+      - 11
+      - 49
+      - 51
+      - 55
+      - 71
+      - 84
+      - 95
+      - 98
+      - 105
+      2:
+      - 1
+      - 11
+      - 49
+      - 51
+      - 55
+      - 71
+      - 84
+      - 95
+      - 98
+      - 105
+      3:
+      - 16
+      - 23
+      4: 3.10.12
+      5: 0.17.7
+      6: 4.43.4
+      8:
+      - 5
+      13: linux-x86_64

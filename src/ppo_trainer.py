@@ -14,6 +14,7 @@ class InfNanLogitsProcessor(LogitsProcessor):
 def filter_non_finite(d):
     return {k: v for k, v in d.items() if not isinstance(v, (float, int)) or np.isfinite(v)}
 
+
 class CollaborativePPOTrainer:
     def __init__(self, config):
         self.config = config
