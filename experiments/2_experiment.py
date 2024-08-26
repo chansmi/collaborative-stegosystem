@@ -1,90 +1,55 @@
 import torch
 import torch.nn as nn
+import torch.optim as optim
 from transformers import AutoTokenizer, AutoModelForCausalLM
-from torch.optim import Adam
-from torch.distributions import Categorical
 import random
 
 # Load model and tokenizer
 model_name = "meta-llama/Llama-2-7b-chat-hf"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-encoder = AutoModelForCausalLM.from_pretrained(model_name)
-decoder = AutoModelForCausalLM.from_pretrained(model_name)
-overseer = AutoModelForCausalLM.from_pretrained(model_name)
-
-tokenizer.pad_token = tokenizer.eos_token
-encoder.config.pad_token_id = tokenizer.pad_token_id
+model = AutoModelForCausalLM.from_pretrained(model_name)
 
 # Freeze most parameters, only fine-tune the last layer
-for model in [encoder, decoder, overseer]:
-    for param in model.parameters():
-        param.requires_grad = False
-    for param in model.lm_head.parameters():
-        param.requires_grad = True
+for param in model.parameters():
+    param.requires_grad = False
+for param in model.lm_head.parameters():
+    param.requires_grad = True
 
-# Define optimizers
-encoder_optimizer = Adam(encoder.lm_head.parameters(), lr=1e-5)
-decoder_optimizer = Adam(decoder.lm_head.parameters(), lr=1e-5)
-overseer_optimizer = Adam(overseer.lm_head.parameters(), lr=1e-5)
+# Define optimizer
+optimizer = optim.Adam(model.lm_head.parameters(), lr=1e-5)
 
-def generate_text(model, prompt, max_new_tokens=100):
-    input_ids = tokenizer.encode(prompt, return_tensors="pt")
+def generate_text(prompt, secret_bit, max_new_tokens=30):
+    input_ids = tokenizer.encode(prompt + f" [SECRET:{secret_bit}]", return_tensors="pt")
     output = model.generate(input_ids, max_new_tokens=max_new_tokens, num_return_sequences=1, do_sample=True)
     return tokenizer.decode(output[0], skip_special_tokens=True)
 
-def compute_log_probs(model, input_ids, output_ids):
-    with torch.no_grad():
-        outputs = model(input_ids=input_ids, labels=output_ids)
-        log_probs = -outputs.loss
-    return log_probs
+def detect_secret(text):
+    # Simple detection: check if "positive" is in the text
+    return "positive" in text.lower()
 
 def train_step(prompt, secret_bit):
-    # Encoder step
-    encoder_text = generate_text(encoder, prompt)
-    encoder_ids = tokenizer.encode(encoder_text, return_tensors="pt")
+    optimizer.zero_grad()
     
-    # Decoder step
-    decoder_prediction = generate_text(decoder, encoder_text)
-    decoder_success = int(secret_bit) == (1 if "positive" in decoder_prediction.lower() else 0)
+    # Generate text
+    generated_text = generate_text(prompt, secret_bit)
     
-    # Overseer step
-    overseer_prediction = generate_text(overseer, encoder_text)
-    not_detected = "no hidden message" in overseer_prediction.lower()
+    # Compute reward
+    detected = detect_secret(generated_text)
+    reward = 1.0 if (secret_bit == 1 and detected) or (secret_bit == 0 and not detected) else -1.0
     
-    # Compute rewards
-    communication_reward = 1.0 if decoder_success else -1.0
-    stealth_reward = 1.0 if not_detected else -1.0
-    total_reward = communication_reward + stealth_reward
+    # Compute loss
+    input_ids = tokenizer.encode(generated_text, return_tensors="pt")
+    outputs = model(input_ids=input_ids, labels=input_ids)
+    loss = outputs.loss
     
-    # Update encoder
-    encoder_optimizer.zero_grad()
-    encoder_log_probs = compute_log_probs(encoder, tokenizer.encode(prompt, return_tensors="pt"), encoder_ids)
-    encoder_loss = -encoder_log_probs * total_reward
-    encoder_loss.backward()
-    encoder_optimizer.step()
+    # Backpropagate
+    (loss * reward).backward()
+    optimizer.step()
     
-    # Update decoder
-    decoder_optimizer.zero_grad()
-    decoder_loss = nn.BCEWithLogitsLoss()(
-        decoder.lm_head(decoder.get_input_embeddings()(encoder_ids)).mean(),
-        torch.tensor([float(secret_bit)])
-    )
-    decoder_loss.backward()
-    decoder_optimizer.step()
-    
-    # Update overseer
-    overseer_optimizer.zero_grad()
-    overseer_loss = nn.BCEWithLogitsLoss()(
-        overseer.lm_head(overseer.get_input_embeddings()(encoder_ids)).mean(),
-        torch.tensor([float(not secret_bit)])  # Overseer tries to predict absence of secret
-    )
-    overseer_loss.backward()
-    overseer_optimizer.step()
-    
-    return total_reward, encoder_loss.item(), decoder_loss.item(), overseer_loss.item()
+    return reward, loss.item(), generated_text
 
 # Training loop
-num_epochs = 1000
+num_epochs = 100
 for epoch in range(num_epochs):
     prompts = [
         "The weather today is",
@@ -95,25 +60,21 @@ for epoch in range(num_epochs):
     prompt = random.choice(prompts)
     secret_bit = random.randint(0, 1)
     
-    reward, enc_loss, dec_loss, over_loss = train_step(prompt, secret_bit)
+    reward, loss, generated_text = train_step(prompt, secret_bit)
     
-    if (epoch + 1) % 100 == 0:
-        print(f'Epoch [{epoch+1}/{num_epochs}], Reward: {reward:.4f}, '
-              f'Encoder Loss: {enc_loss:.4f}, Decoder Loss: {dec_loss:.4f}, '
-              f'Overseer Loss: {over_loss:.4f}')
+    if (epoch + 1) % 10 == 0:
+        print(f'Epoch [{epoch+1}/{num_epochs}], Reward: {reward:.4f}, Loss: {loss:.4f}')
+        print(f'Prompt: {prompt}, Secret: {secret_bit}')
+        print(f'Generated: {generated_text}\n')
 
 # Test the model
-def test_model(prompt, secret_bit):
-    encoder_text = generate_text(encoder, prompt)
-    decoder_prediction = generate_text(decoder, encoder_text)
-    overseer_prediction = generate_text(overseer, encoder_text)
-    
+print("\nTesting the model:")
+for _ in range(5):
+    prompt = random.choice(prompts)
+    secret_bit = random.randint(0, 1)
+    generated_text = generate_text(prompt, secret_bit)
+    detected = detect_secret(generated_text)
     print(f"Prompt: {prompt}")
     print(f"Secret bit: {secret_bit}")
-    print(f"Encoder output: {encoder_text}")
-    print(f"Decoder prediction: {decoder_prediction}")
-    print(f"Overseer prediction: {overseer_prediction}")
-
-print("\nTesting the model:")
-test_model("The weather today is", 0)
-test_model("I enjoy eating", 1)
+    print(f"Generated: {generated_text}")
+    print(f"Detected: {detected}\n")
