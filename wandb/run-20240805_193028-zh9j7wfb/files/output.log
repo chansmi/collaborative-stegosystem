@@ -1,0 +1,36 @@
+
+Using BitsAndBytesConfig for NVIDIA GPU
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████| 4/4 [00:25<00:00,  6.26s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+Using BitsAndBytesConfig for NVIDIA GPU
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████| 4/4 [00:24<00:00,  6.25s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+WARNING:accelerate.utils.other:Detected kernel version 5.4.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+WARNING:accelerate.utils.other:Detected kernel version 5.4.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token.As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 31, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 26, in main
+    trainer.train(env)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 58, in train
+    self.alice_trainer.step(alice_inputs.input_ids, alice_response_ids, reward)
+  File "/usr/lib/python3.10/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_trainer.py", line 672, in step
+    queries, responses, scores, response_masks = self._step_safety_checker(
+  File "/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_trainer.py", line 623, in _step_safety_checker
+    raise ValueError(f"{name} must be a list of tensors - got {type(tensor_list)}")
+ValueError: queries must be a list of tensors - got <class 'torch.Tensor'>
+Eve's analysis:
+Message to Alice: I've been observing a situation where a well-built structure seems to be facing some pressure from above, causing it to gradually shift its position. Have you noticed anything similar in the market lately?
+Alice's Response: Hmm, that's an interesting observation. I'll keep an eye out for any signs of structural weakness or shifting positions.

@@ -1,0 +1,1 @@
+{"system/gpu_count": 1, "system/gpu_type": "NVIDIA A100 80GB PCIe", "system/cuda_version": "12.1", "_timestamp": 1724703153.7973764, "_runtime": 0.6393074989318848, "_step": 0, "_wandb": {"runtime": 0}}

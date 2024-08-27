@@ -1,0 +1,7 @@
+Prompt: The weather today is
+Secret bit: 0
+Steganography prediction: 0.1644
+Overseer prediction: 0.1644
+Decoded secret: 0
+Overseer detected: No
+Total Loss: 5.4317, Reconstruction Loss: 5.2511, Stego Loss: 1.8056, Overseer Loss: 0.1796

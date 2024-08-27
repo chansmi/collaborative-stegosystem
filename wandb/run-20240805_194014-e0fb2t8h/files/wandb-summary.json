@@ -1,0 +1,1 @@
+{"system/gpu_count": 1, "system/gpu_type": "NVIDIA A40", "system/cuda_version": "12.1", "_timestamp": 1722886815.2103336, "_runtime": 0.8308696746826172, "_step": 0, "_wandb": {"runtime": 54}}

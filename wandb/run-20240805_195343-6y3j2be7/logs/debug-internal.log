@@ -1,0 +1,381 @@
+2024-08-05 19:53:43,490 INFO    StreamThr :7909 [internal.py:wandb_internal():85] W&B internal server running at pid: 7909, started at: 2024-08-05 19:53:43.489368
+2024-08-05 19:53:43,498 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status
+2024-08-05 19:53:43,501 INFO    WriterThread:7909 [datastore.py:open_for_write():87] open: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/run-6y3j2be7.wandb
+2024-08-05 19:53:43,502 DEBUG   SenderThread:7909 [sender.py:send():379] send: header
+2024-08-05 19:53:43,502 DEBUG   SenderThread:7909 [sender.py:send():379] send: run
+2024-08-05 19:53:43,708 INFO    SenderThread:7909 [dir_watcher.py:__init__():211] watching files in: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files
+2024-08-05 19:53:43,708 INFO    SenderThread:7909 [sender.py:_start_run_threads():1188] run started: 6y3j2be7 with start time 1722887623.487599
+2024-08-05 19:53:43,726 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: check_version
+2024-08-05 19:53:43,726 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: check_version
+2024-08-05 19:53:43,769 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: run_start
+2024-08-05 19:53:43,788 DEBUG   HandlerThread:7909 [system_info.py:__init__():26] System info init
+2024-08-05 19:53:43,788 DEBUG   HandlerThread:7909 [system_info.py:__init__():41] System info init done
+2024-08-05 19:53:43,788 INFO    HandlerThread:7909 [system_monitor.py:start():194] Starting system monitor
+2024-08-05 19:53:43,788 INFO    SystemMonitor:7909 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-08-05 19:53:43,788 INFO    HandlerThread:7909 [system_monitor.py:probe():214] Collecting system info
+2024-08-05 19:53:43,789 INFO    SystemMonitor:7909 [interfaces.py:start():188] Started cpu monitoring
+2024-08-05 19:53:43,792 INFO    SystemMonitor:7909 [interfaces.py:start():188] Started disk monitoring
+2024-08-05 19:53:43,794 INFO    SystemMonitor:7909 [interfaces.py:start():188] Started gpu monitoring
+2024-08-05 19:53:43,800 INFO    SystemMonitor:7909 [interfaces.py:start():188] Started memory monitoring
+2024-08-05 19:53:43,802 INFO    SystemMonitor:7909 [interfaces.py:start():188] Started network monitoring
+2024-08-05 19:53:43,861 DEBUG   HandlerThread:7909 [system_info.py:probe():152] Probing system
+2024-08-05 19:53:43,863 DEBUG   HandlerThread:7909 [system_info.py:_probe_git():137] Probing git
+2024-08-05 19:53:43,870 DEBUG   HandlerThread:7909 [system_info.py:_probe_git():145] Probing git done
+2024-08-05 19:53:43,870 DEBUG   HandlerThread:7909 [system_info.py:probe():200] Probing system done
+2024-08-05 19:53:43,870 DEBUG   HandlerThread:7909 [system_monitor.py:probe():223] {'os': 'Linux-5.4.0-169-generic-x86_64-with-glibc2.31', 'python': '3.10.12', 'heartbeatAt': '2024-08-05T19:53:43.861372', 'startedAt': '2024-08-05T19:53:43.476731', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/root/collaborative-stegosystem/main.py', 'codePathLocal': 'main.py', 'codePath': 'main.py', 'git': {'remote': 'https://github.com/chansmi/collaborative-stegosystem.git', 'commit': 'fbc74304f4696e4331f7d95f0198f75ed9b2b2c3'}, 'email': None, 'root': '/root/collaborative-stegosystem', 'host': '52167fca7097', 'username': 'root', 'executable': '/usr/bin/python3', 'cpu_count': 48, 'cpu_count_logical': 96, 'cpu_freq': {'current': 1127.5095208333335, 'min': 800.0, 'max': 2801.0}, 'cpu_freq_per_core': [{'current': 872.004, 'min': 800.0, 'max': 2801.0}, {'current': 800.158, 'min': 800.0, 'max': 2801.0}, {'current': 960.459, 'min': 800.0, 'max': 2801.0}, {'current': 1025.461, 'min': 800.0, 'max': 2801.0}, {'current': 800.709, 'min': 800.0, 'max': 2801.0}, {'current': 800.218, 'min': 800.0, 'max': 2801.0}, {'current': 828.314, 'min': 800.0, 'max': 2801.0}, {'current': 799.141, 'min': 800.0, 'max': 2801.0}, {'current': 800.838, 'min': 800.0, 'max': 2801.0}, {'current': 800.87, 'min': 800.0, 'max': 2801.0}, {'current': 803.857, 'min': 800.0, 'max': 2801.0}, {'current': 800.323, 'min': 800.0, 'max': 2801.0}, {'current': 800.708, 'min': 800.0, 'max': 2801.0}, {'current': 800.189, 'min': 800.0, 'max': 2801.0}, {'current': 882.092, 'min': 800.0, 'max': 2801.0}, {'current': 801.5, 'min': 800.0, 'max': 2801.0}, {'current': 800.104, 'min': 800.0, 'max': 2801.0}, {'current': 800.242, 'min': 800.0, 'max': 2801.0}, {'current': 2799.728, 'min': 800.0, 'max': 2801.0}, {'current': 800.654, 'min': 800.0, 'max': 2801.0}, {'current': 872.336, 'min': 800.0, 'max': 2801.0}, {'current': 800.276, 'min': 800.0, 'max': 2801.0}, {'current': 801.713, 'min': 800.0, 'max': 2801.0}, {'current': 800.2, 'min': 800.0, 'max': 2801.0}, {'current': 910.035, 'min': 800.0, 'max': 2801.0}, {'current': 801.711, 'min': 800.0, 'max': 2801.0}, {'current': 800.812, 'min': 800.0, 'max': 2801.0}, {'current': 800.99, 'min': 800.0, 'max': 2801.0}, {'current': 801.33, 'min': 800.0, 'max': 2801.0}, {'current': 886.737, 'min': 800.0, 'max': 2801.0}, {'current': 800.895, 'min': 800.0, 'max': 2801.0}, {'current': 800.813, 'min': 800.0, 'max': 2801.0}, {'current': 974.383, 'min': 800.0, 'max': 2801.0}, {'current': 801.212, 'min': 800.0, 'max': 2801.0}, {'current': 2736.621, 'min': 800.0, 'max': 2801.0}, {'current': 800.725, 'min': 800.0, 'max': 2801.0}, {'current': 2368.996, 'min': 800.0, 'max': 2801.0}, {'current': 958.458, 'min': 800.0, 'max': 2801.0}, {'current': 800.429, 'min': 800.0, 'max': 2801.0}, {'current': 1013.454, 'min': 800.0, 'max': 2801.0}, {'current': 800.854, 'min': 800.0, 'max': 2801.0}, {'current': 800.863, 'min': 800.0, 'max': 2801.0}, {'current': 899.827, 'min': 800.0, 'max': 2801.0}, {'current': 856.916, 'min': 800.0, 'max': 2801.0}, {'current': 801.307, 'min': 800.0, 'max': 2801.0}, {'current': 2800.0, 'min': 800.0, 'max': 2801.0}, {'current': 1823.214, 'min': 800.0, 'max': 2801.0}, {'current': 2515.903, 'min': 800.0, 'max': 2801.0}, {'current': 882.501, 'min': 800.0, 'max': 2801.0}, {'current': 800.445, 'min': 800.0, 'max': 2801.0}, {'current': 2253.216, 'min': 800.0, 'max': 2801.0}, {'current': 992.239, 'min': 800.0, 'max': 2801.0}, {'current': 800.252, 'min': 800.0, 'max': 2801.0}, {'current': 801.33, 'min': 800.0, 'max': 2801.0}, {'current': 801.765, 'min': 800.0, 'max': 2801.0}, {'current': 800.167, 'min': 800.0, 'max': 2801.0}, {'current': 800.898, 'min': 800.0, 'max': 2801.0}, {'current': 801.401, 'min': 800.0, 'max': 2801.0}, {'current': 800.883, 'min': 800.0, 'max': 2801.0}, {'current': 801.272, 'min': 800.0, 'max': 2801.0}, {'current': 800.162, 'min': 800.0, 'max': 2801.0}, {'current': 800.303, 'min': 800.0, 'max': 2801.0}, {'current': 802.915, 'min': 800.0, 'max': 2801.0}, {'current': 863.621, 'min': 800.0, 'max': 2801.0}, {'current': 800.357, 'min': 800.0, 'max': 2801.0}, {'current': 811.878, 'min': 800.0, 'max': 2801.0}, {'current': 2800.0, 'min': 800.0, 'max': 2801.0}, {'current': 800.896, 'min': 800.0, 'max': 2801.0}, {'current': 883.833, 'min': 800.0, 'max': 2801.0}, {'current': 800.256, 'min': 800.0, 'max': 2801.0}, {'current': 800.412, 'min': 800.0, 'max': 2801.0}, {'current': 801.374, 'min': 800.0, 'max': 2801.0}, {'current': 888.023, 'min': 800.0, 'max': 2801.0}, {'current': 800.851, 'min': 800.0, 'max': 2801.0}, {'current': 800.908, 'min': 800.0, 'max': 2801.0}, {'current': 800.892, 'min': 800.0, 'max': 2801.0}, {'current': 800.687, 'min': 800.0, 'max': 2801.0}, {'current': 895.244, 'min': 800.0, 'max': 2801.0}, {'current': 800.867, 'min': 800.0, 'max': 2801.0}, {'current': 800.246, 'min': 800.0, 'max': 2801.0}, {'current': 801.313, 'min': 800.0, 'max': 2801.0}, {'current': 889.664, 'min': 800.0, 'max': 2801.0}, {'current': 2788.428, 'min': 800.0, 'max': 2801.0}, {'current': 800.88, 'min': 800.0, 'max': 2801.0}, {'current': 800.882, 'min': 800.0, 'max': 2801.0}, {'current': 954.129, 'min': 800.0, 'max': 2801.0}, {'current': 800.919, 'min': 800.0, 'max': 2801.0}, {'current': 939.72, 'min': 800.0, 'max': 2801.0}, {'current': 801.32, 'min': 800.0, 'max': 2801.0}, {'current': 1120.144, 'min': 800.0, 'max': 2801.0}, {'current': 800.448, 'min': 800.0, 'max': 2801.0}, {'current': 809.348, 'min': 800.0, 'max': 2801.0}, {'current': 800.907, 'min': 800.0, 'max': 2801.0}, {'current': 2800.0, 'min': 800.0, 'max': 2801.0}, {'current': 800.43, 'min': 800.0, 'max': 2801.0}, {'current': 2324.56, 'min': 800.0, 'max': 2801.0}], 'disk': {'/': {'total': 75.0, 'used': 23.896610260009766}}, 'gpu': 'NVIDIA A40', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA A40', 'memory_total': 48305799168}], 'memory': {'total': 503.5313148498535}}
+2024-08-05 19:53:43,870 INFO    HandlerThread:7909 [system_monitor.py:probe():224] Finished collecting system info
+2024-08-05 19:53:43,870 INFO    HandlerThread:7909 [system_monitor.py:probe():227] Publishing system info
+2024-08-05 19:53:43,872 INFO    HandlerThread:7909 [system_monitor.py:probe():229] Finished publishing system info
+2024-08-05 19:53:43,874 DEBUG   SenderThread:7909 [sender.py:send():379] send: files
+2024-08-05 19:53:43,875 INFO    SenderThread:7909 [sender.py:_save_file():1454] saving file wandb-metadata.json with policy now
+2024-08-05 19:53:44,016 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: python_packages
+2024-08-05 19:53:44,018 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: python_packages
+2024-08-05 19:53:44,018 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:53:44,020 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:44,022 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:53:44,102 DEBUG   SenderThread:7909 [sender.py:send():379] send: telemetry
+2024-08-05 19:53:44,240 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-05 19:53:44,243 DEBUG   SenderThread:7909 [sender.py:send():379] send: history
+2024-08-05 19:53:44,243 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: summary_record
+2024-08-05 19:53:44,244 INFO    SenderThread:7909 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:53:44,313 INFO    wandb-upload_0:7909 [upload_job.py:push():130] Uploaded file /tmp/tmpxo0smxq3wandb/vainvpeq-wandb-metadata.json
+2024-08-05 19:53:44,715 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_created():271] file/dir created: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/wandb-metadata.json
+2024-08-05 19:53:44,716 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_created():271] file/dir created: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:53:44,717 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_created():271] file/dir created: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/requirements.txt
+2024-08-05 19:53:44,717 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_created():271] file/dir created: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/wandb-summary.json
+2024-08-05 19:53:45,019 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:46,019 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:46,759 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:53:47,060 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:47,759 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:53:48,059 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:49,059 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:53:49,064 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:50,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:51,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:52,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:53,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:53,763 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:53:54,058 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:53:54,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:55,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:56,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:57,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:58,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:59,017 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:53:59,018 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:53:59,061 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:53:59,158 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:00,062 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:01,062 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:01,768 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:54:02,062 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:03,062 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:04,063 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:05,060 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:05,063 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:06,063 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:07,063 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:08,063 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:09,259 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:10,200 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:10,200 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:11,259 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:11,773 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:54:12,200 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:12,774 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:54:13,258 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:14,058 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:54:14,059 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:54:14,200 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:15,200 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:15,264 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:15,776 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/config.yaml
+2024-08-05 19:54:16,258 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:17,200 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:18,200 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:19,258 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:19,779 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:54:20,259 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:21,201 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:21,260 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:22,260 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:23,259 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:24,260 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:25,259 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:26,260 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:26,739 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:27,260 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:27,783 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:54:28,262 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:29,018 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:54:29,019 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:54:29,260 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:30,261 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:31,261 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:32,201 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:32,261 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:33,261 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:34,261 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:35,262 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:35,860 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:54:36,426 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:37,323 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:37,425 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:37,861 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:54:38,425 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:39,426 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:39,862 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:54:40,426 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:41,426 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:42,426 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:43,262 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:43,427 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:43,803 DEBUG   SystemMonitor:7909 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-08-05 19:54:43,808 DEBUG   SenderThread:7909 [sender.py:send():379] send: stats
+2024-08-05 19:54:44,018 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:54:44,019 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:54:44,427 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:45,427 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:46,427 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:47,428 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:48,428 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:49,261 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:49,428 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:50,428 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:51,428 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:52,428 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:53,431 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:54,262 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:54:54,429 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:55,431 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:56,430 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:57,430 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:58,430 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:54:59,019 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:54:59,020 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:54:59,430 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:00,261 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:00,430 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:01,431 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:02,431 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:03,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:04,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:05,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:05,878 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:55:05,964 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:06,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:07,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:08,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:09,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:10,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:11,262 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:11,432 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:12,433 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:13,433 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:13,813 DEBUG   SenderThread:7909 [sender.py:send():379] send: stats
+2024-08-05 19:55:14,019 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:55:14,020 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:55:14,433 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:15,433 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:16,433 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:17,263 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:17,433 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:18,433 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:19,433 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:20,434 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:21,434 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:22,263 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:22,434 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:23,434 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:24,434 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:25,435 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:26,435 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:27,264 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:27,435 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:27,563 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-05 19:55:27,565 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-05 19:55:27,570 DEBUG   SenderThread:7909 [sender.py:send():379] send: history
+2024-08-05 19:55:27,570 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: summary_record
+2024-08-05 19:55:27,571 INFO    SenderThread:7909 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:55:27,572 DEBUG   SenderThread:7909 [sender.py:send():379] send: history
+2024-08-05 19:55:27,573 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: summary_record
+2024-08-05 19:55:27,574 INFO    SenderThread:7909 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:55:27,890 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/wandb-summary.json
+2024-08-05 19:55:28,436 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:28,891 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:55:29,019 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:55:29,020 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:55:29,435 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:29,891 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:55:30,437 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:31,437 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:32,437 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:33,263 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:33,436 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:34,437 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:35,437 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:36,438 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:37,438 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:38,265 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:38,437 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:39,437 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:40,438 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:41,438 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:42,438 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:43,438 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:43,816 DEBUG   SenderThread:7909 [sender.py:send():379] send: stats
+2024-08-05 19:55:43,819 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:44,019 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:55:44,020 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:55:44,438 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:45,439 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:46,439 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:47,439 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:48,439 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:49,264 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:49,439 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:50,440 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:51,439 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:51,903 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:55:52,440 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:53,440 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:54,264 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:55:54,440 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:55,440 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:56,440 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:57,440 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:58,440 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:55:59,019 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:55:59,020 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:55:59,441 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:00,264 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:00,441 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:01,441 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:02,442 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:03,442 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:04,442 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:05,265 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:05,442 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:06,442 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:07,443 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:08,443 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:09,443 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:10,443 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:11,265 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:11,443 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:12,443 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-05 19:56:12,444 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-05 19:56:12,448 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:12,449 DEBUG   SenderThread:7909 [sender.py:send():379] send: history
+2024-08-05 19:56:12,450 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: summary_record
+2024-08-05 19:56:12,454 INFO    SenderThread:7909 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:56:12,454 DEBUG   SenderThread:7909 [sender.py:send():379] send: history
+2024-08-05 19:56:12,455 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: summary_record
+2024-08-05 19:56:12,455 INFO    SenderThread:7909 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:56:12,915 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/wandb-summary.json
+2024-08-05 19:56:13,444 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:13,821 DEBUG   SenderThread:7909 [sender.py:send():379] send: stats
+2024-08-05 19:56:13,916 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:56:14,021 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:56:14,021 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:56:14,444 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:14,916 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:56:15,445 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:16,265 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:16,444 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:17,445 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:18,445 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:19,445 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:20,446 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:21,446 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:22,266 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:22,446 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:23,446 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:24,446 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:25,446 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:26,446 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:27,447 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:28,266 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:28,447 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:29,020 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:56:29,021 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:56:29,447 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:30,447 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:31,447 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:32,448 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:33,411 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:33,448 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:34,448 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:35,448 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:35,928 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:56:36,448 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:37,448 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:38,448 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:38,772 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:39,449 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:40,449 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:41,449 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:42,449 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:43,449 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:43,825 DEBUG   SenderThread:7909 [sender.py:send():379] send: stats
+2024-08-05 19:56:43,827 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:44,021 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:56:44,021 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:56:44,449 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:45,449 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:46,450 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:47,450 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:48,450 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:49,266 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:49,450 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:50,450 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:51,450 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:52,451 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:53,452 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:54,267 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:54,451 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:55,452 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:55,651 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-05 19:56:55,653 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: partial_history
+2024-08-05 19:56:55,656 DEBUG   SenderThread:7909 [sender.py:send():379] send: history
+2024-08-05 19:56:55,657 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: summary_record
+2024-08-05 19:56:55,658 INFO    SenderThread:7909 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:56:55,659 DEBUG   SenderThread:7909 [sender.py:send():379] send: history
+2024-08-05 19:56:55,659 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: summary_record
+2024-08-05 19:56:55,661 INFO    SenderThread:7909 [sender.py:_save_file():1454] saving file wandb-summary.json with policy end
+2024-08-05 19:56:55,939 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/wandb-summary.json
+2024-08-05 19:56:56,452 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:56,940 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:56:57,453 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:57,940 INFO    Thread-12 :7909 [dir_watcher.py:_on_file_modified():288] file/dir modified: /root/collaborative-stegosystem/wandb/run-20240805_195343-6y3j2be7/files/output.log
+2024-08-05 19:56:58,453 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:56:59,021 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:56:59,022 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:56:59,267 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:56:59,453 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:00,456 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:01,453 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:02,454 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:03,454 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:04,268 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:57:04,455 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:05,455 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:06,455 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:07,455 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:08,455 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:09,456 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:10,267 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:57:10,456 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:11,456 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:12,456 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:13,456 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:13,827 DEBUG   SenderThread:7909 [sender.py:send():379] send: stats
+2024-08-05 19:57:14,021 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: stop_status
+2024-08-05 19:57:14,022 DEBUG   SenderThread:7909 [sender.py:send_request():406] send_request: stop_status
+2024-08-05 19:57:14,457 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:15,267 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: status_report
+2024-08-05 19:57:15,457 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:16,457 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:17,457 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
+2024-08-05 19:57:18,458 DEBUG   HandlerThread:7909 [handler.py:handle_request():158] handle_request: internal_messages
