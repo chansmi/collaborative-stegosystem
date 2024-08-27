@@ -1,0 +1,26 @@
+
+Using BitsAndBytesConfig for NVIDIA GPU
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████| 4/4 [00:25<00:00,  6.36s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+Using BitsAndBytesConfig for NVIDIA GPU
+
+
+
+Loading checkpoint shards: 100%|██████████████████████████████████████████████████████████████████████| 4/4 [00:25<00:00,  6.38s/it]
+WARNING:root:The `device_map` argument is not provided. We will override the device_map argument. to set the entire model on the current device. If you want to set the model on multiple devices, please provide a custom `device_map` argument.
+WARNING:accelerate.utils.other:Detected kernel version 5.4.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+WARNING:accelerate.utils.other:Detected kernel version 5.4.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+Traceback (most recent call last):
+  File "/root/collaborative-stegosystem/main.py", line 31, in <module>
+    main()
+  File "/root/collaborative-stegosystem/main.py", line 26, in main
+    trainer.train(env)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 44, in train
+    alice_response = self.generate_response(self.alice_trainer, self.alice['tokenizer'], alice_prompt)
+  File "/root/collaborative-stegosystem/src/ppo_trainer.py", line 32, in generate_response
+    response = trainer.generate(inputs.input_ids, **self.generation_kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/trl/trainer/ppo_trainer.py", line 508, in generate
+    raise ValueError(
+ValueError: query_tensor must be a tensor of shape (`seq_len`) or a list of tensors of shape (`seq_len`)
