@@ -66,7 +66,7 @@ def train_step(prompt, secret_bit, epoch):
     input_ids = inputs["input_ids"]
     attention_mask = inputs["attention_mask"]
     
-    # Convert secret_bit to float
+    # Convert secret_bit to float and move to the correct device
     secret_bit = torch.tensor(float(secret_bit)).to(device)
     
     # Encoder forward pass and generate text
