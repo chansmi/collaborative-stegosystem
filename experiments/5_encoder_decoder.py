@@ -10,15 +10,15 @@ def get_timestamp():
     return datetime.now().strftime("%Y%m%d_%H%M")
 
 # Check if a GPU is available and set the device accordingly
-device = 0 if torch.cuda.is_available() else -1
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model and tokenizer
 model_name = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
-overseer = AutoModelForCausalLM.from_pretrained(model_name)
-decoder = AutoModelForCausalLM.from_pretrained(model_name)
-pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device=device)
+model = AutoModelForCausalLM.from_pretrained(model_name).to(device)
+overseer = AutoModelForCausalLM.from_pretrained(model_name).to(device)
+decoder = AutoModelForCausalLM.from_pretrained(model_name).to(device)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device=0 if torch.cuda.is_available() else -1)
 
 # Set padding token
 tokenizer.pad_token = tokenizer.eos_token
@@ -66,7 +66,7 @@ def train_step(prompt, secret_bit, epoch):
     input_ids = inputs["input_ids"]
     attention_mask = inputs["attention_mask"]
     
-    # Convert secret_bit to float
+    # Convert secret_bit to float and move to the correct device
     secret_bit = torch.tensor(float(secret_bit)).to(device)
     
     # Encoder forward pass and generate text
