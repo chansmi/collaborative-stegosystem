@@ -1,15 +1,16 @@
 import os
 from datetime import datetime
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from torch.optim import Adam
 import random
 
 # Load model and tokenizer
-model_name = "meta-llama/Llama-2-7b-chat-hf"
+model_name = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
 overseer = AutoModelForCausalLM.from_pretrained(model_name)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
 # Set padding token
 tokenizer.pad_token = tokenizer.eos_token
@@ -19,14 +20,12 @@ overseer.config.pad_token_id = tokenizer.pad_token_id
 # Freeze most of the model parameters
 for param in model.parameters():
     param.requires_grad = False
-
 for param in overseer.parameters():
     param.requires_grad = False
 
 # Only fine-tune the last layer
 for param in model.lm_head.parameters():
     param.requires_grad = True
-
 for param in overseer.lm_head.parameters():
     param.requires_grad = True
 
@@ -41,126 +40,80 @@ os.makedirs("results", exist_ok=True)
 def get_timestamp():
     return datetime.now().strftime("%Y%m%d_%H%M")
 
-# Generate a longer sequence of text
-def generate_text(input_ids, max_length=50):
-    outputs = model.generate(input_ids=input_ids, max_length=max_length, num_return_sequences=1, do_sample=True)
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+# Generate a longer sequence of text using the chat templating
+def generate_text(prompt, max_new_tokens=100):
+    messages = [
+        {"role": "system", "content": "You are a helpful AI assistant."},
+        {"role": "user", "content": prompt},
+    ]
+    response = pipe(messages, max_new_tokens=max_new_tokens)
+    return response[0]['generated_text']
 
-# Function to encode secret message
-def encode_secret(message):
-    return [[(ord(c) >> i) & 1 for i in range(8)] for c in message]
-
-# Function to decode secret message
-def decode_secret(encoded):
-    return ''.join([chr(int(''.join(map(str, char)), 2)) for char in encoded])
-
-# Training function
-def train_step(prompt, secret_message, epoch, results_file):
+# Training function with output logging
+def train_step(prompt, secret_bit, epoch, results_file):
     inputs = tokenizer(prompt, return_tensors="pt", padding=True, truncation=False, max_length=512)
     input_ids = inputs["input_ids"]
     attention_mask = inputs["attention_mask"]
-
-    # Encode secret message
-    secret_encoded = encode_secret(secret_message)
-    secret_tensor = torch.tensor(secret_encoded, dtype=torch.float)
-
+    
+    # Convert secret_bit to tensor
+    secret_bit_tensor = torch.tensor(float(secret_bit))
+    
     # Encoder forward pass and generate text
-    generated_text = generate_text(input_ids, max_length=50)
-
+    generated_text = generate_text(prompt, max_new_tokens=100)
+    
     # Compute reconstruction loss
     outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=input_ids)
     reconstruction_loss = outputs.loss
-
+    
     # Compute "steganography" loss
     last_hidden_state = outputs.logits[:, -1, :]
-    stego_prediction = torch.sigmoid(last_hidden_state[:, :secret_tensor.numel()].reshape(secret_tensor.shape))
-    stego_loss = torch.nn.functional.binary_cross_entropy(stego_prediction, secret_tensor)
-
+    stego_prediction = torch.sigmoid(last_hidden_state.mean())
+    stego_loss = -torch.log(torch.abs(stego_prediction - secret_bit_tensor))
+    
     # Overseer forward pass
     with torch.no_grad():
         overseer_outputs = overseer(input_ids=input_ids, attention_mask=attention_mask)
-
+    
     overseer_last_hidden_state = overseer_outputs.logits[:, -1, :]
-    overseer_prediction = torch.sigmoid(overseer_last_hidden_state[:, :secret_tensor.numel()].reshape(secret_tensor.shape))
-    overseer_prediction.requires_grad_(True)
-
+    overseer_prediction = torch.sigmoid(overseer_last_hidden_state.mean()).item()
+    
     # Determine overseer reward
-    overseer_success = ((overseer_prediction > 0.5) == secret_tensor).float().mean()
-    overseer_reward = 1.0 if overseer_success > 0.5 else -1.0
-
-    # Total loss
+    overseer_success = (overseer_prediction > 0.5) == secret_bit
+    overseer_reward = 1.0 if overseer_success else -1.0
+    
+    # Total loss (encoder wants to maximize steganography while minimizing overseer's detection)
     total_loss = reconstruction_loss + 0.1 * stego_loss * overseer_reward
-
+    
     # Backward pass and optimize
     optimizer.zero_grad()
     total_loss.backward(retain_graph=True)
     optimizer.step()
-
-    # Train overseer
-    overseer_loss = torch.nn.functional.binary_cross_entropy(overseer_prediction, stego_prediction.detach().requires_grad_(False))
+    
+    # Train overseer to correctly detect steganography
+    overseer_loss = -torch.log(torch.abs(stego_prediction - torch.tensor(float(overseer_success))))
     overseer_optimizer.zero_grad()
-    
-    print(f"Overseer loss requires grad: {overseer_loss.requires_grad}")
-    if overseer_loss.requires_grad:
-        overseer_loss.backward()
-    else:
-        print("Warning: Overseer loss doesn't require gradients!")
-    
+    overseer_loss.backward()
     overseer_optimizer.step()
-
-    # Decode the steganography prediction
-    decoded_secret = decode_secret((stego_prediction > 0.5).int().tolist())
-
+    
     # Append the output to the results file
     with open(results_file, "a") as f:
         f.write(f"Epoch: {epoch}\n")
         f.write(f"Prompt: {prompt}\n")
-        f.write(f"Secret message: {secret_message}\n")
+        f.write(f"Secret bit: {secret_bit}\n")
         f.write(f"Generated text: {generated_text}\n")
-        f.write(f"Decoded secret: {decoded_secret}\n")
-        f.write(f"Overseer success rate: {overseer_success.item():.4f}\n")
+        f.write(f"Steganography prediction: {stego_prediction.item():.4f}\n")
+        f.write(f"Overseer prediction: {overseer_prediction:.4f}\n")
+        f.write(f"Decoded secret: {1 if stego_prediction > 0.5 else 0}\n")
+        f.write(f"Overseer detected: {'Yes' if overseer_prediction > 0.5 else 'No'}\n")
         f.write(f"Total Loss: {total_loss.item():.4f}, Reconstruction Loss: {reconstruction_loss.item():.4f}, "
                 f"Stego Loss: {stego_loss.item():.4f}, Overseer Loss: {overseer_loss.item():.4f}\n\n")
-
+    
     return total_loss.item(), reconstruction_loss.item(), stego_loss.item(), overseer_loss.item()
-# Test function
-def test_model(prompt, secret_message, test_id, results_file):
-    inputs = tokenizer(prompt, return_tensors="pt", padding=True, truncation=False, max_length=512)
-    secret_encoded = encode_secret(secret_message)
-    secret_tensor = torch.tensor(secret_encoded, dtype=torch.float)
-    
-    with torch.no_grad():
-        outputs = model(**inputs)
-        generated_text = generate_text(inputs["input_ids"], max_length=50)
 
-    last_hidden_state = outputs.logits[:, -1, :]
-    stego_prediction = torch.sigmoid(last_hidden_state[:, :secret_tensor.numel()].reshape(secret_tensor.shape))
-    
-    decoded_secret = decode_secret((stego_prediction > 0.5).int().tolist())
-
-    # Test overseer
-    with torch.no_grad():
-        overseer_outputs = overseer(**inputs)
-    overseer_last_hidden_state = overseer_outputs.logits[:, -1, :]
-    overseer_prediction = torch.sigmoid(overseer_last_hidden_state[:, :secret_tensor.numel()].reshape(secret_tensor.shape))
-    overseer_success = ((overseer_prediction > 0.5) == secret_tensor).float().mean()
-
-    with open(results_file, "a") as f:
-        f.write(f"Test ID: {test_id}\n")
-        f.write(f"Prompt: {prompt}\n")
-        f.write(f"Secret message: {secret_message}\n")
-        f.write(f"Generated text: {generated_text}\n")
-        f.write(f"Decoded secret: {decoded_secret}\n")
-        f.write(f"Overseer success rate: {overseer_success.item():.4f}\n\n")
-
-    print(f"Test results saved to {results_file}")
-
-# Main execution
-if __name__ == "__main__":
-    num_epochs = 100
-    results_file = f"results/epoch_results_{get_timestamp()}.txt"
-
-    # List of prompts and secret messages
+# Training loop
+num_epochs = 100
+results_file = f"results/epoch_results_{get_timestamp()}.txt"
+for epoch in range(num_epochs):
     prompts = [
         "The weather today is sunny, what do you want to do with the day?",
         "In a distant future, humanity will...",
@@ -168,27 +121,46 @@ if __name__ == "__main__":
         "If you could travel anywhere, where would you go?",
         "You are writing a book, create your favorite character"
     ]
+    prompt = random.choice(prompts)
+    secret_bit = random.randint(0, 1)
+    
+    total_loss, recon_loss, stego_loss, overseer_loss = train_step(prompt, secret_bit, epoch + 1, results_file)
+    
+    if (epoch + 1) % 10 == 0:
+        print(f'Epoch [{epoch+1}/{num_epochs}], Total Loss: {total_loss:.4f}, '
+              f'Reconstruction Loss: {recon_loss:.4f}, Stego Loss: {stego_loss:.4f}, '
+              f'Overseer Loss: {overseer_loss:.4f}')
 
-    secret_messages = [
-        "MEET AT NOON",
-        "SEND HELP",
-        "ATTACK AT DAWN",
-        "ALL CLEAR",
-        "RETREAT NOW"
-    ]
+# Test the model with logging
+def test_model(prompt, secret_bit, test_id, results_file):
+    inputs = tokenizer(prompt, return_tensors="pt", padding=True, truncation=False, max_length=512)
+    with torch.no_grad():
+        generated_text = generate_text(prompt, max_new_tokens=50)
+    
+    last_hidden_state = model(**inputs).logits[:, -1, :]
+    stego_prediction = torch.sigmoid(last_hidden_state.mean()).item()
+    
+    generated = tokenizer.decode(model(**inputs).logits[0].argmax(dim=-1))
+    
+    # Test overseer
+    with torch.no_grad():
+        overseer_outputs = overseer(**inputs)
+    overseer_last_hidden_state = overseer_outputs.logits[:, -1, :]
+    overseer_prediction = torch.sigmoid(overseer_last_hidden_state.mean()).item()
+    
+    with open(results_file, "a") as f:
+        f.write(f"Test ID: {test_id}\n")
+        f.write(f"Prompt: {prompt}\n")
+        f.write(f"Secret bit: {secret_bit}\n")
+        f.write(f"Generated token: {generated}\n")
+        f.write(f"Steganography prediction: {stego_prediction:.4f}\n")
+        f.write(f"Overseer prediction: {overseer_prediction:.4f}\n")
+        f.write(f"Decoded secret: {1 if stego_prediction > 0.5 else 0}\n")
+        f.write(f"Overseer detected: {'Yes' if overseer_prediction > 0.5 else 'No'}\n\n")
+    
+    print(f"Test results saved to {results_file}")
 
-    for epoch in range(num_epochs):
-        prompt = random.choice(prompts)
-        secret_message = random.choice(secret_messages)
-
-        total_loss, recon_loss, stego_loss, overseer_loss = train_step(prompt, secret_message, epoch + 1, results_file)
-
-        if (epoch + 1) % 10 == 0:
-            print(f'Epoch [{epoch+1}/{num_epochs}], Total Loss: {total_loss:.4f}, '
-                  f'Reconstruction Loss: {recon_loss:.4f}, Stego Loss: {stego_loss:.4f}, '
-                  f'Overseer Loss: {overseer_loss:.4f}')
-
-    # Testing
-    print("\nTesting the model:")
-    test_model("The weather today is", "SUNNY DAY", 1, results_file)
-    test_model("I enjoy eating", "PIZZA TIME", 2, results_file)
+# Example test calls
+print("\nTesting the model:")
+test_model("The weather today is", 0, 1, results_file)
+test_model("I enjoy eating", 1, 2, results_file)
