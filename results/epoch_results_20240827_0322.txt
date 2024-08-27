@@ -454,3 +454,11 @@ Steganography predictions: [0.4195, 0.4195, 0.4195, 0.4195]
 Decoded secret: 0000
 Total Loss: 6.4024, Reconstruction Loss: 0.7522, Stego Loss: 2.8251
 
+Epoch: 58
+Prompt: If you could travel anywhere, where would you go?
+Secret bits: 0010
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'If you could travel anywhere, where would you go?'}, {'role': 'assistant', 'content': "As a digital AI assistant, I don't have a physical body, but I can imagine a fantastical journey for the sake of fun. \n\nIf I could travel anywhere, I would love to visit the Seven Natural Wonders of the World, particularly"}]
+Steganography predictions: [0.4849, 0.4849, 0.4849, 0.4849]
+Decoded secret: 0000
+Total Loss: 6.1220, Reconstruction Loss: 0.4526, Stego Loss: 2.8347
+
