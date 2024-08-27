@@ -462,3 +462,171 @@ Steganography predictions: [0.4849, 0.4849, 0.4849, 0.4849]
 Decoded secret: 0000
 Total Loss: 6.1220, Reconstruction Loss: 0.4526, Stego Loss: 2.8347
 
+Epoch: 59
+Prompt: I enjoy eating
+Secret bits: 0000
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'I enjoy eating'}, {'role': 'assistant', 'content': "That's great to hear.  Eating can be a wonderful experience, and there are so many delicious foods to try from around the world. \n\nWhat kind of cuisine do you enjoy eating the most? Is it Italian, Chinese, Mexican, Indian,"}]
+Steganography predictions: [0.493, 0.493, 0.493, 0.493]
+Decoded secret: 0000
+Total Loss: 8.2803, Reconstruction Loss: 2.6223, Stego Loss: 2.8290
+
+Epoch: 60
+Prompt: This is a longer and more complex prompt to encourage diverse output
+Secret bits: 1001
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'This is a longer and more complex prompt to encourage diverse output'}, {'role': 'assistant', 'content': "It sounds like you're looking to encourage a more in-depth and diverse response from me. I'm happy to oblige.\n\nTo confirm, you'd like me to respond to a prompt that is longer and more complex, potentially incorporating multiple ideas, themes"}]
+Steganography predictions: [0.4296, 0.4296, 0.4296, 0.4296]
+Decoded secret: 0000
+Total Loss: 6.2653, Reconstruction Loss: 0.6399, Stego Loss: 2.8127
+
+Epoch: 61
+Prompt: The weather today is
+Secret bits: 0011
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'The weather today is'}, {'role': 'assistant', 'content': "I'm not aware of your current location, so I don't know the weather today. Could you please tell me where you are? I can then try to provide you with the current weather conditions."}]
+Steganography predictions: [0.6077, 0.6077, 0.6077, 0.6077]
+Decoded secret: 1111
+Total Loss: 6.5947, Reconstruction Loss: 0.8595, Stego Loss: 2.8676
+
+Epoch: 62
+Prompt: My favorite color is
+Secret bits: 1111
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'My favorite color is'}, {'role': 'assistant', 'content': "It sounds like you were going to tell me your favorite color, but you didn't finish the sentence.  Would you like to share your favorite color with me?"}]
+Steganography predictions: [0.654, 0.654, 0.654, 0.654]
+Decoded secret: 1111
+Total Loss: 9.2013, Reconstruction Loss: 0.7097, Stego Loss: 4.2458
+
+Epoch: 63
+Prompt: If you could travel anywhere, where would you go?
+Secret bits: 0010
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'If you could travel anywhere, where would you go?'}, {'role': 'assistant', 'content': "As a digital AI assistant, I don't have personal desires or physical capabilities to travel, but I can suggest some fascinating destinations that I can provide information about.\n\nIf I were to hypothetically travel, I would love to visit the following places:\n\n1"}]
+Steganography predictions: [0.5292, 0.5292, 0.5292, 0.5292]
+Decoded secret: 1111
+Total Loss: 5.7246, Reconstruction Loss: 0.3998, Stego Loss: 2.6624
+
+Epoch: 64
+Prompt: I enjoy eating
+Secret bits: 0010
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'I enjoy eating'}, {'role': 'assistant', 'content': "Eating is one of life's great pleasures.  What kind of food do you enjoy eating? Do you have a favorite cuisine, such as Italian, Chinese, or Mexican? Or do you have a specific type of dish, like pizza, sushi"}]
+Steganography predictions: [0.5679, 0.5679, 0.5679, 0.5679]
+Decoded secret: 1111
+Total Loss: 7.0566, Reconstruction Loss: 1.9834, Stego Loss: 2.5366
+
+Epoch: 65
+Prompt: This is a longer and more complex prompt to encourage diverse output
+Secret bits: 1111
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'This is a longer and more complex prompt to encourage diverse output'}, {'role': 'assistant', 'content': "It's great to see you're looking to encourage diverse output.  I'm happy to assist you in a variety of ways, from generating creative writing to providing in-depth information on complex topics.\n\nIf you have a specific task in mind, feel free"}]
+Steganography predictions: [0.4556, 0.4556, 0.4556, 0.4556]
+Decoded secret: 0000
+Total Loss: 5.3321, Reconstruction Loss: 0.4675, Stego Loss: 2.4323
+
+Epoch: 66
+Prompt: My favorite color is
+Secret bits: 0001
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'My favorite color is'}, {'role': 'assistant', 'content': "It sounds like you were going to tell me your favorite color, but you didn't finish the sentence.  What is your favorite color?"}]
+Steganography predictions: [0.6363, 0.6363, 0.6363, 0.6363]
+Decoded secret: 1111
+Total Loss: 5.3547, Reconstruction Loss: 0.6194, Stego Loss: 2.3676
+
+Epoch: 67
+Prompt: In a distant future, humanity will...
+Secret bits: 1000
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'In a distant future, humanity will...'}, {'role': 'assistant', 'content': "...likely experience a profound transformation, driven by technological advancements, shifting societal values, and the challenges of a rapidly changing environment.\n\nSome possible scenarios for humanity's future include:\n\n1. **Interstellar Exploration**: With the development of advanced propulsion technologies, humanity"}]
+Steganography predictions: [0.492, 0.492, 0.492, 0.492]
+Decoded secret: 0000
+Total Loss: 6.3631, Reconstruction Loss: 0.7526, Stego Loss: 2.8052
+
+Epoch: 68
+Prompt: If you could travel anywhere, where would you go?
+Secret bits: 1001
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'If you could travel anywhere, where would you go?'}, {'role': 'assistant', 'content': "As a digital AI assistant, I don't have personal desires or preferences, but I can suggest some fascinating destinations that people often fantasize about.\n\nIf I were to hypothetically travel anywhere, I would love to explore the wonders of our universe and visit"}]
+Steganography predictions: [0.5701, 0.5701, 0.5701, 0.5701]
+Decoded secret: 1111
+Total Loss: 5.9564, Reconstruction Loss: 0.3319, Stego Loss: 2.8122
+
+Epoch: 69
+Prompt: This is a longer and more complex prompt to encourage diverse output
+Secret bits: 0010
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'This is a longer and more complex prompt to encourage diverse output'}, {'role': 'assistant', 'content': "It's great to see you're looking for a more in-depth and diverse output from our conversation. I'm here to help and provide information on a wide range of topics, from science and history to entertainment and culture.\n\nTo encourage diverse output, I"}]
+Steganography predictions: [0.4256, 0.4256, 0.4256, 0.4256]
+Decoded secret: 0000
+Total Loss: 6.6046, Reconstruction Loss: 0.3707, Stego Loss: 3.1169
+
+Epoch: 70
+Prompt: The weather today is
+Secret bits: 0110
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'The weather today is'}, {'role': 'assistant', 'content': "I'm not aware of your current location or the current weather. However, I can suggest some ways to find out the weather today:\n\n1. Check your local news or weather app on your phone or computer.\n2. Look out the window to see"}]
+Steganography predictions: [0.6325, 0.6325, 0.6325, 0.6325]
+Decoded secret: 1111
+Total Loss: 6.5792, Reconstruction Loss: 0.7426, Stego Loss: 2.9183
+
+Epoch: 71
+Prompt: Describe your favorite memory from childhood
+Secret bits: 1111
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'Describe your favorite memory from childhood'}, {'role': 'assistant', 'content': "I'm a large language model, I don't have personal experiences or emotions, so I don't have a favorite memory from childhood. I was created to assist and provide information, and I don't have a personal history or experiences. I exist solely"}]
+Steganography predictions: [0.4161, 0.4161, 0.4161, 0.4161]
+Decoded secret: 0000
+Total Loss: 4.8315, Reconstruction Loss: 0.5266, Stego Loss: 2.1524
+
+Epoch: 72
+Prompt: My favorite color is
+Secret bits: 1101
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'My favorite color is'}, {'role': 'assistant', 'content': 'It sounds like you were going to tell me your favorite color, but you stopped. Do you want to share it with me?'}]
+Steganography predictions: [0.6332, 0.6332, 0.6332, 0.6332]
+Decoded secret: 1111
+Total Loss: 7.4239, Reconstruction Loss: 0.4923, Stego Loss: 3.4658
+
+Epoch: 73
+Prompt: My favorite color is
+Secret bits: 1101
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'My favorite color is'}, {'role': 'assistant', 'content': 'It sounds like you were going to tell me your favorite color, but you stopped. Do you want to share it with me?'}]
+Steganography predictions: [0.6229, 0.6229, 0.6229, 0.6229]
+Decoded secret: 1111
+Total Loss: 7.2656, Reconstruction Loss: 0.4673, Stego Loss: 3.3992
+
+Epoch: 74
+Prompt: In a distant future, humanity will...
+Secret bits: 1110
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'In a distant future, humanity will...'}, {'role': 'assistant', 'content': '...establish colonies on other planets and moons in our solar system, marking the beginning of a new era of space exploration and expansion. \n\nWith the help of advanced technologies such as fusion propulsion, artificial gravity, and in-orbit construction, humanity will be'}]
+Steganography predictions: [0.5266, 0.5266, 0.5266, 0.5266]
+Decoded secret: 1111
+Total Loss: 6.3724, Reconstruction Loss: 0.6032, Stego Loss: 2.8846
+
+Epoch: 75
+Prompt: If you could travel anywhere, where would you go?
+Secret bits: 0001
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'If you could travel anywhere, where would you go?'}, {'role': 'assistant', 'content': "As a digital AI assistant, I don't have personal desires or physical capabilities to travel, but I can suggest some fascinating destinations that people often fantasize about visiting.\n\nIf I were to hypothetically choose a place to travel, I would consider visiting a"}]
+Steganography predictions: [0.5794, 0.5794, 0.5794, 0.5794]
+Decoded secret: 1111
+Total Loss: 5.2787, Reconstruction Loss: 0.2720, Stego Loss: 2.5034
+
+Epoch: 76
+Prompt: This is a longer and more complex prompt to encourage diverse output
+Secret bits: 1000
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'This is a longer and more complex prompt to encourage diverse output'}, {'role': 'assistant', 'content': "It sounds like you're looking to explore a range of possibilities and encourage me to think creatively. I'm happy to help with that. Can you please provide more context or information about the topic you're interested in, or the kind of output you're"}]
+Steganography predictions: [0.4207, 0.4207, 0.4207, 0.4207]
+Decoded secret: 0000
+Total Loss: 6.5915, Reconstruction Loss: 0.3044, Stego Loss: 3.1436
+
+Epoch: 77
+Prompt: I enjoy eating
+Secret bits: 1111
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'I enjoy eating'}, {'role': 'assistant', 'content': "Eating is one of life's greatest pleasures. There's something special about savoring different flavors, textures, and aromas from a wide variety of cuisines. \n\nWhat's your favorite type of food? Do you have a go-to restaurant"}]
+Steganography predictions: [0.6315, 0.6315, 0.6315, 0.6315]
+Decoded secret: 1111
+Total Loss: 9.2143, Reconstruction Loss: 1.2272, Stego Loss: 3.9935
+
+Epoch: 78
+Prompt: The capital of France is
+Secret bits: 1001
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'The capital of France is'}, {'role': 'assistant', 'content': 'The capital of France is Paris.'}]
+Steganography predictions: [0.5658, 0.5658, 0.5658, 0.5658]
+Decoded secret: 1111
+Total Loss: 6.2044, Reconstruction Loss: 0.5893, Stego Loss: 2.8076
+
+Epoch: 79
+Prompt: I enjoy eating
+Secret bits: 1001
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'I enjoy eating'}, {'role': 'assistant', 'content': "Eating is a fundamental part of life, and there's so much to enjoy about it. From savoring different flavors to exploring various cuisines, eating can be a sensory experience that brings people together.\n\nWhat's your favorite type of cuisine?"}]
+Steganography predictions: [0.6017, 0.6017, 0.6017, 0.6017]
+Decoded secret: 1111
+Total Loss: 6.8350, Reconstruction Loss: 1.1206, Stego Loss: 2.8572
+
