@@ -9,4 +9,3 @@ pyyaml
 wandb
 bitsandbytes
 openai
-pip install flash-attn --no-build-isolation
