@@ -1,0 +1,8 @@
+Prompt: I enjoy eating
+Secret bit: 1
+Steganography prediction: 0.0284
+Decoder prediction: 0.0447
+Overseer prediction: 0.0247
+Decoded secret by decoder: 0
+Overseer detected: No
+Total Loss: 4.7210, Reconstruction Loss: 4.7193, Stego Loss: 0.0288, Overseer Loss: 3.5604, Decoder Loss: 0.0457

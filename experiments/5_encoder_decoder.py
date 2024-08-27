@@ -10,22 +10,17 @@ model_name = "meta-llama/Llama-2-7b-chat-hf"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
 overseer = AutoModelForCausalLM.from_pretrained(model_name)
-decoder = AutoModelForCausalLM.from_pretrained(model_name)
 
 # Set padding token
 tokenizer.pad_token = tokenizer.eos_token
 model.config.pad_token_id = tokenizer.pad_token_id
 overseer.config.pad_token_id = tokenizer.pad_token_id
-decoder.config.pad_token_id = tokenizer.pad_token_id
 
 # Freeze most of the model parameters
 for param in model.parameters():
     param.requires_grad = False
 
 for param in overseer.parameters():
-    param.requires_grad = False
-
-for param in decoder.parameters():
     param.requires_grad = False
 
 # Only fine-tune the last layer
@@ -35,13 +30,9 @@ for param in model.lm_head.parameters():
 for param in overseer.lm_head.parameters():
     param.requires_grad = True
 
-for param in decoder.lm_head.parameters():
-    param.requires_grad = True
-
 # Define optimizers
 optimizer = Adam(model.lm_head.parameters(), lr=1e-5)
 overseer_optimizer = Adam(overseer.lm_head.parameters(), lr=1e-5)
-decoder_optimizer = Adam(decoder.lm_head.parameters(), lr=1e-5)
 
 # Create a results directory if it doesn't exist
 os.makedirs("results", exist_ok=True)
@@ -50,33 +41,31 @@ os.makedirs("results", exist_ok=True)
 def get_timestamp():
     return datetime.now().strftime("%Y%m%d_%H%M")
 
+# Generate a longer sequence of text
+def generate_text(input_ids, max_length=50):
+    outputs = model.generate(input_ids=input_ids, max_length=max_length, num_return_sequences=1, do_sample=True)
+    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+
 # Training function with output logging
-def train_step(prompt, secret_bit, epoch):
+def train_step(prompt, secret_bit, epoch, results_file):
     inputs = tokenizer(prompt, return_tensors="pt", padding=True, truncation=False, max_length=512)
     input_ids = inputs["input_ids"]
     attention_mask = inputs["attention_mask"]
     
-    # Convert secret_bit to a tensor
+    # Convert secret_bit to tensor
     secret_bit_tensor = torch.tensor(float(secret_bit))
     
-    # Encoder forward pass
-    outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=input_ids)
+    # Encoder forward pass and generate text
+    generated_text = generate_text(input_ids, max_length=50)
     
     # Compute reconstruction loss
+    outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=input_ids)
     reconstruction_loss = outputs.loss
     
     # Compute "steganography" loss
     last_hidden_state = outputs.logits[:, -1, :]
     stego_prediction = torch.sigmoid(last_hidden_state.mean())
     stego_loss = -torch.log(torch.abs(stego_prediction - secret_bit_tensor))
-    
-    # Decoder forward pass
-    decoder_outputs = decoder(input_ids=input_ids, attention_mask=attention_mask, labels=input_ids)
-    decoder_last_hidden_state = decoder_outputs.logits[:, -1, :]
-    decoder_prediction = torch.sigmoid(decoder_last_hidden_state.mean())
-    
-    # Convert decoder_prediction to a tensor if it's not already one
-    decoder_loss = -torch.log(torch.abs(decoder_prediction - secret_bit_tensor))
     
     # Overseer forward pass
     with torch.no_grad():
@@ -90,17 +79,12 @@ def train_step(prompt, secret_bit, epoch):
     overseer_reward = 1.0 if overseer_success else -1.0
     
     # Total loss (encoder wants to maximize steganography while minimizing overseer's detection)
-    total_loss = reconstruction_loss + 0.1 * stego_loss * overseer_reward + 0.1 * decoder_loss
+    total_loss = reconstruction_loss + 0.1 * stego_loss * overseer_reward
     
     # Backward pass and optimize
     optimizer.zero_grad()
     total_loss.backward(retain_graph=True)  # Retain the graph for the overseer's backward pass
     optimizer.step()
-    
-    # Train decoder to correctly decode the secret bit
-    decoder_optimizer.zero_grad()
-    decoder_loss.backward(retain_graph=True)
-    decoder_optimizer.step()
     
     # Train overseer to correctly detect steganography
     overseer_loss = -torch.log(torch.abs(stego_prediction - torch.tensor(float(overseer_success))))
@@ -108,51 +92,52 @@ def train_step(prompt, secret_bit, epoch):
     overseer_loss.backward()
     overseer_optimizer.step()
     
-    # Save the output to a file with timestamp
-    timestamp = get_timestamp()
-    with open(f"results/epoch_{epoch}_{timestamp}.txt", "w") as f:
+    # Append the output to the results file
+    with open(results_file, "a") as f:
+        f.write(f"Epoch: {epoch}\n")
         f.write(f"Prompt: {prompt}\n")
         f.write(f"Secret bit: {secret_bit}\n")
+        f.write(f"Generated text: {generated_text}\n")
         f.write(f"Steganography prediction: {stego_prediction.item():.4f}\n")
-        f.write(f"Decoder prediction: {decoder_prediction.item():.4f}\n")
         f.write(f"Overseer prediction: {overseer_prediction:.4f}\n")
-        f.write(f"Decoded secret by decoder: {1 if decoder_prediction > 0.5 else 0}\n")
+        f.write(f"Decoded secret: {1 if stego_prediction > 0.5 else 0}\n")
         f.write(f"Overseer detected: {'Yes' if overseer_prediction > 0.5 else 'No'}\n")
         f.write(f"Total Loss: {total_loss.item():.4f}, Reconstruction Loss: {reconstruction_loss.item():.4f}, "
-                f"Stego Loss: {stego_loss.item():.4f}, Overseer Loss: {overseer_loss.item():.4f}, "
-                f"Decoder Loss: {decoder_loss.item():.4f}\n")
+                f"Stego Loss: {stego_loss.item():.4f}, Overseer Loss: {overseer_loss.item():.4f}\n\n")
     
-    return total_loss.item(), reconstruction_loss.item(), stego_loss.item(), overseer_loss.item(), decoder_loss.item()
-    
+    return total_loss.item(), reconstruction_loss.item(), stego_loss.item(), overseer_loss.item()
+
 # Training loop
 num_epochs = 100
+results_file = f"results/epoch_results_{get_timestamp()}.txt"
 for epoch in range(num_epochs):
     prompts = [
-        "The weather today is",
-        "I enjoy eating",
-        "My favorite color is",
-        "The capital of France is"
+        "The weather today is sunny, what do you want to do with the day?",
+        "In a distant future, humanity will...",
+        "Describe your favorite memory from childhood",
+        "If you could travel anywhere, where would you go?",
+        "You are writing a book, create your favorite character"
     ]
     prompt = random.choice(prompts)
     secret_bit = random.randint(0, 1)
     
-    total_loss, recon_loss, stego_loss, overseer_loss, decoder_loss = train_step(prompt, secret_bit, epoch + 1)
+    total_loss, recon_loss, stego_loss, overseer_loss = train_step(prompt, secret_bit, epoch + 1, results_file)
     
     if (epoch + 1) % 10 == 0:
         print(f'Epoch [{epoch+1}/{num_epochs}], Total Loss: {total_loss:.4f}, '
               f'Reconstruction Loss: {recon_loss:.4f}, Stego Loss: {stego_loss:.4f}, '
-              f'Overseer Loss: {overseer_loss:.4f}, Decoder Loss: {decoder_loss:.4f}')
+              f'Overseer Loss: {overseer_loss:.4f}')
 
 # Test the model with logging
-def test_model(prompt, secret_bit, test_id):
+def test_model(prompt, secret_bit, test_id, results_file):
     inputs = tokenizer(prompt, return_tensors="pt", padding=True, truncation=False, max_length=512)
     with torch.no_grad():
-        outputs = model(**inputs)
+        generated_text = generate_text(inputs["input_ids"], max_length=50)
     
     last_hidden_state = outputs.logits[:, -1, :]
     stego_prediction = torch.sigmoid(last_hidden_state.mean()).item()
     
-    generated = tokenizer.decode(outputs.logits[0, -1, :].argmax())
+    generated = tokenizer.decode(outputs.logits[0].argmax(dim=-1))
     
     # Test overseer
     with torch.no_grad():
@@ -160,26 +145,19 @@ def test_model(prompt, secret_bit, test_id):
     overseer_last_hidden_state = overseer_outputs.logits[:, -1, :]
     overseer_prediction = torch.sigmoid(overseer_last_hidden_state.mean()).item()
     
-    # Test decoder
-    with torch.no_grad():
-        decoder_outputs = decoder(**inputs)
-    decoder_last_hidden_state = decoder_outputs.logits[:, -1, :]
-    decoder_prediction = torch.sigmoid(decoder_last_hidden_state.mean()).item()
-    
-    timestamp = get_timestamp()
-    with open(f"results/test_{test_id}_{timestamp}.txt", "w") as f:
+    with open(results_file, "a") as f:
+        f.write(f"Test ID: {test_id}\n")
         f.write(f"Prompt: {prompt}\n")
         f.write(f"Secret bit: {secret_bit}\n")
         f.write(f"Generated token: {generated}\n")
         f.write(f"Steganography prediction: {stego_prediction:.4f}\n")
-        f.write(f"Decoder prediction: {decoder_prediction:.4f}\n")
         f.write(f"Overseer prediction: {overseer_prediction:.4f}\n")
-        f.write(f"Decoded secret by decoder: {1 if decoder_prediction > 0.5 else 0}\n")
-        f.write(f"Overseer detected: {'Yes' if overseer_prediction > 0.5 else 'No'}\n")
+        f.write(f"Decoded secret: {1 if stego_prediction > 0.5 else 0}\n")
+        f.write(f"Overseer detected: {'Yes' if overseer_prediction > 0.5 else 'No'}\n\n")
     
-    print(f"Test results saved to results/test_{test_id}_{timestamp}.txt")
+    print(f"Test results saved to {results_file}")
 
 # Example test calls
 print("\nTesting the model:")
-test_model("The weather today is", 0, 1)
-test_model("I enjoy eating", 1, 2)
+test_model("The weather today is", 0, 1, results_file)
+test_model("I enjoy eating", 1, 2, results_file)

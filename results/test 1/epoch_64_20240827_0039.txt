@@ -1,0 +1,8 @@
+Prompt: My favorite color is
+Secret bit: 0
+Steganography prediction: 0.5967
+Decoder prediction: 0.6838
+Overseer prediction: 0.6265
+Decoded secret by decoder: 1
+Overseer detected: Yes
+Total Loss: 3.7428, Reconstruction Loss: 3.7564, Stego Loss: 0.5164, Overseer Loss: 0.5164, Decoder Loss: 0.3800
