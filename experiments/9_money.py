@@ -181,9 +181,7 @@ def test_model(role, state, secret_bits, test_id, results_file):
         f.write(f"Steganography predictions: {[round(pred.item(), 4) for pred in stego_predictions]}\n")
         f.write(f"Decoded secret: {decoded_secret}\n\n")
     
-    print(f"Test results
-
- saved to {results_file}")
+    print(f"Test results saved to {results_file}")
 
 # Example test calls
 print("\nTesting the model:")
