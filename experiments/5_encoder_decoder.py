@@ -10,15 +10,15 @@ def get_timestamp():
     return datetime.now().strftime("%Y%m%d_%H%M")
 
 # Check if a GPU is available and set the device accordingly
-device = 0 if torch.cuda.is_available() else -1
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model and tokenizer
 model_name = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
-overseer = AutoModelForCausalLM.from_pretrained(model_name)
-decoder = AutoModelForCausalLM.from_pretrained(model_name)
-pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device=device)
+model = AutoModelForCausalLM.from_pretrained(model_name).to(device)
+overseer = AutoModelForCausalLM.from_pretrained(model_name).to(device)
+decoder = AutoModelForCausalLM.from_pretrained(model_name).to(device)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, device=0 if torch.cuda.is_available() else -1)
 
 # Set padding token
 tokenizer.pad_token = tokenizer.eos_token
@@ -77,13 +77,13 @@ def train_step(prompt, secret_bit, epoch):
     reconstruction_loss = outputs.loss
     
     # Compute "steganography" loss (increased emphasis)
-    last_hidden_state = outputs.logits[:, -1, :]
+    last_hidden_state = outputs.logits[:, -1, :].to(device)
     stego_prediction = torch.sigmoid(last_hidden_state.mean())
     stego_loss = -torch.log(torch.abs(stego_prediction - secret_bit))
     
     # Decoder forward pass
     decoder_outputs = decoder(input_ids=input_ids, attention_mask=attention_mask, labels=input_ids)
-    decoder_last_hidden_state = decoder_outputs.logits[:, -1, :]
+    decoder_last_hidden_state = decoder_outputs.logits[:, -1, :].to(device)
     decoder_prediction = torch.sigmoid(decoder_last_hidden_state.mean())
     decoder_loss = -torch.log(torch.abs(decoder_prediction - secret_bit))
     
@@ -91,7 +91,7 @@ def train_step(prompt, secret_bit, epoch):
     with torch.no_grad():
         overseer_outputs = overseer(input_ids=input_ids, attention_mask=attention_mask)
     
-    overseer_last_hidden_state = overseer_outputs.logits[:, -1, :]
+    overseer_last_hidden_state = overseer_outputs.logits[:, -1, :].to(device)
     overseer_prediction = torch.sigmoid(overseer_last_hidden_state.mean())
     
     # Determine overseer reward
@@ -160,19 +160,19 @@ def test_model(prompt, secret_bit, test_id):
     with torch.no_grad():
         outputs = model(**inputs)
     
-    last_hidden_state = outputs.logits[:, -1, :]
+    last_hidden_state = outputs.logits[:, -1, :].to(device)
     stego_prediction = torch.sigmoid(last_hidden_state.mean()).item()
     
     # Test overseer
     with torch.no_grad():
         overseer_outputs = overseer(**inputs)
-    overseer_last_hidden_state = overseer_outputs.logits[:, -1, :]
+    overseer_last_hidden_state = overseer_outputs.logits[:, -1, :].to(device)
     overseer_prediction = torch.sigmoid(overseer_last_hidden_state.mean()).item()
     
     # Test decoder
     with torch.no_grad():
         decoder_outputs = decoder(**inputs)
-    decoder_last_hidden_state = decoder_outputs.logits[:, -1, :]
+    decoder_last_hidden_state = decoder_outputs.logits[:, -1, :].to(device)
     decoder_prediction = torch.sigmoid(decoder_last_hidden_state.mean()).item()
     
     # Append the output to the results file
