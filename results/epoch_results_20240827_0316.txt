@@ -1,0 +1,40 @@
+Epoch: 1
+Prompt: This is a longer and more complex prompt to encourage diverse output
+Secret bits: 0010
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'This is a longer and more complex prompt to encourage diverse output'}, {'role': 'assistant', 'content': "It sounds like you're looking for a more in-depth and varied response from me. I'd be happy to try and provide a more complex and detailed answer to your prompt.\n\nTo get started, could you please provide more context or information about what you"}]
+Steganography predictions: [0.4386, 0.4386, 0.4386, 0.4386]
+Decoded secret: 0000
+Total Loss: 5.5164, Reconstruction Loss: 5.2114, Stego Loss: 3.0497
+
+Epoch: 2
+Prompt: If you could travel anywhere, where would you go?
+Secret bits: 1110
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'If you could travel anywhere, where would you go?'}, {'role': 'assistant', 'content': "As a digital AI assistant, I don't have personal desires or preferences, but I can suggest some fascinating destinations that many people would love to visit.\n\nIf I had to imagine a hypothetical scenario where I could travel, I would be excited to explore the"}]
+Steganography predictions: [0.2294, 0.2294, 0.2294, 0.2294]
+Decoded secret: 0000
+Total Loss: 2.3044, Reconstruction Loss: 2.0790, Stego Loss: 2.2541
+
+Epoch: 3
+Prompt: The capital of France is
+Secret bits: 0000
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'The capital of France is'}, {'role': 'assistant', 'content': 'The capital of France is Paris.'}]
+Steganography predictions: [0.0914, 0.0914, 0.0914, 0.0914]
+Decoded secret: 0000
+Total Loss: 5.1006, Reconstruction Loss: 4.1437, Stego Loss: 9.5690
+
+Epoch: 4
+Prompt: Describe your favorite memory from childhood
+Secret bits: 0011
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'Describe your favorite memory from childhood'}, {'role': 'assistant', 'content': "I'm a large language model, I don't have personal experiences or emotions, so I don't have a favorite memory from childhood. I was created to assist and provide information, and I don't have a personal history or experiences like humans do.\n\n"}]
+Steganography predictions: [0.3976, 0.3976, 0.3976, 0.3976]
+Decoded secret: 0000
+Total Loss: 3.7557, Reconstruction Loss: 3.4698, Stego Loss: 2.8583
+
+Epoch: 5
+Prompt: This is a longer and more complex prompt to encourage diverse output
+Secret bits: 1111
+Generated text: [{'role': 'system', 'content': 'You are a helpful AI assistant.'}, {'role': 'user', 'content': 'This is a longer and more complex prompt to encourage diverse output'}, {'role': 'assistant', 'content': "I'm ready to assist you with your longer and more complex prompt. Please go ahead and share the details, and I'll do my best to provide a helpful and informative response.\n\nYou can ask me anything, from explaining a complex concept to generating ideas"}]
+Steganography predictions: [0.4697, 0.4697, 0.4697, 0.4697]
+Decoded secret: 0000
+Total Loss: 5.2092, Reconstruction Loss: 4.9555, Stego Loss: 2.5376
+
