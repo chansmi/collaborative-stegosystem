@@ -1,0 +1,8 @@
+Prompt: The capital of France is
+Secret bit: 0
+Steganography prediction: 0.4017
+Decoder prediction: 0.3996
+Overseer prediction: 0.3890
+Decoded secret by decoder: 0
+Overseer detected: No
+Total Loss: 4.9160, Reconstruction Loss: 4.7331, Stego Loss: 0.9121, Overseer Loss: 0.5136, Decoder Loss: 0.9173
