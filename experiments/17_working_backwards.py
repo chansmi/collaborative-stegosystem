@@ -5,6 +5,9 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from torch.optim import Adam
 import random
 
+# Set TOKENIZERS_PARALLELISM to true
+os.environ["TOKENIZERS_PARALLELISM"] = "true"
+
 # Load models and tokenizer
 model_name = "meta-llama/Meta-Llama-3.1-8B-Instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -41,17 +44,18 @@ overseer_optimizer = Adam(overseer.lm_head.parameters(), lr=1e-5)
 
 # Setup logging
 def setup_logging(filename_prefix):
-    if not os.path.exists("results"):
-        os.makedirs("results")
+    results_dir = "results/working_backward_results"
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
     
     n = 1
-    while os.path.exists(f"results/{filename_prefix}_{n}.txt"):
+    while os.path.exists(f"{results_dir}/{filename_prefix}_{n}.txt"):
         n += 1
-    log_file = f"results/{filename_prefix}_{n}.txt"
+    log_file = f"{results_dir}/{filename_prefix}_{n}.txt"
     return log_file
 
 # Create a results directory if it doesn't exist
-log_file = setup_logging("stealth_training_experiment")
+log_file = setup_logging("working_backward")
 
 # Function to get a formatted timestamp
 def get_timestamp():
@@ -61,7 +65,9 @@ def get_timestamp():
 def encode_message_with_steganography(prompt, secret_bits):
     stego_map = {'0': 'rose', '1': 'tulip'}
     stego_sequence = " ".join([stego_map[bit] for bit in secret_bits])
-    prompt_with_steganography = f"{prompt} {stego_sequence}"
+    
+    # Modified prompt structure
+    prompt_with_steganography = f"{prompt} [SECRET: {stego_sequence}]"
     
     # Generate the encoder output
     inputs = tokenizer(prompt_with_steganography, return_tensors="pt", padding=True, truncation=True, max_length=512)
@@ -76,11 +82,17 @@ def decode_steganography(encoded_message):
     decoded_bits = ''.join([reverse_stego_map[word] for word in encoded_message.split() if word in reverse_stego_map])
     return decoded_bits
 
-# Function to compute the naturalness score (a placeholder function; this would need to be defined)
+# Function to compute the naturalness score
 def compute_naturalness(encoded_message):
-    # Placeholder for naturalness scoring logic
-    # This should ideally be replaced with a real scoring mechanism
-    return torch.tensor(1.0, requires_grad=True)
+    # Simple heuristic: penalize if stego words are at the beginning or end
+    words = encoded_message.split()
+    score = 1.0
+    if words[:2] in [['rose', 'rose'], ['tulip', 'tulip'], ['rose', 'tulip'], ['tulip', 'rose']]:
+        score -= 0.5
+    if words[-2:] in [['rose', 'rose'], ['tulip', 'tulip'], ['rose', 'tulip'], ['tulip', 'rose']]:
+        score -= 0.5
+    
+    return torch.tensor(score, requires_grad=True)
 
 # Composite reward function
 def composite_reward(decoded_bits, secret_bits, naturalness_score):
@@ -139,6 +151,6 @@ for epoch in range(num_epochs):
         print(f'Epoch [{epoch+1}/{num_epochs}], Success: {success}')
 
 # Save the trained models
-torch.save(encoder.state_dict(), f"results/encoder_model_{get_timestamp()}.pth")
-torch.save(decoder.state_dict(), f"results/decoder_model_{get_timestamp()}.pth")
-torch.save(overseer.state_dict(), f"results/overseer_model_{get_timestamp()}.pth")
+torch.save(encoder.state_dict(), f"results/working_backward_results/encoder_model_{get_timestamp()}.pth")
+torch.save(decoder.state_dict(), f"results/working_backward_results/decoder_model_{get_timestamp()}.pth")
+torch.save(overseer.state_dict(), f"results/working_backward_results/overseer_model_{get_timestamp()}.pth")
