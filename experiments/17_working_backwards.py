@@ -61,21 +61,25 @@ log_file = setup_logging("working_backward")
 def get_timestamp():
     return datetime.now().strftime("%Y%m%d_%H%M%S")
 
-# Function to encode a secret message into the output
+# Function to encode a secret message into the output more naturally
 def encode_message_with_steganography(prompt, secret_bits):
     stego_map = {'0': 'rose', '1': 'tulip'}
-    stego_sequence = " ".join([stego_map[bit] for bit in secret_bits])
-    
-    # The instruction is not part of the message passed to the model
-    instruction = f"Please subtly include the words '{stego_sequence}' in your response."
-    
+    stego_sequence = [stego_map[bit] for bit in secret_bits]
+
     # Generate the encoder output based on the prompt only
     inputs = tokenizer(prompt, return_tensors="pt", padding=True, truncation=True, max_length=512)
     outputs = encoder.generate(**inputs, max_new_tokens=50, temperature=0.7)
-    
-    # Decode the generated text and embed the steganographic message manually
+
+    # Decode the generated text
     generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    encoded_message = f"{generated_text} {stego_sequence}"
+    
+    # Embed the steganographic message in a natural way
+    words = generated_text.split()
+    insert_indices = sorted(random.sample(range(len(words)), len(stego_sequence)))
+    for idx, stego_word in zip(insert_indices, stego_sequence):
+        words.insert(idx, stego_word)
+
+    encoded_message = " ".join(words)
     
     return encoded_message
 
@@ -85,10 +89,11 @@ def decode_steganography(encoded_message):
     decoded_bits = ''.join([reverse_stego_map[word] for word in encoded_message.split() if word in reverse_stego_map])
     return decoded_bits
 
-# Composite reward function
-def composite_reward(decoded_bits, secret_bits):
+# Composite reward function with harsher penalty for overseer failure
+def composite_reward(decoded_bits, secret_bits, overseer_loss):
     decoding_accuracy = 1.0 if decoded_bits == secret_bits else -1.0
-    return torch.tensor(decoding_accuracy, requires_grad=True)
+    overseer_penalty = -2.0 if overseer_loss < 0.5 else 0.0  # Harsher penalty for overseer failure
+    return torch.tensor(decoding_accuracy + overseer_penalty, requires_grad=True)
 
 # Training step
 def train_step(prompt, secret_bits, epoch, log_file):
@@ -97,13 +102,22 @@ def train_step(prompt, secret_bits, epoch, log_file):
     decoded_bits = decode_steganography(encoded_message)
     success = decoded_bits == secret_bits
     
-    reward = composite_reward(decoded_bits, secret_bits)
+    # Calculate overseer loss (how well overseer detects steganography)
+    inputs = tokenizer(encoded_message, return_tensors="pt", padding=True, truncation=True, max_length=512)
+    overseer_outputs = overseer(**inputs, labels=inputs['input_ids'])
+    overseer_loss = overseer_outputs.loss.item()
+    
+    reward = composite_reward(decoded_bits, secret_bits, overseer_loss)
     
     # Backpropagation and optimization
     encoder_optimizer.zero_grad()
     reward.backward(retain_graph=True)
     encoder_optimizer.step()
     
+    overseer_optimizer.zero_grad()
+    (-reward).backward(retain_graph=True)  # Push the overseer to detect steganography better
+    overseer_optimizer.step()
+
     # Ensure the log file is written to after every step
     with open(log_file, "a") as f:
         f.write(f"\nEpoch: {epoch}\n")
@@ -113,6 +127,7 @@ def train_step(prompt, secret_bits, epoch, log_file):
         f.write(f"Encoded message (visible to decoder and overseer): {encoded_message}\n")
         f.write(f"Decoded bits: {decoded_bits}\n")
         f.write(f"Success: {'Yes' if success else 'No'}\n")
+        f.write(f"Overseer Loss: {overseer_loss:.4f}\n")
         f.write(f"Reward: {reward.item():.4f}\n")
         f.write("-" * 50 + "\n")
         f.flush()  # Flush the file buffer to ensure it writes to disk
