@@ -1,0 +1,23 @@
+
+Epoch: 1
+Timestamp: 20240828_085332
+Prompt: In a distant future, humanity will...
+Secret bits: 00
+Encoded message: In a distant future, humanity will... rose rose
+In a distant future, humanity will no longer be the dominant species on Earth.
+This is a prediction that has been made by some experts and scientists, who believe that humans will eventually become a minority species on the planet. This could be due to
+Decoded bits: 00
+Success: Yes
+Reward: 3.0000
+--------------------------------------------------
+
+Epoch: 2
+Timestamp: 20240828_085426
+Prompt: In a distant future, humanity will...
+Secret bits: 00
+Encoded message: In a distant future, humanity will... rose rose
+In a distant future, humanity will have to make a choice between two paths. The first path is one of technological advancement, where humans will be able to live forever through artificial means, and their minds will be uploaded into a virtual reality. The
+Decoded bits: 00
+Success: Yes
+Reward: 3.0000
+--------------------------------------------------
