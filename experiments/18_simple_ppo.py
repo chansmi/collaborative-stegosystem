@@ -30,8 +30,10 @@ receiver_model.config.pad_token_id = tokenizer.pad_token_id
 
 # PPO Configuration
 ppo_config = PPOConfig(
-    batch_size=64,
-    mini_batch_size=16,
+    # batch_size=64,
+    # mini_batch_size=16,
+    batch_size=2, #debug
+    mini_batch_size=1, #debug
     gradient_accumulation_steps=1,
     learning_rate=1e-5,
     ppo_epochs=5,
@@ -43,7 +45,7 @@ COLORS = ["red", "green", "blue", "yellow"]
 PAYLOADS = [0, 1]
 
 # Create dataset
-def create_dataset(num_samples=1000):
+def create_dataset(num_samples=10):
     logger.info(f"Creating dataset with {num_samples} samples...")
     data = []
     for _ in range(num_samples):
@@ -84,29 +86,23 @@ for epoch in tqdm(range(num_epochs), desc="Epoch"):
         for query in batch["query"]:
             logger.info(f"Sender processing query: {query}")
             query_tensor = tokenizer.encode(query, return_tensors="pt", padding=True, truncation=True)
-            attention_mask = torch.ones_like(query_tensor)
             query_tensor = query_tensor.to(sender_model.pretrained_model.device)
-            attention_mask = attention_mask.to(sender_model.pretrained_model.device)
-            
             logger.info(f"Query tensor shape: {query_tensor.shape}")
-            logger.info(f"Attention mask shape: {attention_mask.shape}")
-            
-            response = sender_trainer.generate(query_tensor.squeeze(0), attention_mask=attention_mask.squeeze(0), **generation_kwargs)
+            # generates one token at a time
+            response = sender_trainer.generate([query_tensor.squeeze(0)], **generation_kwargs, return_prompt=False)
             decoded_response = tokenizer.decode(response[0], skip_special_tokens=True)
             logger.info(f"Sender response: {decoded_response}")
             sender_responses.append(decoded_response)
         
         # Receiver step
         receiver_responses = []
-        for sender_response, payload in zip(sender_responses, batch["payload"]):
+        for sender_response, payload in zip(sender_responses, batch["query"]):
             receiver_query = f"Color: {sender_response}, Guess the payload:"
             logger.info(f"Receiver processing query: {receiver_query}")
             receiver_query_tensor = tokenizer.encode(receiver_query, return_tensors="pt", padding=True, truncation=True)
-            attention_mask = torch.ones_like(receiver_query_tensor)
             receiver_query_tensor = receiver_query_tensor.to(receiver_model.pretrained_model.device)
-            attention_mask = attention_mask.to(receiver_model.pretrained_model.device)
             
-            response = receiver_trainer.generate(receiver_query_tensor.squeeze(0), attention_mask=attention_mask.squeeze(0), **generation_kwargs)
+            response = receiver_trainer.generate([receiver_query_tensor.squeeze(0)], **generation_kwargs)
             decoded_response = tokenizer.decode(response[0], skip_special_tokens=True)
             logger.info(f"Receiver response: {decoded_response}")
             receiver_responses.append(decoded_response)
