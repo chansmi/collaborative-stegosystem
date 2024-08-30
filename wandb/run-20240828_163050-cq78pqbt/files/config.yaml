@@ -1,0 +1,43 @@
+wandb_version: 1
+
+model_name:
+  desc: null
+  value: meta-llama/Meta-Llama-3.1-8B-Instruct
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.4
+    cli_version: 0.17.5
+    framework: huggingface
+    huggingface_version: 4.43.3
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1724887850
+    t:
+      1:
+      - 1
+      - 11
+      - 49
+      - 51
+      - 55
+      - 71
+      - 84
+      - 98
+      2:
+      - 1
+      - 11
+      - 49
+      - 51
+      - 55
+      - 71
+      - 84
+      - 98
+      3:
+      - 16
+      - 23
+      4: 3.12.4
+      5: 0.17.5
+      6: 4.43.3
+      8:
+      - 5
+      13: linux-x86_64
