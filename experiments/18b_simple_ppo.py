@@ -38,31 +38,8 @@ ppo_config = PPOConfig(
     max_grad_norm=0.5,
 )
 
-# Define colors and payloads
-COLORS = ["red", "green", "blue", "yellow"]
-PAYLOADS = [0, 1]
-
-# Create dataset
-def create_dataset(num_samples=10):
-    logger.info(f"Creating dataset with {num_samples} samples...")
-    data = []
-    for _ in range(num_samples):
-        payload = random.choice(PAYLOADS)
-        data.append({
-            "payload": payload,
-            "query": f"Payload: {payload}, Choose a color out of red, blue, green, or yellow:"
-        })
-    logger.info(f"Dataset created with {len(data)} samples")
-    return Dataset.from_list(data)
-
-dataset = create_dataset()
-
-# Unified tokenization process
-def tokenize(sample):
-    sample["input_ids"] = tokenizer.encode(sample["query"], return_tensors="pt", truncation=True, padding=True).squeeze(0)
-    return sample
-
-dataset = dataset.map(tokenize, batched=False)
+dataset = ["Payload: 0, Choose a color out of red, blue, green, or yellow:", "Payload: 1, Choose a color out of red, blue, green, or yellow:"]
+tokens = tokenizer(dataset, return_tensors='pt')
 
 # Create PPO Trainers
 logger.info("Creating PPO Trainers...")
