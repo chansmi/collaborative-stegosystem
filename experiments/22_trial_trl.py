@@ -65,20 +65,6 @@ tokenizer.padding_side = 'left'
 # from the `datasets` library. One should customize this function to train the model on
 # its own dataset.
 def build_dataset(query_dataset, dataset_num_proc, input_min_text_length=2, input_max_text_length=8):
-    """
-    Build dataset for training. This builds the dataset from `load_dataset`, one should
-    customize this function to train the model on its own dataset.
-
-    Args:
-        query_dataset (`str`):
-            The name of the dataset to be loaded.
-
-    Returns:
-        dataloader (`torch.utils.data.DataLoader`):
-            The dataloader for the dataset.
-    """
-    # load imdb with datasets
-
     ds = load_from_disk('./collaborative-stegosystem/data/simple_ppo_data')
     return ds
 
@@ -137,13 +123,12 @@ receiver_model = trl_model_class.from_pretrained(
 
 
 #tokenizer = AutoTokenizer.from_pretrained(ppo_config.model_name)
-5
 # Some tokenizers like GPT-2's don't have a padding token by default, so we set one here.
 #tokenizer.pad_token_id = tokenizer.eos_token_id
 
 # We then build the PPOTrainer, passing the model, the reference model, the tokenizer
-sender_ppo_trainer = PPOTrainer(ppo_config, sender_model, ref_model, tokenizer, dataset=dataset, data_collator=collator, log_with="wandb")
-receiver_ppo_trainer = PPOTrainer(ppo_config, receiver_model, ref_model, tokenizer, log_with="wandb")
+sender_ppo_trainer = PPOTrainer(ppo_config, sender_model, ref_model, tokenizer, dataset=dataset, data_collator=collator)
+receiver_ppo_trainer = PPOTrainer(ppo_config, receiver_model, ref_model, tokenizer)
 
 # We then define the arguments to pass to the `generate` function. These arguments
 # are passed to the `generate` function of the PPOTrainer, which is a wrapper around
@@ -200,5 +185,3 @@ for batch in tqdm(sender_ppo_trainer.dataloader):
     sender_stats = sender_ppo_trainer.step(query_tensors, response_tensors, rewards)
     receiver_stats = receiver_ppo_trainer.step(query_tensors, response_tensors, rewards)
 
-    sender_ppo_trainer.log_stats(sender_model, batch, rewards, columns_to_log=["query", "response", "ref_response", "ref_rewards"])
-    #print(batch["response"])
