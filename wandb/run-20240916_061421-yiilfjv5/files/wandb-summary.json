@@ -1,0 +1,1 @@
+{"epoch": 1, "sender_loss": 0, "receiver_loss": 0, "sender_learning_rate": 0, "receiver_learning_rate": 0, "batch_reward": -1.0, "sender_entropy": 0, "receiver_entropy": 0, "train_accuracy": 0.0, "_timestamp": 1726493436.7612863, "_runtime": 975.605592250824, "_step": 23, "_wandb": {"runtime": 1001}}

@@ -31,7 +31,7 @@ tokenizer.pad_token = tokenizer.eos_token
 tokenizer.padding_side = 'left'
 
 def build_dataset(query_dataset, dataset_num_proc, input_min_text_length=2, input_max_text_length=8):
-    return load_from_disk('./collaborative-stegosystem/data/simple_ppo_data')
+    return load_from_disk('/g/g10/smith585/codebases/collaborative-stegosystem/data/simple_ppo_data')
 
 # Load dataset
 with PartialState().local_main_process_first():
@@ -64,12 +64,14 @@ sender_model = trl_model_class.from_pretrained(
     trust_remote_code=args.trust_remote_code,
     device_map=device_map,
     peft_config=peft_config,
+    log_with="wandb",
 )
 receiver_model = trl_model_class.from_pretrained(
     ppo_config.model_name,
     trust_remote_code=args.trust_remote_code,
     device_map=device_map,
     peft_config=peft_config,
+    log_with="wandb",
 )
 
 # Initialize PPO trainers

@@ -1,0 +1,127 @@
+
+Using the `SDPA` attention implementation on multi-gpu setup with ROCM may lead to performance issues due to the FA backend. Disabling it to use alternative backends.
+Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:267: UserWarning: No dataset is provided. Make sure to set config.batch_size to the correct value before training.
+  warnings.warn(
+Epoch 1/10:   0%|                                                                                                                                                                        | 0/15 [00:00<?, ?it/s]You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+
+
+
+Epoch 1/10:  27%|██████████████████████████████████████████▋                                                                                                                     | 4/15 [02:41<07:14, 39.53s/it]/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1305: UserWarning: KL divergence is starting to become negative: -1.00 - this might be a precursor for failed training. sometimes this happens because the generation kwargs are not correctly set. Please make sure that the generation kwargs are set correctly, or review your training hyperparameters.
+  warnings.warn(
+Epoch 1/10:  33%|█████████████████████████████████████████████████████▎                                                                                                          | 5/15 [03:19<06:31, 39.19s/it]/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (12.83) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (22.21) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (30.22) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (52.94) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (60.16) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (48.44) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (43.71) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (23.50) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (75.68) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (95.52) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (71.17) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (103.39) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (47.46) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (22.11) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (47.06) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (111.01) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (65.71) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (21.28) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (52.66) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (104.24) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (51.76) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (37.73) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (23.45) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (69.42) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (123.17) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (30.11) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (66.94) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (103.02) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (47.84) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (29.02) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (13.55) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (57.57) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (134.32) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (41.12) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (122.39) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (25.95) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (60.12) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1238: UserWarning: The average ratio of batch (38.30) exceeds threshold 10.00. Skipping batch.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:1305: UserWarning: KL divergence is starting to become negative: -1.94 - this might be a precursor for failed training. sometimes this happens because the generation kwargs are not correctly set. Please make sure that the generation kwargs are set correctly, or review your training hyperparameters.
+  warnings.warn(
+
+
+
+
+
+
+
+
+Epoch 1/10: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 15/15 [09:56<00:00, 39.74s/it]
+Epoch 2/10:   0%|                                                                                                                                                                                                | 0/15 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+
+
+Epoch 2/10:  60%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████▍                                                                         | 9/15 [06:23<04:15, 42.66s/it]
+Traceback (most recent call last):
+  File "/g/g10/smith585/codebases/collaborative-stegosystem/experiments/23_trl_wandb_log.py", line 187, in <module>
+    # Accuracy calculation
+             ^^^^^^^^^^^^^^
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 81, in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py", line 818, in step
+    logprobs, logits, vpreds, _ = self.batched_forward_pass(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 80, in inner
+    with self._recreate_cm():
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/core.py", line 292, in empty_device_cache
+    gc.collect()
+KeyboardInterrupt

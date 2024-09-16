@@ -1,20 +1,22 @@
 from dataclasses import dataclass, field
-from typing import Optional, Literal
+from typing import Optional
+
 import torch
 from accelerate import Accelerator, PartialState
 from datasets import load_from_disk
 from peft import LoraConfig
 from tqdm import tqdm
 from transformers import AutoTokenizer, HfArgumentParser
-
-from trl import AutoModelForCausalLMWithValueHead, PPOConfig, PPOTrainer, set_seed
-
 import wandb
+
+from trl import AutoModelForCausalLMWithValueHead, AutoModelForSeq2SeqLMWithValueHead, PPOConfig, PPOTrainer, set_seed
 
 tqdm.pandas()
 
 @dataclass
 class ScriptArguments:
+    use_seq2seq: bool = field(default=False, metadata={"help": "Whether to use seq2seq"})
+    trust_remote_code: bool = field(default=False, metadata={"help": "Enable `trust_remote_code`"})
     use_peft: bool = field(default=False, metadata={"help": "Whether to use PEFT"})
     lora_alpha: Optional[float] = field(default=16, metadata={"help": "The LoRA alpha parameter"})
     lora_r: Optional[int] = field(default=16, metadata={"help": "The LoRA r parameter"})
@@ -23,17 +25,22 @@ class ScriptArguments:
 parser = HfArgumentParser((ScriptArguments, PPOConfig))
 args, ppo_config = parser.parse_args_into_dataclasses()
 
+# Set up model class and tokenizer
+trl_model_class = AutoModelForCausalLMWithValueHead if not args.use_seq2seq else AutoModelForSeq2SeqLMWithValueHead
+tokenizer = AutoTokenizer.from_pretrained(ppo_config.model_name)
+tokenizer.pad_token = tokenizer.eos_token
+tokenizer.padding_side = 'left'
+
+def build_dataset(query_dataset, dataset_num_proc, input_min_text_length=2, input_max_text_length=8):
+    return load_from_disk('/g/g10/smith585/codebases/collaborative-stegosystem/data/simple_ppo_data')
+
 # Load dataset
 with PartialState().local_main_process_first():
-    dataset = load_from_disk('./collaborative-stegosystem/data/simple_ppo_data')
+    dataset = build_dataset(ppo_config.query_dataset, ppo_config.dataset_num_proc)
 
-print(f"Dataset size: {len(dataset)}")
+def collator(data):
+    return {key: [d[key] for d in data] for key in data[0]}
 
-# Load dataset
-with PartialState().local_main_process_first():
-    dataset = load_from_disk('./collaborative-stegosystem/data/simple_ppo_data')
-
-print(f"Dataset size: {len(dataset)}")
 
 # Initial PPO configuration
 ppo_config = PPOConfig()
@@ -165,6 +172,9 @@ for epoch in range(ppo_config.ppo_epochs):
         query_tensor_receiver_list = [query_tensors_receiver[i] for i in range(len(query_tensors_receiver))]
         receiver_response = receiver_ppo_trainer.generate(query_tensor_receiver_list, generate_ref_response=False, **generation_kwargs)
         batch["receiver_response"] = tokenizer.batch_decode(receiver_response)
+
+        print(batch["sender_response"])
+        print(batch["receiver_response"])
 
         # Compute rewards and accuracy
         rewards = []
