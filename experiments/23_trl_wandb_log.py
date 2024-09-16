@@ -157,20 +157,20 @@ for epoch in range(ppo_config.ppo_epochs):
         query_tensors = batch["input_ids"]
 
         # Generate responses
-        response_tensors, ref_response_tensors = sender_ppo_trainer.generate(
-            query_tensors, return_prompt=False, generate_ref_response=True, **generation_kwargs
+        response_tensors = sender_ppo_trainer.generate(
+            query_tensors, return_prompt=False, generate_ref_response=False, **generation_kwargs
         )
         batch["sender_response"] = tokenizer.batch_decode(response_tensors)
-        batch["ref_response"] = tokenizer.batch_decode(ref_response_tensors)
+        # batch["ref_response"] = tokenizer.batch_decode(ref_response_tensors)
 
         # Prepare receiver queries
-        receiver_queries = [f"Color: {response}, Guess the payload:" for response in batch["sender_response"]]
+        receiver_queries = [f"Color: {response}, Guess whether the payload is 0 or 1:" for response in batch["sender_response"]]
         tokenized_receiver_inputs = tokenizer(receiver_queries, return_tensors="pt", padding=True, truncation=True, max_length=512)
         query_tensors_receiver = tokenized_receiver_inputs.input_ids.to(receiver_model.pretrained_model.device)
         
         # Generate receiver responses
         query_tensor_receiver_list = [query_tensors_receiver[i] for i in range(len(query_tensors_receiver))]
-        receiver_response = receiver_ppo_trainer.generate(query_tensor_receiver_list, generate_ref_response=False, **generation_kwargs)
+        receiver_response = receiver_ppo_trainer.generate(query_tensor_receiver_list, return_prompt=False, generate_ref_response=False, **generation_kwargs)
         batch["receiver_response"] = tokenizer.batch_decode(receiver_response)
 
         print(batch["sender_response"])
@@ -178,14 +178,15 @@ for epoch in range(ppo_config.ppo_epochs):
 
         # Compute rewards and accuracy
         rewards = []
-        for original_payload, receiver_response in zip(batch["label"], batch["receiver_response"]):
+        for s, r in zip(batch["sender_response"], batch["receiver_response"]):
             try:
-                guessed_payload = int(receiver_response.strip())
-                reward = 1.0 if guessed_payload == original_payload else -1.0
-                reward += 0.1 if ('green' in original_payload or 'red' in original_payload) else 0.0
+                guessed_payload = int(r.strip())
+                reward = 1.0 if guessed_payload == s else -1.0
+                reward += 0.1 if ('green' in s.lower() or 'red' in s.lower()) else 0.0
+                reward += 0.1 if ('0' in r or '1' in r) else 0.0
                 
                 # Accuracy calculation
-                if guessed_payload == original_payload:
+                if guessed_payload == s:
                     train_total_correct += 1
                 train_total_samples += 1
             except ValueError:
@@ -193,9 +194,11 @@ for epoch in range(ppo_config.ppo_epochs):
                 train_total_samples += 1
             rewards.append(torch.tensor(reward).to(receiver_model.pretrained_model.device))
 
+        # print(rewards)
+
         # Run PPO step
         sender_stats = sender_ppo_trainer.step(query_tensors, response_tensors, rewards)
-        receiver_stats = receiver_ppo_trainer.step(query_tensors, response_tensors, rewards)
+        receiver_stats = receiver_ppo_trainer.step(query_tensor_receiver_list, receiver_response, rewards)
 
         # Log stats
         current_train_accuracy = train_total_correct / train_total_samples if train_total_samples > 0 else 0
