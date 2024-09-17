@@ -1,0 +1,185 @@
+
+Using the `SDPA` attention implementation on multi-gpu setup with ROCM may lead to performance issues due to the FA backend. Disabling it to use alternative backends.
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:267: UserWarning: No dataset is provided. Make sure to set config.batch_size to the correct value before training.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:276: UserWarning: No dataset is provided. In a multi-GPU setting, this will lead to an error. You should prepare your dataloader yourself with `dataloader = ppo_trainer.accelerator.prepare(dataloader)` and using `torch.utils.data.DataLoader`, or pass a dataset to the `PPOTrainer`. Please  refer to the documentation for more details.
+  warnings.warn(
+Epoch 1/10:   0%|                                                                                                                                  | 0/3 [00:00<?, ?it/s]You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[' none', ' give', ' (', ' Hue', ' you', ' None', ' S', '???', ' 10', ' http', ' Triple', '\n', ' 0', ' ***', ' Daylight', ' black', ' blue', ' white', ' 5', ' 0', '\n', ' ----', ' $', '\n', ' 1', ' Click', ' 4', ' Drop', ' 1', ' Default', ' Only', ' 16', ' 1', ' Click', ' This', ' Use', ' Morph', ' red', '\n', ' Light', ' White', ' *', ' 0', ' 0', ' 2', ' Total', ' Black', ' 0', ' Custom', ' 30', ' When', ' "', ' Speech', ' Black', ' The', '!', ' $', '\n', ' Deal', ' INT', ' Top', ' 6', ' Choose', ' $']
+[' M', ' [', ' )', ' Parameters', '\n', ' Read', '\n', '\n', " '", ' for', ' action', '\n', '\n', ' https', ' you', '\n', '\n', ' join', ' 01', " '", '\n', ' when', ' Is', ' false', ' 6', ' or', ' whatever', ' dir', ' Continent', ' Clean', " '", '\n', ' (', 'While', ' For', ' some', ' A', ' 50', ' the', ' <', ' ^', " '", ' 05', ' set', ' else', ' for', " '", ' Input', ' expect', "''", ' //', ' Example', ' this', ' [', ' def', " '", ' $', '\n', ' {', ' re', ' def', ' )', ' Output', ' $']
+{'objective/kl': array(0., dtype=float32), 'objective/kl_dist': array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], dtype=float32), 'objective/logprobs': array([[-9.114504 , -2.442901 , -4.0344734, ..., -2.0427384, -4.7641454,
+        -6.671714 ],
+       [-9.114504 , -2.442901 , -4.0344734, ..., -1.9969673, -4.597601 ,
+        -9.744654 ],
+       [-9.114505 , -2.442901 , -3.9673264, ..., -2.0083761, -4.35879  ,
+        -5.5061455],
+       ...,
+       [-9.067972 , -2.5795722, -3.8665686, ..., -1.9977874, -4.3567553,
+        -6.1294527],
+       [-9.067973 , -2.5795722, -3.7415686, ..., -1.9306719, -4.4729323,
+        -3.9636426],
+       [-9.103502 , -2.4533033, -3.9992065, ..., -2.1038678, -4.3476977,
+        -4.2093363]], dtype=float32), 'objective/ref_logprobs': array([[-9.114504 , -2.442901 , -4.0344734, ..., -2.0427384, -4.7641454,
+        -6.671714 ],
+       [-9.114504 , -2.442901 , -4.0344734, ..., -1.9969673, -4.597601 ,
+        -9.744654 ],
+       [-9.114505 , -2.442901 , -3.9673264, ..., -2.0083761, -4.35879  ,
+        -5.5061455],
+       ...,
+       [-9.067972 , -2.5795722, -3.8665686, ..., -1.9977874, -4.3567553,
+        -6.1294527],
+       [-9.067973 , -2.5795722, -3.7415686, ..., -1.9306719, -4.4729323,
+        -3.9636426],
+       [-9.103502 , -2.4533033, -3.9992065, ..., -2.1038678, -4.3476977,
+        -4.2093363]], dtype=float32), 'objective/kl_coef': 0.2, 'objective/entropy': array(6.003698, dtype=float32), 'ppo/mean_non_score_reward': array(0., dtype=float32), 'ppo/mean_scores': array(-0.99492186, dtype=float32), 'ppo/std_scores': array(0.02643286, dtype=float32), 'tokens/queries_len_mean': 19.0, 'tokens/queries_len_std': 0.0, 'tokens/queries_dist': array([19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.],
+      dtype=float32), 'tokens/responses_len_mean': 1.0, 'tokens/responses_len_std': 0.0, 'tokens/responses_dist': array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.], dtype=float32), 'ppo/loss/policy': array([-0.00135622], dtype=float32), 'ppo/loss/value': array([14.464706], dtype=float32), 'ppo/loss/total': array([1.4451144], dtype=float32), 'ppo/policy/entropy': array([6.366605], dtype=float32), 'ppo/policy/approxkl': array([0.08127999], dtype=float32), 'ppo/policy/policykl': array([0.07740393], dtype=float32), 'ppo/policy/clipfrac': array([0.6046876], dtype=float32), 'ppo/policy/advantages': array([27.527924 , 27.443365 , 27.353455 , ..., 25.271936 , 25.044653 ,
+        0.4958177], dtype=float32), 'ppo/policy/advantages_mean': array([-1.0386809e-06], dtype=float32), 'ppo/policy/ratio': array([0.99343556, 1.1361054 , 0.88349545, ..., 1.4018371 , 0.7884575 ,
+       1.5449117 ], dtype=float32), 'ppo/returns/mean': array([-0.99492186], dtype=float32), 'ppo/returns/var': array([0.00072187], dtype=float32), 'ppo/val/vpred': array([4.0321474], dtype=float32), 'ppo/val/error': array([25.3475], dtype=float32), 'ppo/val/clipfrac': array([0.95], dtype=float32), 'ppo/val/mean': array([4.475342], dtype=float32), 'ppo/val/var': array([0.03340358], dtype=float32), 'ppo/val/var_explained': array([-43114.7], dtype=float32), 'ppo/learning_rate': 5e-06, 'time/ppo/forward_pass': 0.5966980457305908, 'time/ppo/compute_rewards': 0.030549287796020508, 'time/ppo/compute_advantages': 0.002144336700439453, 'time/ppo/optimize_step': 20.714452505111694, 'time/ppo/calc_stats': 0.0621037483215332, 'time/ppo/total': 21.406068325042725}
+Epoch 1/10:  33%|████████████████████████████████████████▋                                                                                 | 1/3 [00:54<01:48, 54.09s/it]
+[' OK', ' 0', ' 1', '\n', ' Choose', ' and', ' green', ' chosen', ' Pick', ' Choose', ' Choice', ' $', ' 1', ' red', '\n\n', ' flip', ' choose', ' 0', ' Different', ' Select', ' Choose', 'and', ' Use', ' For', ' Red', ' D', ' 0', ' Potion', ' Clear', '\n', ' choose', ' Fast', ' )', '\n', ' white', ' Chain', ' 100', ' Blue', ' choose', ' use', ' Red', ' 0', ' red', ' options', ' Choose', ' Choose', ' (-', ' So', ' 4', ' Choose', ' Which', ' Comments', ' Choose', ' applying', ' 1', '\n', ' 1936', ' Zero', ' color', ' Default', ' 0', ' 1', ' 0', '\n']
+
+Epoch 1/10:  67%|█████████████████████████████████████████████████████████████████████████████████▎                                        | 2/3 [01:37<00:47, 47.75s/it]
+{'objective/kl': array(0.18397483, dtype=float32), 'objective/kl_dist': array([-0.20338154,  0.44427705, -0.11941016, -0.27847052,  0.6225976 ,
+        0.31453395,  0.23172736,  0.56012917,  0.19717896,  0.6865448 ,
+        0.62402534, -0.5059984 , -0.09424543,  0.3353486 , -0.24678576,
+        0.19083309,  1.1389134 ,  0.03409749,  0.41090584,  0.31048608,
+        0.6225976 ,  0.4824083 , -0.23565006, -0.10005522, -0.07906038,
+        0.18654466,  0.05671895,  0.24400187,  0.18691063,  0.10223794,
+        1.1282142 ,  0.16058421,  0.2802658 , -0.05572283,  0.1609056 ,
+        0.221529  , -0.1274023 , -0.18546605,  1.1991048 ,  0.84531355,
+       -0.30282104,  0.06154466,  0.5567188 ,  0.24400187,  0.6557547 ,
+        0.37504315,  0.50321436,  0.17066717,  0.5302658 ,  0.6590977 ,
+        0.16090572, -0.6450356 ,  0.5816279 ,  0.27165914, -0.33351797,
+       -0.18987083, -0.2040596 , -0.14933372,  0.12402534, -0.00599837,
+       -0.09424531, -0.41465163, -0.08363998, -0.44424957], dtype=float32), 'objective/logprobs': array([[-9.062229 , -2.353875 , -4.143071 , ..., -2.003496 , -4.739885 ,
+        -6.6264973],
+       [-9.062229 , -2.353875 , -4.143071 , ..., -1.9936404, -4.7901125,
+        -5.050376 ],
+       [-9.064877 , -2.6393585, -4.218216 , ..., -2.293301 , -4.8907695,
+        -3.5005558],
+       ...,
+       [-9.1322   , -2.6514661, -4.22091  , ..., -2.0536613, -4.7404757,
+        -3.6946425],
+       [-9.1322   , -2.6514661, -4.22091  , ..., -2.0407264, -4.811673 ,
+        -2.6722827],
+       [-9.0640745, -2.5163016, -4.213871 , ..., -1.9002275, -4.7050343,
+        -2.653586 ]], dtype=float32), 'objective/ref_logprobs': array([[-9.114504 , -2.442901 , -4.0344734, ..., -2.044503 , -4.5234485,
+        -6.4231157],
+       [-9.114504 , -2.442901 , -4.0344734, ..., -1.9969673, -4.597601 ,
+        -5.494653 ],
+       [-9.114505 , -2.442901 , -3.9673264, ..., -2.0083761, -4.35879  ,
+        -3.3811455],
+       ...,
+       [-9.067972 , -2.5795722, -3.9915686, ..., -1.9893681, -4.3381953,
+        -3.2799911],
+       [-9.067973 , -2.5795722, -3.7415686, ..., -1.9306719, -4.4729323,
+        -2.5886426],
+       [-9.103502 , -2.4533033, -3.9992065, ..., -2.1038678, -4.3476977,
+        -2.2093365]], dtype=float32), 'objective/kl_coef': 0.19897600000000001, 'objective/entropy': array(5.5613914, dtype=float32), 'ppo/mean_non_score_reward': array(-0.03660658, dtype=float32), 'ppo/mean_scores': array(-0.990625, dtype=float32), 'ppo/std_scores': array(0.02937848, dtype=float32), 'tokens/queries_len_mean': 19.0, 'tokens/queries_len_std': 0.0, 'tokens/queries_dist': array([19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.],
+      dtype=float32), 'tokens/responses_len_mean': 1.0, 'tokens/responses_len_std': 0.0, 'tokens/responses_dist': array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.], dtype=float32), 'ppo/loss/policy': array([0.0087705], dtype=float32), 'ppo/loss/value': array([12.64596], dtype=float32), 'ppo/loss/total': array([1.2733665], dtype=float32), 'ppo/policy/entropy': array([6.3140306], dtype=float32), 'ppo/policy/approxkl': array([0.09252458], dtype=float32), 'ppo/policy/policykl': array([0.10355933], dtype=float32), 'ppo/policy/clipfrac': array([0.453125], dtype=float32), 'ppo/policy/advantages': array([2.3266502e+01, 2.3199518e+01, 2.3128302e+01, ..., 2.1040649e+01,
+       2.0832851e+01, 1.3493598e-03], dtype=float32), 'ppo/policy/advantages_mean': array([-7.074792e-07], dtype=float32), 'ppo/policy/ratio': array([0.99939936, 1.3297095 , 1.0841256 , ..., 0.86806786, 0.8410317 ,
+       0.80622435], dtype=float32), 'ppo/returns/mean': array([-1.0272317], dtype=float32), 'ppo/returns/var': array([0.0093732], dtype=float32), 'ppo/val/vpred': array([3.496454], dtype=float32), 'ppo/val/error': array([20.53881], dtype=float32), 'ppo/val/clipfrac': array([0.95], dtype=float32), 'ppo/val/mean': array([4.0924683], dtype=float32), 'ppo/val/var': array([0.03400655], dtype=float32), 'ppo/val/var_explained': array([-2200.7656], dtype=float32), 'ppo/learning_rate': 5e-06, 'time/ppo/forward_pass': 0.5890903472900391, 'time/ppo/compute_rewards': 0.009200572967529297, 'time/ppo/compute_advantages': 0.0014257431030273438, 'time/ppo/optimize_step': 20.47832441329956, 'time/ppo/calc_stats': 0.040236711502075195, 'time/ppo/total': 21.118367910385132}
+['\n', ' 0', '\n', ' Choose', ' default', '0', ' your', '\n', ' Select', ' 2', ' B', ' from', '\n', ' 0', ' Choose', ' 1', ' ha', '\n', ' Add', ' choose', ' "', ' No', ' Angry', ' all', ' White', ' 0', ' A', 'LED', ' make', ' 0', ' Enter', ' Choose', ' gray', '\n', ' Value', '\n', 'ec', ' Both', ' chose', ' Health', ' Yes', ' reflect', ' in', ' file', ' Black', ' No', ' Uses', ' One', '!!', ' "', ' with', ' Standard', ' Show', ' interface', ' true', ' blue', ' $', ' an', ' acceptable', ' 380', ' any', ' green', ' Switch', ' 7']
+Epoch 1/10: 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [02:21<00:00, 47.12s/it]
+Epoch 2/10:   0%|                                                                                                                                  | 0/3 [00:00<?, ?it/s]
+{'objective/kl': array(0.05628029, dtype=float32), 'objective/kl_dist': array([-0.35636812,  0.08457315, -0.5313938 ,  0.33442545, -0.56528735,
+        1.1602187 ,  0.0992763 , -0.23866767,  0.5927086 , -0.24216175,
+       -0.28169274, -0.7229954 , -0.00456965, -0.03772402,  0.43090826,
+       -0.20025367,  0.4662404 , -0.26488662,  0.8888006 ,  0.5363841 ,
+        0.30971265,  0.03521872, -0.06813282,  0.13476396, -0.16281629,
+        0.0775249 ,  0.05806684,  1.6758958 ,  0.49543035, -0.03772402,
+        0.316221  ,  0.57459915, -0.3885436 , -0.26488662, -0.78139377,
+       -0.10307455,  1.9313011 , -0.21478128,  0.05686712, -0.4902358 ,
+       -0.2822919 , -0.04747534, -0.35217357,  0.38270044, -0.1835692 ,
+       -0.15146935,  0.31622124, -0.27554798, -0.10636783,  0.3970735 ,
+        0.03110623, -0.4636159 , -0.44199336,  0.29743218, -0.4007237 ,
+       -0.36680424,  0.09270811,  0.17486823, -0.19193316, -0.28549504,
+        0.49543047,  0.66103065, -0.17346632,  0.17474651], dtype=float32), 'objective/logprobs': array([[-9.077126 , -2.433958 , -4.235013 , ..., -2.2239535, -4.781781 ,
+        -2.903549 ],
+       [-9.077126 , -2.433958 , -4.235013 , ..., -2.2751956, -4.7472405,
+        -2.6730766],
+       [-9.067524 , -2.4329891, -4.234236 , ..., -2.2950256, -4.8312864,
+        -3.065071 ],
+       ...,
+       [-9.080818 , -2.435203 , -4.208527 , ..., -2.1429937, -4.773803 ,
+        -4.942884 ],
+       [-9.080818 , -2.435203 , -4.208527 , ..., -2.2673457, -4.7490664,
+        -7.887109 ],
+       [-9.081039 , -2.4352033, -4.2217107, ..., -2.037036 , -4.7816854,
+        -6.03459  ]], dtype=float32), 'objective/ref_logprobs': array([[-9.114504 , -2.442901 , -4.0344734, ..., -2.0433266, -4.6839128,
+        -2.5471811],
+       [-9.114504 , -2.442901 , -4.0344734, ..., -2.012383 , -4.5188556,
+        -2.7576501],
+       [-9.114505 , -2.442901 , -3.9673264, ..., -1.98563  , -4.4142184,
+        -2.5336773],
+       ...,
+       [-9.067972 , -2.5795722, -3.7415683, ..., -2.0062065, -4.3753157,
+        -5.6039147],
+       [-9.067973 , -2.5795722, -3.7415686, ..., -1.9306719, -4.4729323,
+        -7.713643 ],
+       [-9.103502 , -2.4533033, -3.9992065, ..., -2.1038678, -4.347698 ,
+        -6.2093368]], dtype=float32), 'objective/kl_coef': 0.19795724288000002, 'objective/entropy': array(6.5232973, dtype=float32), 'ppo/mean_non_score_reward': array(-0.01114109, dtype=float32), 'ppo/mean_scores': array(-0.9828125, dtype=float32), 'ppo/std_scores': array(0.04139311, dtype=float32), 'tokens/queries_len_mean': 19.0, 'tokens/queries_len_std': 0.0, 'tokens/queries_dist': array([19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.],
+      dtype=float32), 'tokens/responses_len_mean': 1.0, 'tokens/responses_len_std': 0.0, 'tokens/responses_dist': array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.], dtype=float32), 'ppo/loss/policy': array([-0.02792784], dtype=float32), 'ppo/loss/value': array([9.17182], dtype=float32), 'ppo/loss/total': array([0.88925415], dtype=float32), 'ppo/policy/entropy': array([6.3287416], dtype=float32), 'ppo/policy/approxkl': array([0.04211889], dtype=float32), 'ppo/policy/policykl': array([0.00995316], dtype=float32), 'ppo/policy/clipfrac': array([0.5257813], dtype=float32), 'ppo/policy/advantages': array([28.528786  , 28.39162   , 28.245777  , ..., 26.504858  ,
+       26.239653  ,  0.49417198], dtype=float32), 'ppo/policy/advantages_mean': array([1.3541431e-07], dtype=float32), 'ppo/policy/ratio': array([1.0039215 , 1.0012461 , 0.98678577, ..., 1.0626452 , 1.257802  ,
+       1.4103674 ], dtype=float32), 'ppo/returns/mean': array([-0.9939536], dtype=float32), 'ppo/returns/var': array([0.01217281], dtype=float32), 'ppo/val/vpred': array([2.8490784], dtype=float32), 'ppo/val/error': array([14.838621], dtype=float32), 'ppo/val/clipfrac': array([0.93359375], dtype=float32), 'ppo/val/mean': array([3.382141], dtype=float32), 'ppo/val/var': array([0.01292378], dtype=float32), 'ppo/val/var_explained': array([-1232.9873], dtype=float32), 'ppo/learning_rate': 5e-06, 'time/ppo/forward_pass': 0.5676264762878418, 'time/ppo/compute_rewards': 0.00930476188659668, 'time/ppo/compute_advantages': 0.0014505386352539062, 'time/ppo/optimize_step': 20.930726289749146, 'time/ppo/calc_stats': 0.03983187675476074, 'time/ppo/total': 21.549031496047974}
+Epoch 1/10 - Train Accuracy: 0.0000
+[' 1', ' Choose', ' Tr', ' Choose', ' Pick', ' Try', ' Select', ' 12', ' If', ' CHO', ' (', ' We', ' Cyan', ' Red', ' Select', ' 10', ' Red', '\n', ' max', ' Default', ' Water', ' Save', ' Yellow', ' gray', ' red', ' Color', '.', '0', ' At', ' Number', ' Recommended', ' 5', ' ;', ' 100', ' ', ' Off', ' Choose', ' that', ' radio', ' 10', ' Aer', ' c', ' ', ' mostly', ' u', ' 1', ' Use', '\n', 'Sweet', ' 74', ' 1', ' Standard', ' Select', ' 1', ' a', 'out', 'Enjoy', ' submit', '\n', ' Rock', ' This', ' Set', ' 0', ' 0']
+Epoch 2/10:   0%|                                                                                                                                  | 0/3 [00:20<?, ?it/s]
+Traceback (most recent call last):
+  File "/g/g10/smith585/codebases/collaborative-stegosystem/experiments/23_trl_wandb_log.py", line 199, in <module>
+    sender_stats = sender_ppo_trainer.step(query_tensors, response_tensors, rewards)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 81, in inner
+    return func(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py", line 818, in step
+    logprobs, logits, vpreds, _ = self.batched_forward_pass(
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 80, in inner
+    with self._recreate_cm():
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/core.py", line 294, in empty_device_cache
+    gc.collect()
+KeyboardInterrupt
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/g/g10/smith585/codebases/collaborative-stegosystem/experiments/23_trl_wandb_log.py", line 199, in <module>
+[rank2]:     sender_stats = sender_ppo_trainer.step(query_tensors, response_tensors, rewards)
+[rank2]:                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 81, in inner
+[rank2]:     return func(*args, **kwds)
+[rank2]:            ^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py", line 818, in step
+[rank2]:     logprobs, logits, vpreds, _ = self.batched_forward_pass(
+[rank2]:                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 80, in inner
+[rank2]:     with self._recreate_cm():
+[rank2]:   File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/contextlib.py", line 144, in __exit__
+[rank2]:     next(self.gen)
+[rank2]:   File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/core.py", line 294, in empty_device_cache
+[rank2]:     gc.collect()
+[rank2]: KeyboardInterrupt

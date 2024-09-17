@@ -1,0 +1,71 @@
+
+Using the `SDPA` attention implementation on multi-gpu setup with ROCM may lead to performance issues due to the FA backend. Disabling it to use alternative backends.
+Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:267: UserWarning: No dataset is provided. Make sure to set config.batch_size to the correct value before training.
+  warnings.warn(
+Epoch 1/10:   0%|                                                                                                                   | 0/15 [00:00<?, ?it/s]You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[' none', ' give', ' (', ' Hue', ' you', ' None', ' S', '???', '\n', ' http', ' Triple', '\n', ' 0', ' ***', ' Daylight', ' black', ' 0', ' white', ' 5', ' 0', ' Option', ' ----', '\n', '\n', ' 1', ' Click', ' 4', ' Drop', ' 1', ' >>>', ' Only', ' 0', ' 1', ' Click', ' This', ' Use', ' Morph', ' red', ' Print', ' 0', ' White', ' Black', '\n', ' 0', ' 2', ' Total', ' Black', ' 0', ' Custom', ' 30', ' When', ' "', ' Speech', ' Black', ' The', '!', ' $', '\n', ' Deal', ' INT', ' Top', ' 6', ' Choose', ' $']
+[' M', ' [', ' )', ' Parameters', '\n', ' Read', '\n', '\n', " '", ' for', ' action', '\n', '\n', ' https', ' you', '\n', '\n', ' join', ' 01', " '", ' -', ' when', ' Is', ' false', ' 6', ' or', ' whatever', ' dir', ' Continent', ' >>>', " '", '\n', ' (', 'While', ' For', ' some', ' A', ' 50', ' json', ' <', ' ^', " '", ' """', ' set', ' else', ' for', " '", ' Input', ' expect', "''", ' //', ' Example', ' this', ' [', ' def', " '", ' $', '\n', ' {', ' re', ' def', ' )', ' Output', ' $']
+Epoch 1/10:   0%|                                                                                                                   | 0/15 [01:07<?, ?it/s]
+{'objective/kl': array(0., dtype=float32), 'objective/kl_dist': array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.], dtype=float32), 'objective/logprobs': array([[-9.047384 , -2.3939602, -3.7955241, ..., -1.8798383, -4.5970793,
+        -6.9185824],
+       [-9.047384 , -2.3939602, -3.7541118, ..., -1.865648 , -4.615511 ,
+        -9.937279 ],
+       [-9.047385 , -2.3939703, -3.7955365, ..., -1.8798275, -4.597078 ,
+        -3.7535245],
+       ...,
+       [-9.047391 , -2.3940146, -3.795507 , ..., -1.8797936, -4.5970798,
+        -5.7384505],
+       [-9.047391 , -2.3940146, -3.754125 , ..., -1.8656243, -4.6155906,
+        -4.213967 ],
+       [-9.047388 , -2.3940082, -3.7955203, ..., -1.8797998, -4.5970817,
+        -4.246563 ]], dtype=float32), 'objective/ref_logprobs': array([[-9.047384 , -2.3939602, -3.7955241, ..., -1.8798383, -4.5970793,
+        -6.9185824],
+       [-9.047384 , -2.3939602, -3.7541118, ..., -1.865648 , -4.615511 ,
+        -9.937279 ],
+       [-9.047385 , -2.3939703, -3.7955365, ..., -1.8798275, -4.597078 ,
+        -3.7535245],
+       ...,
+       [-9.047391 , -2.3940146, -3.795507 , ..., -1.8797936, -4.5970798,
+        -5.7384505],
+       [-9.047391 , -2.3940146, -3.754125 , ..., -1.8656243, -4.6155906,
+        -4.213967 ],
+       [-9.047388 , -2.3940082, -3.7955203, ..., -1.8797998, -4.5970817,
+        -4.246563 ]], dtype=float32), 'objective/kl_coef': 0.2, 'objective/entropy': array(5.735036, dtype=float32), 'ppo/mean_non_score_reward': array(0., dtype=float32), 'ppo/mean_scores': array(-0.99531245, dtype=float32), 'ppo/std_scores': array(0.02777282, dtype=float32), 'tokens/queries_len_mean': 19.0, 'tokens/queries_len_std': 0.0, 'tokens/queries_dist': array([19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.,
+       19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19., 19.],
+      dtype=float32), 'tokens/responses_len_mean': 1.0, 'tokens/responses_len_std': 0.0, 'tokens/responses_dist': array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.], dtype=float32), 'ppo/loss/policy': array([-0.06111958], dtype=float32), 'ppo/loss/value': array([14.331085], dtype=float32), 'ppo/loss/total': array([1.3719889], dtype=float32), 'ppo/policy/entropy': array([6.2435427], dtype=float32), 'ppo/policy/approxkl': array([0.04597098], dtype=float32), 'ppo/policy/policykl': array([0.03070805], dtype=float32), 'ppo/policy/clipfrac': array([0.7328125], dtype=float32), 'ppo/policy/advantages': array([28.37881  , 28.292173 , 28.20005  , ..., 26.093908 , 25.862717 ,
+       -1.0121257], dtype=float32), 'ppo/policy/advantages_mean': array([2.033636e-06], dtype=float32), 'ppo/policy/ratio': array([1.0000057, 1.0000088, 1.0000081, ..., 0.8918502, 1.0318344,
+       0.8112145], dtype=float32), 'ppo/returns/mean': array([-0.9953125], dtype=float32), 'ppo/returns/var': array([0.00076875], dtype=float32), 'ppo/val/vpred': array([4.1007814], dtype=float32), 'ppo/val/error': array([26.002563], dtype=float32), 'ppo/val/clipfrac': array([0.95], dtype=float32), 'ppo/val/mean': array([4.4502583], dtype=float32), 'ppo/val/var': array([0.03046129], dtype=float32), 'ppo/val/var_explained': array([-33823.535], dtype=float32), 'ppo/learning_rate': 5e-06, 'time/ppo/forward_pass': 0.7445149421691895, 'time/ppo/compute_rewards': 0.03827619552612305, 'time/ppo/compute_advantages': 0.002335786819458008, 'time/ppo/optimize_step': 27.08309292793274, 'time/ppo/calc_stats': 0.02401590347290039, 'time/ppo/total': 27.89252758026123}
+Traceback (most recent call last):
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/runpy.py", line 198, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/workspace/smith585/x86_miniconda/lib/python3.12/runpy.py", line 88, in _run_code
+    exec(code, run_globals)
+  File "/g/g10/smith585/.cursor-server/extensions/ms-python.debugpy-2024.6.0/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/__main__.py", line 39, in <module>
+    cli.main()
+  File "/g/g10/smith585/.cursor-server/extensions/ms-python.debugpy-2024.6.0/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 430, in main
+    run()
+  File "/g/g10/smith585/.cursor-server/extensions/ms-python.debugpy-2024.6.0/bundled/libs/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 284, in run_file
+    runpy.run_path(target, run_name="__main__")
+  File "/g/g10/smith585/.cursor-server/extensions/ms-python.debugpy-2024.6.0/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 321, in run_path
+    return _run_module_code(code, init_globals, run_name,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/g/g10/smith585/.cursor-server/extensions/ms-python.debugpy-2024.6.0/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 135, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/g/g10/smith585/.cursor-server/extensions/ms-python.debugpy-2024.6.0/bundled/libs/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 124, in _run_code
+    exec(code, run_globals)
+  File "/g/g10/smith585/codebases/collaborative-stegosystem/experiments/23_trl_wandb_log.py", line 205, in <module>
+    assert "ppo/learning_rate" in sender_stats, "Sender stats don't have learning rate"
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Sender stats don't have learning rate

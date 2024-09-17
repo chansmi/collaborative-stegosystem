@@ -1,0 +1,8 @@
+
+Using the `SDPA` attention implementation on multi-gpu setup with ROCM may lead to performance issues due to the FA backend. Disabling it to use alternative backends.
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:267: UserWarning: No dataset is provided. Make sure to set config.batch_size to the correct value before training.
+  warnings.warn(
+/usr/workspace/smith585/x86_miniconda/lib/python3.12/site-packages/trl/trainer/ppo_trainer.py:276: UserWarning: No dataset is provided. In a multi-GPU setting, this will lead to an error. You should prepare your dataloader yourself with `dataloader = ppo_trainer.accelerator.prepare(dataloader)` and using `torch.utils.data.DataLoader`, or pass a dataset to the `PPOTrainer`. Please  refer to the documentation for more details.
+  warnings.warn(
+Epoch 1/10:   0%|                                                                                                                             | 0/3 [00:00<?, ?it/s]You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[' none', ' give', ' (', ' Hue', ' you', ' None', ' S', '???', ' 10', ' http', ' Triple', '\n', ' 0', ' ***', ' Daylight', ' black', ' blue', ' white', ' 5', ' 0', '\n', ' ----', ' $', '\n', ' 1', ' Click', ' 4', ' Drop', ' 1', ' Default', ' Only', ' 16', ' 1', ' Click', ' This', ' Use', ' Morph', ' red', '\n', ' Light', ' White', ' *', ' 0', ' 0', ' 2', ' Total', ' Black', ' 0', ' Custom', ' 30', ' When', ' "', ' Speech', ' Black', ' The', '!', ' $', '\n', ' Deal', ' INT', ' Top', ' 6', ' Choose', ' $']

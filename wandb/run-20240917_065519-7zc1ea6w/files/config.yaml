@@ -1,0 +1,249 @@
+wandb_version: 1
+
+exp_name:
+  desc: null
+  value: 23_trl_wandb_log
+seed:
+  desc: null
+  value: 42
+log_with:
+  desc: null
+  value: wandb
+task_name:
+  desc: null
+  value: collaborative-stegosystem
+model_name:
+  desc: null
+  value: gpt2
+query_dataset:
+  desc: null
+  value: imdb
+reward_model:
+  desc: null
+  value: sentiment-analysis:lvwerra/distilbert-imdb
+remove_unused_columns:
+  desc: null
+  value: true
+tracker_kwargs:
+  desc: null
+  value:
+    wandb:
+      entity: chansmi
+accelerator_kwargs:
+  desc: null
+  value: {}
+project_kwargs:
+  desc: null
+  value: {}
+tracker_project_name:
+  desc: null
+  value: collaborative-stegosystem
+push_to_hub_if_best_kwargs:
+  desc: null
+  value: {}
+steps:
+  desc: null
+  value: 150
+learning_rate:
+  desc: null
+  value: 5.0e-06
+adap_kl_ctrl:
+  desc: null
+  value: true
+init_kl_coef:
+  desc: null
+  value: 0.2
+kl_penalty:
+  desc: null
+  value: kl
+target:
+  desc: null
+  value: 6
+horizon:
+  desc: null
+  value: 10000
+gamma:
+  desc: null
+  value: 0.99
+lam:
+  desc: null
+  value: 0.95
+cliprange:
+  desc: null
+  value: 0.1
+cliprange_value:
+  desc: null
+  value: 0.1
+vf_coef:
+  desc: null
+  value: 0.1
+batch_size:
+  desc: null
+  value: 64
+forward_batch_size:
+  desc: null
+  value: null
+mini_batch_size:
+  desc: null
+  value: 16
+gradient_accumulation_steps:
+  desc: null
+  value: 2
+world_size:
+  desc: null
+  value: null
+ppo_epochs:
+  desc: null
+  value: 10
+max_grad_norm:
+  desc: null
+  value: 1.0
+optimize_cuda_cache:
+  desc: null
+  value: null
+optimize_device_cache:
+  desc: null
+  value: true
+early_stopping:
+  desc: null
+  value: false
+target_kl:
+  desc: null
+  value: 0.1
+compare_steps:
+  desc: null
+  value: 1
+ratio_threshold:
+  desc: null
+  value: 10.0
+use_score_scaling:
+  desc: null
+  value: false
+use_score_norm:
+  desc: null
+  value: false
+score_clip:
+  desc: null
+  value: null
+whiten_rewards:
+  desc: null
+  value: false
+gradient_checkpointing:
+  desc: null
+  value: false
+is_encoder_decoder:
+  desc: null
+  value: null
+is_peft_model:
+  desc: null
+  value: null
+backward_batch_size:
+  desc: null
+  value: 32
+global_backward_batch_size:
+  desc: null
+  value: null
+global_batch_size:
+  desc: null
+  value: null
+dataset_num_proc:
+  desc: null
+  value: null
+total_ppo_epochs:
+  desc: null
+  value: 3
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.2
+    cli_version: 0.17.5
+    framework: huggingface
+    huggingface_version: 4.43.3
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1726581319
+    t:
+      1:
+      - 1
+      - 5
+      - 11
+      - 49
+      - 51
+      - 53
+      - 55
+      - 71
+      - 84
+      - 98
+      - 105
+      2:
+      - 1
+      - 5
+      - 11
+      - 49
+      - 51
+      - 53
+      - 55
+      - 71
+      - 84
+      - 98
+      - 105
+      3:
+      - 16
+      - 23
+      - 24
+      4: 3.12.2
+      5: 0.17.5
+      6: 4.43.3
+      8:
+      - 5
+      13: linux-x86_64
+trl_ppo_trainer_config:
+  desc: null
+  value:
+    exp_name: 23_trl_wandb_log
+    seed: 42
+    log_with: wandb
+    task_name: collaborative-stegosystem
+    model_name: gpt2
+    query_dataset: imdb
+    reward_model: sentiment-analysis:lvwerra/distilbert-imdb
+    remove_unused_columns: true
+    tracker_kwargs/wandb/entity: chansmi
+    tracker_project_name: collaborative-stegosystem
+    steps: 150
+    learning_rate: 5.0e-06
+    adap_kl_ctrl: true
+    init_kl_coef: 0.2
+    kl_penalty: kl
+    target: 6
+    horizon: 10000
+    gamma: 0.99
+    lam: 0.95
+    cliprange: 0.1
+    cliprange_value: 0.1
+    vf_coef: 0.1
+    batch_size: 64
+    forward_batch_size: null
+    mini_batch_size: 16
+    gradient_accumulation_steps: 2
+    world_size: 4
+    ppo_epochs: 10
+    max_grad_norm: 1.0
+    optimize_cuda_cache: null
+    optimize_device_cache: true
+    early_stopping: false
+    target_kl: 0.1
+    compare_steps: 1
+    ratio_threshold: 10.0
+    use_score_scaling: false
+    use_score_norm: false
+    score_clip: null
+    whiten_rewards: false
+    gradient_checkpointing: false
+    is_encoder_decoder: false
+    is_peft_model: false
+    backward_batch_size: 32
+    global_backward_batch_size: 128
+    global_batch_size: 256
+    dataset_num_proc: null
+    total_ppo_epochs: 3

@@ -1,0 +1,17 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Accelerate Launch 23",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/usr/workspace/smith585/x86_miniconda/bin/accelerate",
+            "console": "integratedTerminal",
+            "args": "launch collaborative-stegosystem/experiments/23_trl_wandb_log.py",
+            "justMyCode": false
+        }
+    ]
+}

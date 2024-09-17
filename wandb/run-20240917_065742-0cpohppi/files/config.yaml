@@ -1,0 +1,96 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.12.2
+    cli_version: 0.17.5
+    framework: huggingface
+    huggingface_version: 4.43.3
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1726581462
+    t:
+      1:
+      - 1
+      - 5
+      - 11
+      - 49
+      - 51
+      - 53
+      - 55
+      - 71
+      - 84
+      - 98
+      - 105
+      2:
+      - 1
+      - 5
+      - 11
+      - 49
+      - 51
+      - 53
+      - 55
+      - 71
+      - 84
+      - 98
+      - 105
+      3:
+      - 23
+      - 24
+      4: 3.12.2
+      5: 0.17.5
+      6: 4.43.3
+      8:
+      - 5
+      13: linux-x86_64
+trl_ppo_trainer_config:
+  desc: null
+  value:
+    exp_name: 23_trl_wandb_log
+    seed: 42
+    log_with: wandb
+    task_name: collaborative-stegosystem
+    model_name: gpt2
+    query_dataset: imdb
+    reward_model: sentiment-analysis:lvwerra/distilbert-imdb
+    remove_unused_columns: true
+    tracker_kwargs/wandb/entity: chansmi
+    tracker_project_name: collaborative-stegosystem
+    steps: 150
+    learning_rate: 5.0e-06
+    adap_kl_ctrl: true
+    init_kl_coef: 0.2
+    kl_penalty: kl
+    target: 6
+    horizon: 10000
+    gamma: 0.99
+    lam: 0.95
+    cliprange: 0.1
+    cliprange_value: 0.1
+    vf_coef: 0.1
+    batch_size: 64
+    forward_batch_size: null
+    mini_batch_size: 16
+    gradient_accumulation_steps: 2
+    world_size: 4
+    ppo_epochs: 10
+    max_grad_norm: 1.0
+    optimize_cuda_cache: null
+    optimize_device_cache: true
+    early_stopping: false
+    target_kl: 0.1
+    compare_steps: 1
+    ratio_threshold: 10.0
+    use_score_scaling: false
+    use_score_norm: false
+    score_clip: null
+    whiten_rewards: false
+    gradient_checkpointing: false
+    is_encoder_decoder: false
+    is_peft_model: false
+    backward_batch_size: 32
+    global_backward_batch_size: 128
+    global_batch_size: 256
+    dataset_num_proc: null
+    total_ppo_epochs: 3
