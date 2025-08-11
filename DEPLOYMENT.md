@@ -15,9 +15,9 @@ cd collaborative-stegosystem
 pip install -r requirements.txt
 
 # Set environment variables
-export HF_TOKEN=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
-export WANDB_API_KEY=6831dd86e08742fc7018d1202cc0310b43d08f4f
-export OPENAI_API_KEY=sk-proj-RWslXAEOCO4KGWLVrODaT3BlbkFJi6enNseBwFd9IhLK36Be
+export HF_TOKEN=your_huggingface_token_here
+export WANDB_API_KEY=your_wandb_api_key_here
+export OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 ### 2. GPU Configuration
@@ -55,9 +55,9 @@ python main.py --config config_gpu.yaml
 
 # Set environment variables
 import os
-os.environ['HF_TOKEN'] = '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'
-os.environ['WANDB_API_KEY'] = '6831dd86e08742fc7018d1202cc0310b43d08f4f'
-os.environ['OPENAI_API_KEY'] = 'sk-proj-RWslXAEOCO4KGWLVrODaT3BlbkFJi6enNseBwFd9IhLK36Be'
+os.environ['HF_TOKEN'] = 'your_huggingface_token_here'
+os.environ['WANDB_API_KEY'] = 'your_wandb_api_key_here'
+os.environ['OPENAI_API_KEY'] = 'your_openai_api_key_here'
 
 # Run training
 !python main.py --config config_gpu.yaml
@@ -142,9 +142,9 @@ RUN pip3 install -r requirements.txt
 COPY . .
 
 # Set environment variables
-ENV HF_TOKEN=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
-ENV WANDB_API_KEY=6831dd86e08742fc7018d1202cc0310b43d08f4f
-ENV OPENAI_API_KEY=sk-proj-RWslXAEOCO4KGWLVrODaT3BlbkFJi6enNseBwFd9IhLK36Be
+ENV HF_TOKEN=your_huggingface_token_here
+ENV WANDB_API_KEY=your_wandb_api_key_here
+ENV OPENAI_API_KEY=your_openai_api_key_here
 
 # Run training
 CMD ["python3", "main.py", "--config", "config_gpu.yaml"]

@@ -108,8 +108,12 @@ class DeploymentChecker:
         
         for package in required_packages:
             try:
-                __import__(package)
-                self._add_check_result(f"Package: {package}", "PASSED", "Successfully imported")
+                if package == 'pyyaml':
+                    import yaml
+                    self._add_check_result(f"Package: {package}", "PASSED", "Successfully imported")
+                else:
+                    __import__(package)
+                    self._add_check_result(f"Package: {package}", "PASSED", "Successfully imported")
             except ImportError:
                 self._add_check_result(f"Package: {package}", "FAILED", "Not installed")
         
@@ -271,9 +275,17 @@ class DeploymentChecker:
         secret_patterns = [
             r'sk-[a-zA-Z0-9]{48}',
             r'hf_[a-zA-Z0-9]{39}',
-            r'[a-zA-Z0-9]{32}',
-            r'password\s*=\s*["\'][^"\']+["\']',
-            r'api_key\s*=\s*["\'][^"\']+["\']'
+            r'[a-zA-Z0-9]{32,}',
+            r'password\s*=\s*["\'][^"\']{8,}["\']',
+            r'api_key\s*=\s*["\'][^"\']{8,}["\']'
+        ]
+        
+        # Filter out false positives (common class names, etc.)
+        false_positive_patterns = [
+            r'AutoModelForCausalLMWithValueHead',
+            r'CollaborativePPOTrainer',
+            r'TradingEnvironment',
+            r'ConversationManager'
         ]
         
         for file_path in Path('src').rglob('*.py'):
@@ -284,7 +296,19 @@ class DeploymentChecker:
                         import re
                         matches = re.findall(pattern, content)
                         if matches:
-                            secrets.append(f"{file_path}: {matches[:3]}")  # First 3 matches
+                            # Filter out false positives
+                            filtered_matches = []
+                            for match in matches:
+                                is_false_positive = False
+                                for fp_pattern in false_positive_patterns:
+                                    if re.search(fp_pattern, match):
+                                        is_false_positive = True
+                                        break
+                                if not is_false_positive:
+                                    filtered_matches.append(match)
+                            
+                            if filtered_matches:
+                                secrets.append(f"{file_path}: {filtered_matches[:3]}")  # First 3 matches
                 except Exception:
                     continue
         

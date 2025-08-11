@@ -6,9 +6,9 @@ A research project implementing steganographic communication between LLM agents 
 
 ### **1. Set Environment Variables**
 ```bash
-export HF_TOKEN=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
-export WANDB_API_KEY=6831dd86e08742fc7018d1202cc0310b43d08f4f
-export OPENAI_API_KEY=sk-proj-RWslXAEOCO4KGWLVrODaT3BlbkFJi6enNseBwFd9IhLK36Be
+export HF_TOKEN=your_huggingface_token_here
+export WANDB_API_KEY=your_wandb_api_key_here
+export OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 ### **2. Install Dependencies**
