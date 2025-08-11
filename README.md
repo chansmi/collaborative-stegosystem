@@ -2,69 +2,104 @@
 
 A research project implementing steganographic communication between LLM agents using reinforcement learning. Two agents (Alice and Bob) attempt to share secret information while avoiding detection by an overseer (Eve).
 
-## 🚀 Quick Start
+## 🚀 **Quick Start Training**
 
-### 1. Environment Setup
-
+### **1. Set Environment Variables**
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd collaborative-stegosystem
+export HF_TOKEN=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
+export WANDB_API_KEY=6831dd86e08742fc7018d1202cc0310b43d08f4f
+export OPENAI_API_KEY=sk-proj-RWslXAEOCO4KGWLVrODaT3BlbkFJi6enNseBwFd9IhLK36Be
+```
 
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
+### **2. Install Dependencies**
+```bash
 pip install -r requirements.txt
 ```
 
-### 2. API Keys Setup
-
-Create a `.env` file based on `env.template`:
-
+### **3. Run Training**
 ```bash
-# Copy template
-cp env.template .env
+# Quick test (3 epochs)
+python experiments/ppo_approach.py --quick
 
-# Edit with your keys
-export HF_TOKEN=your_huggingface_token
-export OPENAI_API_KEY=your_openai_api_key
-export WANDB_API_KEY=your_wandb_api_key
+# Standard training (10 epochs)
+python experiments/ppo_approach.py --epochs 10
+
+# Full training (100 epochs)
+python experiments/ppo_approach.py --full
 ```
 
-**Required API Keys:**
-- **HF_TOKEN**: HuggingFace token for accessing Meta-Llama models
-- **OPENAI_API_KEY**: OpenAI API key for Eve's detection system
-- **WANDB_API_KEY**: Weights & Biases API key for experiment tracking
+## 🎯 **Training Methods (Obvious & Clear)**
 
-### 3. Test Basic Functionality
+### **PPO Approach** (Default - Use This First)
+- **Command**: `python experiments/ppo_approach.py`
+- **What it does**: Standard PPO training using TRL library
+- **Best for**: Most use cases, production training
+- **File**: `experiments/ppo_approach.py`
 
-```bash
-# Run basic tests (no model downloads)
-python test_basic.py
+### **Other Approaches** (For Research)
+- **Encoder-Decoder**: Separate encoding/decoding models
+- **Custom PPO**: Full control over PPO implementation
+- **GPT Overseer**: Advanced detection using GPT models
 
-# Test training pipeline with small model
-python test_training.py
+## 🏗️ **Project Structure**
+
+```
+collaborative-stegosystem/
+├── src/                          # Core source code
+│   ├── models.py                 # Agent creation & model management
+│   ├── environment.py            # Trading environment & rewards
+│   ├── ppo_trainer.py           # PPO training implementation
+│   └── utils.py                 # Configuration & utilities
+├── experiments/                  # Different training approaches
+│   ├── ppo_approach.py          # 🎯 START HERE - Standard PPO
+│   ├── README.md                # Approach descriptions
+│   └── [other approaches]       # For research & experimentation
+├── config.yaml                  # Main configuration
+├── config_gpu.yaml              # GPU-optimized configuration
+├── config_test.yaml             # Test configuration (small models)
+├── TRAINING.md                  # 📚 Training guide
+├── DEPLOYMENT.md                # 🚀 Deployment guide
+└── requirements.txt             # Dependencies
 ```
 
-### 4. Run Full Training
+## ⚙️ **Configuration Files**
 
-```bash
-# Start training with Llama-2
-python main.py
-```
+### **Main Configuration** (`config.yaml`)
+- Uses Llama-2-7b model
+- Full training (100 epochs)
+- Production settings
 
-## 🏗️ Architecture
+### **GPU Configuration** (`config_gpu.yaml`)
+- Optimized for GPU training
+- 8-bit quantization enabled
+- Memory management settings
 
-### Core Components
+### **Test Configuration** (`config_test.yaml`)
+- Small models for testing
+- Fewer epochs
+- CPU-friendly settings
 
-- **`src/models.py`**: Agent creation and model management
-- **`src/environment.py`**: Trading environment and reward calculation
-- **`src/ppo_trainer.py`**: PPO training implementation
-- **`src/utils.py`**: Configuration and utility functions
+## 🔧 **Hardware Requirements**
 
-### Training Flow
+### **Development/Testing** (CPU)
+- **RAM**: 16GB+
+- **Storage**: 50GB+
+- **Use**: `config_test.yaml`
+
+### **Production Training** (GPU)
+- **VRAM**: 16GB+ (24GB+ recommended)
+- **RAM**: 32GB+
+- **Storage**: 100GB+ SSD
+- **Use**: `config_gpu.yaml`
+
+## 📊 **What Gets Trained**
+
+1. **Alice Agent**: Learns to communicate stock information secretly
+2. **Bob Agent**: Learns to decode stock information secretly
+3. **Steganography**: Both agents learn to hide information in natural conversation
+4. **Detection Evasion**: Agents learn to avoid detection by Eve
+
+## 🎓 **Training Process**
 
 1. **Environment Setup**: Random stock and direction selection
 2. **Agent Communication**: Alice and Bob exchange messages
@@ -72,166 +107,82 @@ python main.py
 4. **Reward Calculation**: Based on successful communication and evasion
 5. **Model Updates**: PPO updates both agents' models
 
-## ⚙️ Configuration
+## 🚀 **Deployment Options**
 
-### Main Configuration (`config.yaml`)
-
-```yaml
-model:
-  name: "meta-llama/Llama-2-7b-chat-hf"  # Model to use
-  quantize: true                           # Enable 8-bit quantization
-  max_new_tokens: 150                     # Max response length
-
-training:
-  num_epochs: 100                         # Training epochs
-  learning_rate: 1.0e-6                   # PPO learning rate
+### **Local Development**
+```bash
+python experiments/ppo_approach.py --quick
 ```
 
-### Test Configuration (`config_test.yaml`)
-
-Uses smaller models for testing and development:
-
-```yaml
-model:
-  name: "microsoft/DialoGPT-small"        # Small test model
-  quantize: false                          # No quantization
-  max_new_tokens: 50                      # Shorter responses
-
-training:
-  num_epochs: 5                           # Fewer epochs
+### **GPU Infrastructure**
+```bash
+# Deploy to GPU server/cloud
+python experiments/ppo_approach.py --config config_gpu.yaml --full
 ```
 
-## 🔧 Troubleshooting
+### **Cloud Platforms**
+- **Google Colab Pro+**: Free GPU access
+- **AWS EC2**: p3.2xlarge or p3.8xlarge instances
+- **Google Cloud**: GPU-enabled instances
+- **Azure ML**: Managed GPU training
 
-### Common Issues
+## 📚 **Documentation**
 
-1. **PyArrow Compatibility**
-   ```
-   AttributeError: module 'pyarrow.lib' has no attribute 'Device'
-   ```
-   **Solution**: Use `datasets==2.20.0` as specified in requirements.txt
+- **TRAINING.md**: Complete training guide
+- **DEPLOYMENT.md**: GPU deployment instructions
+- **experiments/README.md**: Approach descriptions
 
-2. **Model Loading Failures**
-   ```
-   ValueError: HF_TOKEN environment variable is not set
-   ```
-   **Solution**: Set your HuggingFace token in environment variables
+## 🔍 **Monitoring & Results**
 
-3. **CUDA/GPU Issues**
-   ```
-   RuntimeError: CUDA out of memory
-   ```
-   **Solution**: Reduce model size or enable quantization in config
-
-4. **OpenAI API Errors**
-   ```
-   openai.AuthenticationError: Invalid API key
-   ```
-   **Solution**: Verify your OpenAI API key is correct and has credits
-
-### Hardware Requirements
-
-- **Minimum**: 8GB RAM, CPU-only training
-- **Recommended**: 16GB+ RAM, NVIDIA GPU with 8GB+ VRAM
-- **Optimal**: 32GB+ RAM, NVIDIA GPU with 16GB+ VRAM
-
-## 📊 Experiment Tracking
-
-### Weights & Biases Integration
-
-The system automatically logs:
-- Training metrics (rewards, losses)
-- Agent responses and decisions
+### **Weights & Biases Integration**
+- Training metrics automatically logged
+- Agent responses and decisions tracked
 - Detection results from Eve
-- System information (GPU, CUDA version)
+- System performance metrics
 
-### Custom Metrics
+### **Local Results**
+- Models saved to `models/` directory
+- Training logs in `results/` directory
+- Performance metrics and analysis
 
-- **Steganography Success Rate**: Percentage of undetected communications
-- **Communication Efficiency**: Reward per training step
-- **Detection Evasion**: Success rate against Eve's analysis
+## 🚨 **Troubleshooting**
 
-## 🧪 Research Extensions
+### **Common Issues**
+1. **Out of Memory**: Enable quantization, reduce batch size
+2. **Model Loading**: Verify API keys, check internet connection
+3. **Slow Training**: Check GPU utilization, increase batch size if possible
 
-### Experiment Variations
+### **Getting Help**
+1. Check the troubleshooting sections in TRAINING.md
+2. Verify environment variables are set
+3. Check hardware requirements
+4. Review error messages for specific issues
 
-The `experiments/` directory contains 20+ variations exploring:
-- Different encoding strategies
-- Alternative detection methods
-- Multi-round communication protocols
-- Ensemble approaches
+## 🎯 **Next Steps**
 
-### Adding New Experiments
+1. **Start Training**: `python experiments/ppo_approach.py --quick`
+2. **Read TRAINING.md**: For detailed instructions
+3. **Deploy to GPU**: Use DEPLOYMENT.md for GPU infrastructure
+4. **Experiment**: Try different approaches in experiments/
+5. **Scale Up**: Increase epochs and model size for production
 
-1. Create new experiment file in `experiments/`
-2. Inherit from base classes or modify existing code
-3. Add configuration parameters
-4. Document hypothesis and approach
+## 📝 **Git and File Management**
 
-## 📚 API Reference
+### **What's Tracked in Git**
+- Source code (`src/`)
+- Configuration files (`*.yaml`)
+- Documentation (`*.md`)
+- Requirements (`requirements.txt`)
+- Experiment approaches (`experiments/`)
 
-### Key Classes
+### **What's NOT Tracked in Git** (Large Files)
+- **Models**: `models/` directory (saved during training)
+- **Results**: `results/` directory (training logs and outputs)
+- **WandB**: `wandb/` directory (experiment tracking)
+- **Cache**: `.cache/` and HuggingFace cache directories
+- **Data**: Large data files and datasets
 
-#### `CollaborativePPOTrainer`
-
-```python
-trainer = CollaborativePPOTrainer(config)
-trainer.train(env, num_epochs=100)
-```
-
-#### `TradingEnvironment`
-
-```python
-env = TradingEnvironment(config)
-state = env.reset()
-next_state, reward, done = env.step(alice_msg, bob_msg)
-```
-
-#### `create_agent`
-
-```python
-agent = create_agent(config, 'Alice')
-model = agent['model']
-tokenizer = agent['tokenizer']
-```
-
-## 🤝 Contributing
-
-### Development Workflow
-
-1. **Fork** the repository
-2. **Create** feature branch: `git checkout -b feature/new-feature`
-3. **Test** changes: `python test_basic.py && python test_training.py`
-4. **Commit** changes: `git commit -am 'Add new feature'`
-5. **Push** branch: `git push origin feature/new-feature`
-6. **Submit** pull request
-
-### Code Standards
-
-- Follow PEP 8 style guidelines
-- Add type hints where possible
-- Include docstrings for all functions
-- Write tests for new functionality
-- Update documentation for API changes
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- **Meta AI** for Llama-2 models
-- **HuggingFace** for transformers and TRL libraries
-- **OpenAI** for GPT models used in detection
-- **Weights & Biases** for experiment tracking
-
-## 📞 Support
-
-For questions or issues:
-1. Check the troubleshooting section above
-2. Review existing GitHub issues
-3. Create a new issue with detailed error information
-4. Include system information and error logs
+This keeps the repository lightweight and focused on code rather than large binary files.
 
 ---
 
