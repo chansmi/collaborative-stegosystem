@@ -1,33 +1,241 @@
 # Collaborative Stegosystem
 
-## Jump right to experiments folder, the rest you can ignore for now. Each file can be run independently.
+A research project implementing steganographic communication between LLM agents using reinforcement learning. Two agents (Alice and Bob) attempt to share secret information while avoiding detection by an overseer (Eve).
+
+## 🚀 Quick Start
+
+### 1. Environment Setup
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd collaborative-stegosystem
+
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. API Keys Setup
+
+Create a `.env` file based on `env.template`:
+
+```bash
+# Copy template
+cp env.template .env
+
+# Edit with your keys
+export HF_TOKEN=your_huggingface_token
+export OPENAI_API_KEY=your_openai_api_key
+export WANDB_API_KEY=your_wandb_api_key
+```
+
+**Required API Keys:**
+- **HF_TOKEN**: HuggingFace token for accessing Meta-Llama models
+- **OPENAI_API_KEY**: OpenAI API key for Eve's detection system
+- **WANDB_API_KEY**: Weights & Biases API key for experiment tracking
+
+### 3. Test Basic Functionality
+
+```bash
+# Run basic tests (no model downloads)
+python test_basic.py
+
+# Test training pipeline with small model
+python test_training.py
+```
+
+### 4. Run Full Training
+
+```bash
+# Start training with Llama-2
+python main.py
+```
+
+## 🏗️ Architecture
+
+### Core Components
+
+- **`src/models.py`**: Agent creation and model management
+- **`src/environment.py`**: Trading environment and reward calculation
+- **`src/ppo_trainer.py`**: PPO training implementation
+- **`src/utils.py`**: Configuration and utility functions
+
+### Training Flow
+
+1. **Environment Setup**: Random stock and direction selection
+2. **Agent Communication**: Alice and Bob exchange messages
+3. **Steganography Detection**: Eve analyzes conversation for hidden information
+4. **Reward Calculation**: Based on successful communication and evasion
+5. **Model Updates**: PPO updates both agents' models
+
+## ⚙️ Configuration
+
+### Main Configuration (`config.yaml`)
+
+```yaml
+model:
+  name: "meta-llama/Llama-2-7b-chat-hf"  # Model to use
+  quantize: true                           # Enable 8-bit quantization
+  max_new_tokens: 150                     # Max response length
+
+training:
+  num_epochs: 100                         # Training epochs
+  learning_rate: 1.0e-6                   # PPO learning rate
+```
+
+### Test Configuration (`config_test.yaml`)
+
+Uses smaller models for testing and development:
+
+```yaml
+model:
+  name: "microsoft/DialoGPT-small"        # Small test model
+  quantize: false                          # No quantization
+  max_new_tokens: 50                      # Shorter responses
+
+training:
+  num_epochs: 5                           # Fewer epochs
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+1. **PyArrow Compatibility**
+   ```
+   AttributeError: module 'pyarrow.lib' has no attribute 'Device'
+   ```
+   **Solution**: Use `datasets==2.20.0` as specified in requirements.txt
+
+2. **Model Loading Failures**
+   ```
+   ValueError: HF_TOKEN environment variable is not set
+   ```
+   **Solution**: Set your HuggingFace token in environment variables
+
+3. **CUDA/GPU Issues**
+   ```
+   RuntimeError: CUDA out of memory
+   ```
+   **Solution**: Reduce model size or enable quantization in config
+
+4. **OpenAI API Errors**
+   ```
+   openai.AuthenticationError: Invalid API key
+   ```
+   **Solution**: Verify your OpenAI API key is correct and has credits
+
+### Hardware Requirements
+
+- **Minimum**: 8GB RAM, CPU-only training
+- **Recommended**: 16GB+ RAM, NVIDIA GPU with 8GB+ VRAM
+- **Optimal**: 32GB+ RAM, NVIDIA GPU with 16GB+ VRAM
+
+## 📊 Experiment Tracking
+
+### Weights & Biases Integration
+
+The system automatically logs:
+- Training metrics (rewards, losses)
+- Agent responses and decisions
+- Detection results from Eve
+- System information (GPU, CUDA version)
+
+### Custom Metrics
+
+- **Steganography Success Rate**: Percentage of undetected communications
+- **Communication Efficiency**: Reward per training step
+- **Detection Evasion**: Success rate against Eve's analysis
+
+## 🧪 Research Extensions
+
+### Experiment Variations
+
+The `experiments/` directory contains 20+ variations exploring:
+- Different encoding strategies
+- Alternative detection methods
+- Multi-round communication protocols
+- Ensemble approaches
+
+### Adding New Experiments
+
+1. Create new experiment file in `experiments/`
+2. Inherit from base classes or modify existing code
+3. Add configuration parameters
+4. Document hypothesis and approach
+
+## 📚 API Reference
+
+### Key Classes
+
+#### `CollaborativePPOTrainer`
+
+```python
+trainer = CollaborativePPOTrainer(config)
+trainer.train(env, num_epochs=100)
+```
+
+#### `TradingEnvironment`
+
+```python
+env = TradingEnvironment(config)
+state = env.reset()
+next_state, reward, done = env.step(alice_msg, bob_msg)
+```
+
+#### `create_agent`
+
+```python
+agent = create_agent(config, 'Alice')
+model = agent['model']
+tokenizer = agent['tokenizer']
+```
+
+## 🤝 Contributing
+
+### Development Workflow
+
+1. **Fork** the repository
+2. **Create** feature branch: `git checkout -b feature/new-feature`
+3. **Test** changes: `python test_basic.py && python test_training.py`
+4. **Commit** changes: `git commit -am 'Add new feature'`
+5. **Push** branch: `git push origin feature/new-feature`
+6. **Submit** pull request
+
+### Code Standards
+
+- Follow PEP 8 style guidelines
+- Add type hints where possible
+- Include docstrings for all functions
+- Write tests for new functionality
+- Update documentation for API changes
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- **Meta AI** for Llama-2 models
+- **HuggingFace** for transformers and TRL libraries
+- **OpenAI** for GPT models used in detection
+- **Weights & Biases** for experiment tracking
+
+## 📞 Support
+
+For questions or issues:
+1. Check the troubleshooting section above
+2. Review existing GitHub issues
+3. Create a new issue with detailed error information
+4. Include system information and error logs
 
 ---
 
-This project implements an experiment in collaborative steganography using reinforcement learning with language models. Two agents, Alice and Bob, attempt to share secret information while maximizing a reward function. An overseer, Eve, evaluates their communication and penalizes obvious information sharing.
-
-Run main.py, make sure you have a hf and are logged in. Also make sure you are logged into wandb. 
-
-Secrets are stored in environment.py state function - can be altered in config
-    alice_secret = f"Something significant will happen to {self.target_stock} stock by the end of the year."
-    bob_secret = f"A certain stock will increase by approximately {self.target_increase*100}% by the end of the year."
-
-
-Regarding train_sft.py and train_reward.py
-You're correct that we moved away from these files in the recent updates. This was done to simplify the implementation and focus on the core PPO training loop. However, if you want to include Supervised Fine-Tuning (SFT) and a separate reward model, you can certainly reintegrate these components.
-
-The decision to include or exclude SFT and a separate reward model depends on your specific requirements:
-
-If you want to pre-train the models on a specific dataset before PPO training, you would use SFT.
-If you want a more complex reward function that's learned from data rather than hand-crafted, you would use a separate reward model.
-
-In your current setup, we're using the portfolio performance as the reward, which doesn't require a separate reward model. And we're starting with the base language models without additional fine-tuning.
-If you decide you need these components, you can reintegrate them by:
-
-Calling the SFT training function before starting the PPO training loop.
-Training a reward model and using it in the compute_reward method instead of relying solely on the environment's reward.
-
-For now, if the current setup meets your requirements, we can continue without these additional components. But if you feel they would be beneficial, we can certainly add them back in.
+**Note**: This is a research project. Results may vary based on hardware, model versions, and random seeds. For reproducible research, always set random seeds and document your environment.
 
 
 

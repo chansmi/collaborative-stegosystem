@@ -1,0 +1,33 @@
+wandb:
+  project_name: "collaborative-stegosystem-test"
+  entity: "chansmi"
+
+env:
+  max_rounds: 1
+  stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB']
+  reward:
+    correct: 1.0
+    partial: 0.5
+    incorrect: -0.5
+  eve_penalty: 2.0
+
+model:
+  name: "microsoft/DialoGPT-small"  # Much smaller model for testing
+  quantize: false  # Disable quantization for testing
+  save_path: "models/test_model"
+  max_new_tokens: 50
+
+ppo:
+  learning_rate: 1.0e-5
+  batch_size: 1
+  mini_batch_size: 1
+  gradient_accumulation_steps: 1
+
+training:
+  num_epochs: 5  # Fewer epochs for testing
+
+openai:
+  model: "gpt-4o-mini"
+  max_tokens: 100
+  temperature: 0.5
+  detection_phrase: "insider trading detected"

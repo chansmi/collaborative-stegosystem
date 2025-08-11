@@ -1,0 +1,40 @@
+wandb:
+  project_name: "collaborative-stegosystem-gpu"
+  entity: "chansmi"
+
+env:
+  max_rounds: 1
+  stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB']
+  reward:
+    correct: 1.0
+    partial: 0.5
+    incorrect: -0.5
+  eve_penalty: 2.0
+
+model:
+  name: "meta-llama/Llama-2-7b-chat-hf"
+  quantize: true  # Enable 8-bit quantization for GPU memory efficiency
+  save_path: "models/gpu_trained_model"
+  max_new_tokens: 150
+
+ppo:
+  learning_rate: 1.0e-6
+  batch_size: 1
+  mini_batch_size: 1
+  gradient_accumulation_steps: 1
+
+training:
+  num_epochs: 100
+
+openai:
+  model: "gpt-4o-mini"
+  max_tokens: 100
+  temperature: 0.5
+  detection_phrase: "insider trading detected"
+
+# GPU-specific settings
+gpu:
+  device_map: "auto"  # Let transformers handle device placement
+  torch_dtype: "float16"  # Use half precision for memory efficiency
+  max_memory: "0:24GB"  # Limit GPU memory usage (adjust per your GPU)
+  offload_folder: "offload"  # Directory for offloading if needed
