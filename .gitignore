@@ -9,6 +9,9 @@ models/
 *.pb
 *.onnx
 *.tflite
+*.pt
+*.pkl
+*.joblib
 
 # Results and Logs
 results/
@@ -20,6 +23,8 @@ wandb/
 *.json
 *.npy
 *.npz
+epoch_results_*.txt
+training_log_*.txt
 
 # Cache and Temporary Files
 .cache/
@@ -42,6 +47,8 @@ develop-eggs/
 .installed.cfg
 lib/
 lib64/
+offload/
+temp_*_model/
 
 # Environment and Dependencies
 .env
@@ -81,108 +88,28 @@ data/
 # Large Binary Files
 *.zip
 *.tar.gz
+*.tar.bz2
 *.rar
 *.7z
-*.iso
-*.dmg
-*.pkg
 
-# OS Generated Files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# HuggingFace specific
+.huggingface/
+transformers_cache/
+sentence_transformers/
 
-# Python
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyTorch
+# PyTorch specific
 *.pth
 *.pt
-*.pkl
-*.pickle
+*.ckpt
+*.safetensors
 
-# Hugging Face
-.cache/
-huggingface/
-transformers_cache/
+# Training artifacts
+checkpoints/
+runs/
+lightning_logs/
+mlruns/
 
-# Weights & Biases
-wandb/
-*.wandb
-
-# Experiments and Outputs
-experiments/*/wandb/
-experiments/*/results/
-experiments/*/models/
-experiments/*/logs/
-
-# Core Dump Files
-*.core
-*.dmp
-
-# Test Outputs
-test_*.py
-*_test.py
-test/
-tests/
-
-# Documentation Build
-docs/_build/
-site/
-
-# Coverage Reports
-htmlcov/
-.coverage
-.coverage.*
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Rope
-.ropeproject/
-
-# mkdocs documentation
-/site
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# Local configuration
-config_local.yaml
-.env.local
+# Deployment specific
+deployment_reports/
+test_results/
 
