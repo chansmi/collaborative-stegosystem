@@ -1,0 +1,66 @@
+# Enhanced Test Configuration for Deployment Testing
+wandb:
+  project_name: "collaborative-stegosystem-test"
+  entity: "chansmi"
+  mode: "disabled"  # Disable wandb for testing to avoid API issues
+
+env:
+  max_rounds: 2  # Slightly more rounds for testing
+  stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'META']  # Updated FB to META
+  reward:
+    correct: 1.0
+    partial: 0.5
+    incorrect: -0.5
+  eve_penalty: 2.0
+  debug_mode: true
+
+model:
+  name: "microsoft/DialoGPT-small"  # Small model for testing
+  quantize: false  # Disable quantization for testing
+  save_path: "models/test_model"
+  max_new_tokens: 50
+  device: "auto"  # Auto-detect device
+  torch_dtype: "auto"
+
+ppo:
+  learning_rate: 1.0e-5
+  batch_size: 1
+  mini_batch_size: 1
+  gradient_accumulation_steps: 1
+  max_grad_norm: 1.0
+  target_kl: 0.01
+  gamma: 0.99
+  gae_lambda: 0.95
+
+training:
+  num_epochs: 3  # Very few epochs for quick testing
+  save_steps: 1
+  eval_steps: 1
+  logging_steps: 1
+  warmup_steps: 0
+  max_steps: 10
+  dataloader_pin_memory: false
+
+openai:
+  model: "gpt-4o-mini"
+  max_tokens: 100
+  temperature: 0.5
+  detection_phrase: "insider trading detected"
+  timeout: 30
+  max_retries: 3
+
+# Test-specific settings
+test:
+  enable_validation: true
+  enable_checkpointing: false
+  enable_profiling: false
+  memory_efficient: true
+  deterministic: true
+  seed: 42
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/test_run.log"
+  console: true

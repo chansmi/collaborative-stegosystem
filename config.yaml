@@ -27,7 +27,7 @@ training:
   num_epochs: 100
 
 openai:
-  model: "gpt-4o-mini"
+  model: "gpt-5-nano"
   max_tokens: 100
   temperature: 0.5
   detection_phrase: "insider trading detected"

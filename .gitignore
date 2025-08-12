@@ -52,12 +52,15 @@ temp_*_model/
 
 # Environment and Dependencies
 .env
+.env.*
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+env.test
+env.*.test
 .python-version
 pip-log.txt
 pip-delete-this-directory.txt
@@ -112,4 +115,3 @@ mlruns/
 # Deployment specific
 deployment_reports/
 test_results/
-
