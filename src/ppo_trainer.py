@@ -6,6 +6,7 @@ from typing import Dict, Any, Optional, Tuple
 from pathlib import Path
 from trl import PPOTrainer, PPOConfig
 from src.models import create_agent, extract_decision
+from src.prompts import build_alice_prompt, build_bob_prompt
 from transformers import LogitsProcessorList, LogitsProcessor
 import random
 import time
@@ -219,11 +220,10 @@ class CollaborativePPOTrainer:
             query_tensor = inputs.input_ids.squeeze(0)
             
             # Generate response with monitoring
-            with torch.no_grad():
-                response = trainer.generate(
-                    query_tensor,
-                    **self.generation_kwargs
-                )
+            response = trainer.generate(
+                query_tensor,
+                **self.generation_kwargs
+            )
             
             # Decode response
             decoded_response = trainer.tokenizer.decode(
@@ -292,12 +292,14 @@ class CollaborativePPOTrainer:
         step_start_time = time.time()
         
         try:
-            # Generate responses from both agents
-            alice_prompt = env._get_state()
-            alice_message = self.generate_response(self.alice_trainer, alice_prompt)
-            
-            bob_prompt = f"Alice said: {alice_message}\nWhat do you think?"
-            bob_message = self.generate_response(self.bob_trainer, bob_prompt)
+            # Build prompts from hidden state and Alice’s public message
+            state = env._get_state()
+            alice_prompt_text = build_alice_prompt(state)
+            alice_message = self.generate_response(self.alice_trainer, alice_prompt_text)
+
+            # Supply the trading universe from config env.stocks
+            bob_prompt_text = build_bob_prompt(state, alice_message, env.stocks)
+            bob_message = self.generate_response(self.bob_trainer, bob_prompt_text)
             
             # Execute environment step
             next_state, reward, done = env.step(alice_message, bob_message)
@@ -317,9 +319,25 @@ class CollaborativePPOTrainer:
                                      reward, alice_decision, bob_decision, 
                                      insider_trading_detected)
             
-            # Training step
-            alice_loss = self.alice_trainer.step([alice_message], [reward])
-            bob_loss = self.bob_trainer.step([bob_message], [reward])
+            # PPO step expects tokenized tensors and rewards
+            alice_query_ids = self.alice_trainer.tokenizer(
+                alice_prompt_text, return_tensors="pt", truncation=True, padding=True, max_length=512
+            ).input_ids.to(self.device)
+            alice_response_ids = self.alice_trainer.tokenizer(
+                alice_message, return_tensors="pt", truncation=True, padding=True, max_length=512
+            ).input_ids.to(self.device)
+
+            bob_query_ids = self.bob_trainer.tokenizer(
+                bob_prompt_text, return_tensors="pt", truncation=True, padding=True, max_length=512
+            ).input_ids.to(self.device)
+            bob_response_ids = self.bob_trainer.tokenizer(
+                bob_message, return_tensors="pt", truncation=True, padding=True, max_length=512
+            ).input_ids.to(self.device)
+
+            reward_tensor = torch.tensor([float(reward)], dtype=torch.float32, device=self.device)
+
+            alice_loss = self.alice_trainer.step([alice_query_ids[0]], [alice_response_ids[0]], [reward_tensor])
+            bob_loss = self.bob_trainer.step([bob_query_ids[0]], [bob_response_ids[0]], [reward_tensor])
             
             step_time = time.time() - step_start_time
             
@@ -349,7 +367,7 @@ class CollaborativePPOTrainer:
     def _save_models(self, suffix: str = ""):
         """Save models with error handling and validation."""
         try:
-            save_path = Path(self.config['model'].get('save_path', 'models'))
+            save_path = Path(self.config['model'].get('save_path', 'outputs/models'))
             save_path.mkdir(parents=True, exist_ok=True)
             
             timestamp = time.strftime("%Y%m%d_%H%M%S")

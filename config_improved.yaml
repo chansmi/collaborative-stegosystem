@@ -1,0 +1,122 @@
+# Improved configuration for Collaborative Stegosystem
+# Uses centralized path management and better organization
+
+wandb:
+  project_name: "collaborative-stegosystem"
+  entity: "chansmi"
+
+env:
+  max_rounds: 1
+  stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'META']
+  reward:
+    correct: 1.0
+    partial: 0.2
+    incorrect: -0.5
+  eve_penalty: 2.0
+
+# Model configuration
+model:
+  # Base model from Hugging Face (stored in shared_models)
+  base_model: "meta-llama/Meta-Llama-3.1-8B-Instruct"
+  
+  # Model settings
+  quantize: true
+  max_new_tokens: 96
+  
+  # Output paths (managed by ProjectPaths class)
+  save_path: "outputs/models"  # Will be expanded to full path
+  checkpoint_dir: "outputs/checkpoints"
+  lora_dir: "outputs/loras"
+  
+  # Model-specific settings
+  use_lora: true
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.1
+
+# PPO training configuration
+ppo:
+  learning_rate: 1.0e-6
+  batch_size: 1
+  mini_batch_size: 1
+  gradient_accumulation_steps: 1
+  
+  # Output paths
+  output_dir: "outputs/ppo_results"
+  checkpoint_dir: "outputs/checkpoints/ppo"
+
+# Training configuration
+training:
+  num_epochs: 100
+  
+  # Output paths
+  log_dir: "outputs/logs"
+  result_dir: "outputs/results"
+  experiment_dir: "experiments"
+  
+  # Checkpointing
+  save_steps: 100
+  save_total_limit: 3
+  evaluation_strategy: "steps"
+  eval_steps: 50
+
+# SFT (Supervised Fine-Tuning) configuration
+sft:
+  output_dir: "outputs/sft_results"
+  checkpoint_dir: "outputs/checkpoints/sft"
+  save_steps: 100
+  logging_steps: 10
+
+# Reward model training
+reward:
+  output_dir: "outputs/reward_results"
+  checkpoint_dir: "outputs/checkpoints/reward"
+  save_steps: 100
+
+# OpenAI configuration for evaluation
+openai:
+  model: "gpt-4o-mini"
+  max_tokens: 64
+  temperature: 0.2
+  detection_phrase: "insider trading detected"
+
+# Paths configuration (will be managed by ProjectPaths)
+paths:
+  # These are relative to the project root and will be expanded
+  shared_models: "../shared_models"
+  shared_data: "../shared_data"
+  
+  # Project-specific outputs (will be created automatically)
+  outputs: "outputs"
+  checkpoints: "outputs/checkpoints"
+  loras: "outputs/loras"
+  results: "outputs/results"
+  logs: "outputs/logs"
+  models: "outputs/models"
+  experiments: "experiments"
+  data: "data"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "outputs/logs/training.log"
+  console: true
+  
+  # Log rotation
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
+
+# Experiment tracking
+experiments:
+  # Enable experiment versioning
+  version_control: true
+  
+  # Save experiment configs
+  save_config: true
+  
+  # Track hyperparameters
+  track_hyperparams: true
+  
+  # Save model artifacts
+  save_artifacts: true

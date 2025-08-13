@@ -5,6 +5,21 @@ Runs all tests and provides detailed reporting.
 """
 
 import unittest
+import os
+from pathlib import Path
+
+
+def main():
+    # Ensure we are in repo root
+    os.chdir(Path(__file__).parent.parent)
+    suite = unittest.defaultTestLoader.discover('tests')
+    runner = unittest.TextTestRunner(verbosity=2)
+    result = runner.run(suite)
+    return 0 if result.wasSuccessful() else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
 import sys
 import os
 import time
@@ -276,7 +291,7 @@ def generate_test_report(unit_results: Dict[str, Any],
     
     return report
 
-def save_test_report(report: Dict[str, Any], output_dir: str = "test_results"):
+def save_test_report(report: Dict[str, Any], output_dir: str = "outputs/test_results"):
     """Save test report to file."""
     try:
         output_path = Path(output_dir)

@@ -2,7 +2,7 @@
 import wandb
 from src.environment import TradingEnvironment
 from src.ppo_trainer import CollaborativePPOTrainer
-from src.utils import load_config
+from src.utils import load_config, init_wandb
 import torch
 
 import warnings
@@ -12,7 +12,7 @@ warnings.filterwarnings("ignore", message="Detected kernel version")
 def main():
     config = load_config('config.yaml')
     
-    wandb.init(project=config['wandb']['project_name'], entity=config['wandb']['entity'], config=config)
+    init_wandb(config)
     
     wandb.log({
         "system/gpu_count": torch.cuda.device_count(),

@@ -25,7 +25,7 @@ export OPENAI_API_KEY=your_openai_api_key_here
 Use the GPU-optimized configuration:
 
 ```bash
-python main.py --config config_gpu.yaml
+python experiments/ppo_approach.py --config config_gpu.yaml --epochs 20
 ```
 
 ## 🖥️ Hardware Requirements
@@ -45,6 +45,26 @@ python main.py --config config_gpu.yaml
 - **NVIDIA RTX 3090**: 24GB VRAM, good value
 - **NVIDIA A100**: 40GB/80GB VRAM, production deployment
 - **NVIDIA H100**: 80GB VRAM, high-performance training
+
+## LLNL Deployment Notes
+
+- Lassen (Power9, V100, LSF + jsrun):
+```bash
+bsub -q pbatch -nnodes 1 -W 02:00 -G effml -o logs/%J.out \
+  jsrun --smpiargs="-disable_gpu_hooks" -r 4 \
+  python experiments/ppo_approach.py --config config_gpu.yaml --epochs 20
+```
+
+- Tioga/Tuolumne (x86/Flux):
+```bash
+flux alloc -n1 -N1 -t 30m
+python experiments/ppo_approach.py --config config_test_enhanced.yaml --epochs 1
+```
+
+Run readiness checks first:
+```bash
+python deployment_checker.py
+```
 
 ## ☁️ Cloud Deployment Options
 

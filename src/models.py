@@ -80,14 +80,16 @@ def create_agent(config: Dict[str, Any], role: str) -> Dict[str, Any]:
         if not role or not isinstance(role, str):
             raise ModelError(f"Invalid role: {role}")
         
-        # Check authentication
-        hf_token = os.environ.get("HF_TOKEN")
-        if not hf_token:
-            raise ModelError("HF_TOKEN environment variable is not set. Please set it to access Meta-Llama models.")
-        
+        # Check authentication only for gated models (e.g., Meta Llama)
         model_name = config.get('model', {}).get('name')
         if not model_name:
             raise ModelError("Model name not specified in configuration")
+        gated = 'meta-llama' in model_name.lower() or 'llama' in model_name.lower()
+        hf_token = os.environ.get("HF_TOKEN")
+        if gated and not hf_token:
+            raise ModelError("HF_TOKEN is required for gated models (e.g., Meta Llama). Set it to proceed.")
+        
+        # model_name already validated above
         
         logger.info(f"Creating {role} agent with model: {model_name}")
         

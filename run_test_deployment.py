@@ -22,7 +22,7 @@ def setup_logging(config):
     log_format = log_config.get('format', '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     
     # Create logs directory if it doesn't exist
-    log_file = log_config.get('file', 'logs/test_run.log')
+    log_file = log_config.get('file', 'outputs/logs/test_run.log')
     Path(log_file).parent.mkdir(exist_ok=True)
     
     # Configure logging
@@ -228,7 +228,7 @@ def main():
     print("=" * 60)
     
     # Load configuration
-    config_file = "config_test_enhanced.yaml"
+    config_file = Path(__file__).parent / "config_test_enhanced.yaml"
     try:
         with open(config_file, 'r') as f:
             config = yaml.safe_load(f)

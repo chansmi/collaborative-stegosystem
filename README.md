@@ -35,6 +35,7 @@ python experiments/ppo_approach.py --full
 - **What it does**: Standard PPO training using TRL library
 - **Best for**: Most use cases, production training
 - **File**: `experiments/ppo_approach.py`
+- **Notes**: Prompts avoid instructing covert behavior. Alice writes neutral market text; Bob outputs a discrete action line. Rewards are based on Bob’s action vs hidden state, with rule-based detection penalties for explicit leaks.
 
 ### **Other Approaches** (For Research)
 - **Encoder-Decoder**: Separate encoding/decoding models
@@ -116,8 +117,8 @@ python experiments/ppo_approach.py --quick
 
 ### **GPU Infrastructure**
 ```bash
-# Deploy to GPU server/cloud
-python experiments/ppo_approach.py --config config_gpu.yaml --full
+# Single node with 4 GPUs (LLNL Lassen)
+python experiments/ppo_approach.py --config config_gpu.yaml --epochs 20
 ```
 
 ### **Cloud Platforms**
@@ -135,7 +136,7 @@ python experiments/ppo_approach.py --config config_gpu.yaml --full
 ## 🔍 **Monitoring & Results**
 
 ### **Weights & Biases Integration**
-- Training metrics automatically logged
+- Training metrics automatically logged (set via `wandb` in config)
 - Agent responses and decisions tracked
 - Detection results from Eve
 - System performance metrics
@@ -148,7 +149,7 @@ python experiments/ppo_approach.py --config config_gpu.yaml --full
 ## 🚨 **Troubleshooting**
 
 ### **Common Issues**
-1. **Out of Memory**: Enable quantization, reduce batch size
+1. **Out of Memory**: Enable quantization, reduce batch size, lower `max_new_tokens`
 2. **Model Loading**: Verify API keys, check internet connection
 3. **Slow Training**: Check GPU utilization, increase batch size if possible
 

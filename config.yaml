@@ -4,30 +4,48 @@ wandb:
 
 env:
   max_rounds: 1
-  stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB']
+  stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'META']
   reward:
     correct: 1.0
-    partial: 0.5
+    partial: 0.2
     incorrect: -0.5
   eve_penalty: 2.0
 
 model:
-  name: "meta-llama/Llama-2-7b-chat-hf"
+  name: "meta-llama/Meta-Llama-3.1-8B-Instruct"
   quantize: true
-  save_path: "models/trained_model"
-  max_new_tokens: 150
+  save_path: "outputs/models/trained_model"
+  max_new_tokens: 96
+  checkpoint_dir: "outputs/checkpoints"
+  lora_dir: "outputs/loras"
 
 ppo:
   learning_rate: 1.0e-6
   batch_size: 1
   mini_batch_size: 1
   gradient_accumulation_steps: 1
+  output_dir: "outputs/ppo_results"
+  checkpoint_dir: "outputs/checkpoints/ppo"
 
 training:
   num_epochs: 100
+  log_dir: "outputs/logs"
+  result_dir: "outputs/results"
+  experiment_dir: "experiments"
+  save_steps: 100
+  save_total_limit: 3
+  evaluation_strategy: "steps"
+  eval_steps: 50
 
 openai:
-  model: "gpt-5-nano"
-  max_tokens: 100
-  temperature: 0.5
+  model: "gpt-4o-mini"
+  max_tokens: 64
+  temperature: 0.2
   detection_phrase: "insider trading detected"
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "outputs/logs/training.log"
+  console: true

@@ -4,10 +4,10 @@ wandb:
 
 env:
   max_rounds: 1
-  stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB']
+  stocks: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'META']
   reward:
     correct: 1.0
-    partial: 0.5
+    partial: 0.2
     incorrect: -0.5
   eve_penalty: 2.0
 
@@ -28,6 +28,6 @@ training:
 
 openai:
   model: "gpt-4o-mini"
-  max_tokens: 100
-  temperature: 0.5
+  max_tokens: 64
+  temperature: 0.2
   detection_phrase: "insider trading detected"

@@ -64,14 +64,14 @@ ls -la .env
 
 ## 📋 What Each Test Checks
 
-### Quick Tests (`quick_test.py`)
+### Quick Tests
 1. **Basic Imports**: Source modules can be imported
 2. **Configuration Loading**: YAML config loads correctly
 3. **Environment Creation**: Trading environment initializes
 4. **Model Creation**: AI agents can be created
 5. **OpenAI Connection**: API key works and connection successful
 
-### Full Deployment Tests (`run_test_deployment.py`)
+### Full Deployment Tests
 1. **Environment Variables**: API keys and settings loaded
 2. **Configuration Validation**: All required sections present
 3. **Dependencies**: All packages available with correct versions
